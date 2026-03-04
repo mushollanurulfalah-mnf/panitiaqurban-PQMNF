@@ -7,6 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+/* __EMBEDDED_CONFIG__ */
+// window.__QCFG__ akan diisi otomatis saat admin save config
+</script>
 <style>
 :root{
   --em:#0d6e4f;--eml:#1a8f67;--emd:#094d37;
@@ -133,14 +137,14 @@ main{max-width:1200px;margin:0 auto;padding:1.5rem}
 .badge{display:inline-block;padding:.18rem .55rem;border-radius:11px;font-size:.7rem;font-weight:600}
 .bs{background:#dcfce7;color:#166534}
 .bk{background:#fef9c3;color:#854d0e}
-.brt10{background:#dbeafe;color:#1eaf56}
+.brt10{background:#dbeafe;color:#17c43d}
 .brt03{background:#e0e7ff;color:#3730a3}
 .brt04{background:#fce7f3;color:#9d174d}
 .brt02{background:#ffedd5;color:#9a3412}
 .brt03{background:#d1fae5;color:#065f46}
-.bguru{background:#dbeafe;color:#1e40af}
+.bgurutetap{background:#dbeafe;color:#1e40af}
 .bsesepuh{background:#ede9fe;color:#5b21b6}
-.bulama{background:#dcfce7;color:#166534}
+.bulamasetempat{background:#dcfce7;color:#166534}
 
 
 /* ── FORM ── */
@@ -199,7 +203,7 @@ select.fc{cursor:pointer}
 <!-- LOADING -->
 <div id="ls">
   <img src="https://i.ibb.co.com/W4rmSh0f/white-mnf2.png" alt="Masjid" style="width:90px;height:90px;filter:drop-shadow(0 4px 12px rgba(201,162,39,.4))">
-  <div class="lt">Musholla Nurul Falah<br><small style="font-size:.65em;color:rgba(201,162,39,.75)">Sistem Manajemen Qurban</small></div>
+  <div class="lt">Musholla Nurul Falah<br><small style="font-size:.65em;color:rgba(201,162,39,.75)">Sistem Manajemen Panitia Qurban</small></div>
   <div class="spin"></div>
 </div>
 
@@ -222,9 +226,9 @@ select.fc{cursor:pointer}
 <div class="mo" id="mo-gh">
   <div class="mb">
     <div style="text-align:center;margin-bottom:1.3rem">
-      <img src="https://i.ibb.co.com/W4rmSh0f/white-mnf2.png" alt="Masjid" style="width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(13,110,79,.25))">
+      <img src="https://i.ibb.co.com/JwzP9XyJ/mnf-bulat.png" alt="Masjid" style="width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(13,110,79,.25))">
       <div class="mtitle" style="text-align:center">Musholla Nurul Falah</div>
-      <p class="msub">Konfigurasi GitHub sebagai database penyimpanan</p>
+      <p class="msub">Konfigurasi GitHub sebagai database & deploy</p>
     </div>
     <div class="fg"><label class="fl"><i class="fab fa-github"></i> GitHub Token (Personal Access Token)</label>
       <input type="password" class="fc" id="cfg-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
@@ -232,12 +236,17 @@ select.fc{cursor:pointer}
     </div>
     <div class="fr">
       <div class="fg"><label class="fl">Username GitHub</label><input type="text" class="fc" id="cfg-owner" placeholder="username"></div>
-      <div class="fg"><label class="fl">Nama Repository</label><input type="text" class="fc" id="cfg-repo" placeholder="qurban-data"></div>
+      <div class="fg"><label class="fl">Nama Repository</label><input type="text" class="fc" id="cfg-repo" placeholder="qurban-nurul-falah"></div>
     </div>
     <div class="fg"><label class="fl">Password Admin Aplikasi</label><input type="password" class="fc" id="cfg-pw" placeholder="Buat password admin Anda"></div>
-    <button class="bp" style="width:100%;justify-content:center" onclick="saveConfig()"><i class="fas fa-save"></i> Simpan & Mulai</button>
-    <div style="margin-top:.9rem;padding:.85rem;background:var(--cream);border-radius:8px;font-size:.74rem;color:var(--tl)">
-      <strong>Catatan:</strong> Data disimpan sebagai JSON per tahun hijriah di repository GitHub. Pastikan repository sudah dibuat.
+    <button class="bp" style="width:100%;justify-content:center" onclick="saveConfig()"><i class="fas fa-save"></i> Simpan & Deploy Otomatis</button>
+    <div style="margin-top:.9rem;padding:.85rem;background:var(--cream);border-radius:8px;font-size:.74rem;color:var(--tl);line-height:1.8">
+      <strong style="color:var(--em)">📋 Panduan agar bisa dibuka di HP lain:</strong><br>
+      1️⃣ Buat repository GitHub baru (misal: <code>qurban-nurul-falah</code>)<br>
+      2️⃣ Upload file <b>index.html</b> ini ke repository<br>
+      3️⃣ Aktifkan <b>GitHub Pages</b> (Settings → Pages → Branch: main)<br>
+      4️⃣ Buka aplikasi lewat URL GitHub Pages, isi form ini & klik Simpan<br>
+      5️⃣ Config otomatis ter-embed ke file — semua HP bisa pakai URL yang sama 🎉
     </div>
   </div>
 </div>
@@ -249,7 +258,7 @@ select.fc{cursor:pointer}
     <p class="msub">Setiap tahun disimpan terpisah — data lama tetap aman</p>
     <div style="display:flex;gap:.65rem;align-items:flex-end;margin-bottom:1.1rem">
       <div class="fg" style="flex:1;margin-bottom:0"><label class="fl">Tahun Hijriah</label>
-        <input type="number" class="fc" id="new-year" placeholder="Cth: 1446" min="1440" max="1520" onkeydown="if(event.key==='Enter')addYear()">
+        <input type="number" class="fc" id="new-year" placeholder="Cth: 1447" min="1440" max="1520" onkeydown="if(event.key==='Enter')addYear()">
       </div>
       <button class="bp" onclick="addYear()"><i class="fas fa-plus"></i> Tambah</button>
     </div>
@@ -295,7 +304,7 @@ select.fc{cursor:pointer}
 <nav>
   <div class="ni">
     <div class="nb">
-      <img src="https://i.ibb.co.com/W4rmSh0f/white-mnf2.png" alt="Masjid" style="width:38px;height:38px;filter:drop-shadow(0 1px 4px rgba(252, 251, 249, 0.35))">
+      <img src="https://i.ibb.co.com/W4rmSh0f/white-mnf2.png" alt="Masjid" style="width:38px;height:38px;filter:drop-shadow(0 1px 4px rgba(201,162,39,.35))">
       <div><span>PQ-MNF</span><span class="nbs"></span></div>
     </div>
     <div class="na">
@@ -311,7 +320,7 @@ select.fc{cursor:pointer}
   <!-- HERO -->
   <div class="hero">
     <div class="htitle" id="hero-title">PANITIA QURBAN 1446 H</div>
-    <div class="hsub">MUSHOLLA NURUL FALAH — Sistem Data panitia, hewan, mustahik, guru & sesepuh</div>
+    <div class="hsub">MUSHOLLA NURUL FALAH — SISTEM MANAJEMEN KEPANITIAN</div>
     <div class="harab"></div>
   </div>
 
@@ -455,7 +464,7 @@ select.fc{cursor:pointer}
         <p>🟢 <b>Export Pilihan</b> — Pilih tahun & kategori data, diekspor ke satu file Excel</p>
         <p>🟢 <b>Tombol Cepat</b> — Download langsung data tahun aktif (<b id="exp-yr-info" style="color:var(--em)"></b>) per kategori</p>
         <p>🟢 <b>Hewan Qurban</b> — Menghasilkan 2 sheet: Daftar Hewan &amp; Daftar Pequrban (terpisah)</p>
-        <p>🟢 <b>Mustahik</b> — Sheet utama + sheet per RT (RT 10 – RT 04)</p>
+        <p>🟢 <b>Mustahik</b> — Sheet utama + sheet per RT</p>
         <p>🟢 <b>Rekap Dashboard</b> — Ringkasan lengkap semua statistik data tahun aktif</p>
         <div style="margin-top:.7rem;padding:.8rem;background:var(--cream);border-radius:8px;font-size:.78rem;color:var(--tl)">
           💡 Data tersimpan per tahun hijriah secara terpisah — aplikasi bisa digunakan setiap tahun tanpa kehilangan data lama.
@@ -466,7 +475,7 @@ select.fc{cursor:pointer}
 </main>
 
 <footer style="text-align:center;padding:1.8rem 1rem;color:var(--tl);font-size:.76rem">
-  <p>Musholla <span style="color:var(--em);font-weight:600">Nurul Falah</span> — Sistem Manajemen Qurban</p>
+  <p>Musholla <span style="color:var(--em);font-weight:600">Nurul Falah</span> — Sistem Manajemen Panitia Qurban</p>
   <p style="margin-top:.2rem">Data tersimpan di GitHub • Aktif: <span id="ft-year" style="color:var(--em);font-weight:600">1446 H</span></p>
 </footer>
 <div class="tc-wrap" id="tc-wrap"></div>
@@ -490,14 +499,26 @@ const db = () => allData[activeYear] || emptyDb();
 window.onload = async () => {
   await delay(1350);
   hide('ls');
-  const saved = localStorage.getItem('qcfg');
-  if (saved) {
-    cfg = JSON.parse(saved);
+
+  // Prioritas 1: config ter-embed di HTML (untuk multi-HP via GitHub Pages)
+  if (window.__QCFG__ && window.__QCFG__.token) {
+    cfg = window.__QCFG__;
+    localStorage.setItem('qcfg', JSON.stringify(cfg));
     closeModal('mo-gh');
     await loadAll();
-  } else {
-    setSyncStatus('err');
   }
+  // Prioritas 2: config dari localStorage browser ini
+  else {
+    const saved = localStorage.getItem('qcfg');
+    if (saved) {
+      cfg = JSON.parse(saved);
+      closeModal('mo-gh');
+      await loadAll();
+    } else {
+      setSyncStatus('err');
+    }
+  }
+
   const cy = JSON.parse(localStorage.getItem('qyears') || '["1446"]');
   cy.forEach(y => { if (!allData[y]) allData[y] = emptyDb(); });
   if (!allData[activeYear]) allData[activeYear] = emptyDb();
@@ -538,7 +559,7 @@ function scrollYear(dir) {
 }
 
 function updateTitles() {
-  document.getElementById('hero-title').textContent = `Panitia Qurban ${activeYear} H`;
+  document.getElementById('hero-title').textContent = `PANITIA QURBAN ${activeYear} H`;
   const expInfo = document.getElementById('exp-yr-info');
   if (expInfo) expInfo.textContent = activeYear + ' H';
 }
@@ -591,11 +612,57 @@ async function saveConfig() {
   const token=V('cfg-token'),owner=V('cfg-owner'),repo=V('cfg-repo'),pw=V('cfg-pw');
   if (!token||!owner||!repo||!pw) { toast('Semua field harus diisi!','err'); return; }
   cfg={token,owner,repo,adminpw:pw};
+
+  // Simpan ke localStorage (lokal)
   localStorage.setItem('qcfg', JSON.stringify(cfg));
+
+  // Otomatis update file HTML di GitHub dengan config ter-embed
+  // agar saat dibuka di HP lain tetap terhubung
   closeModal('mo-gh');
-  toast('Konfigurasi disimpan!');
+  toast('Konfigurasi disimpan! Memperbarui file deploy...','warn');
+  await embedConfigToGithub(token, owner, repo, pw);
   await loadAll();
 }
+
+async function embedConfigToGithub(token, owner, repo, pw) {
+  try {
+    // Ambil file HTML ini dari GitHub
+    const fileRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/index.html`,
+      {headers:{Authorization:`token ${token}`,Accept:'application/vnd.github.v3+json'}});
+    if (!fileRes.ok) { toast('File index.html belum ada di repo, upload manual dulu.','warn'); return; }
+    const fileData = await fileRes.json();
+    const currentContent = decodeURIComponent(escape(atob(fileData.content)));
+    const sha = fileData.sha;
+
+    // Inject config ke dalam HTML
+    const newContent = injectConfig(currentContent, token, owner, repo, pw);
+
+    // Push kembali ke GitHub
+    await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/index.html`, {
+      method:'PUT',
+      headers:{Authorization:`token ${token}`,'Content-Type':'application/json'},
+      body:JSON.stringify({
+        message:'Auto-embed config for cross-device access',
+        content: btoa(unescape(encodeURIComponent(newContent))),
+        sha
+      })
+    });
+    toast('✅ Config berhasil di-embed! Semua HP bisa akses data.','ok');
+  } catch(e) {
+    console.warn('Auto-embed failed:', e.message);
+    toast('Config lokal tersimpan. Upload index.html manual ke GitHub untuk akses multi-HP.','warn');
+  }
+}
+
+function injectConfig(html, token, owner, repo, pw) {
+  const marker = '/* __EMBEDDED_CONFIG__ */';
+  const injection = `/* __EMBEDDED_CONFIG__ */\nwindow.__QCFG__={token:'${token}',owner:'${owner}',repo:'${repo}',adminpw:'${pw}'};`;
+  if (html.includes(marker)) {
+    return html.replace(/\/\* __EMBEDDED_CONFIG__ \*\/[\s\S]*?;/, injection);
+  }
+  return html.replace('<script>', `<script>\n${injection}\n`);
+}
+
 function openGhConfig() {
   if(cfg.token){S('cfg-token',cfg.token);S('cfg-owner',cfg.owner);S('cfg-repo',cfg.repo);S('cfg-pw',cfg.adminpw||'');}
   openModal('mo-gh');
