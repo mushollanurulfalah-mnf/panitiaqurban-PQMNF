@@ -8,8 +8,13 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
-/* __EMBEDDED_CONFIG__ */
-// window.__QCFG__ akan diisi otomatis saat admin save config
+/* ── KONFIGURASI — UBAH DI SINI ─────────────────────────────
+   Setelah deploy Apps Script, paste URL Web App di bawah.
+   Password admin juga diubah di sini.
+──────────────────────────────────────────────────────────── */
+const API_URL       = 'https://script.google.com/macros/s/AKfycbxfqXJUhBK6NQJowAhPUTZTEaiqqFTm1JV7gTuLnkSakPPKiwlqoJ3F6wch6L3MopAkfg/exec';
+const ADMIN_PASSWORD = 'PQMNF2026';
+/* ────────────────────────────────────────────────────────── */
 </script>
 <style>
 :root{
@@ -25,13 +30,13 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--td);min-height:100vh;overflow-x:hidden}
 
-/* ── LOADING ── */
+/* LOADING */
 #ls{position:fixed;inset:0;background:var(--emd);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .5s}
 #ls .lt{font-family:'Amiri',serif;color:var(--gold);font-size:2rem;text-align:center;margin-top:1rem;line-height:1.3}
 .spin{width:56px;height:56px;border:3px solid rgba(201,162,39,.25);border-top:3px solid var(--gold);border-radius:50%;animation:spin 1s linear infinite;margin-top:2rem}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* ── MODAL ── */
+/* MODAL */
 .mo{position:fixed;inset:0;background:rgba(9,77,55,.88);backdrop-filter:blur(8px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem}
 .mb{background:var(--white);border-radius:var(--r);padding:2rem;width:100%;max-width:500px;box-shadow:var(--shl);animation:su .3s ease;max-height:92vh;overflow-y:auto}
 .mb.wide{max-width:600px}
@@ -39,7 +44,7 @@ body{font-family:'Poppins',sans-serif;background:var(--cream);color:var(--td);mi
 .mtitle{font-family:'Amiri',serif;font-size:1.5rem;color:var(--em);margin-bottom:.35rem}
 .msub{color:var(--tl);font-size:.83rem;margin-bottom:1.4rem}
 
-/* ── NAV ── */
+/* NAV */
 nav{background:var(--emd);padding:0 1.5rem;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.22)}
 .ni{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px}
 .nb{display:flex;align-items:center;gap:.75rem;color:var(--gold);font-family:'Amiri',serif;font-size:1.1rem}
@@ -47,21 +52,21 @@ nav{background:var(--emd);padding:0 1.5rem;position:sticky;top:0;z-index:100;box
 .na{display:flex;align-items:center;gap:.45rem}
 .abadge{background:var(--gold);color:var(--emd);padding:.28rem .75rem;border-radius:20px;font-size:.74rem;font-weight:600;display:none}
 .abadge.on{display:inline-block}
-.ybadge{background:rgba(201,162,39,.18);border:1px solid var(--gold);color:var(--gold);padding:.28rem .8rem;border-radius:20px;font-size:.8rem;font-weight:600;cursor:default}
+.ybadge{background:rgba(201,162,39,.18);border:1px solid var(--gold);color:var(--gold);padding:.28rem .8rem;border-radius:20px;font-size:.8rem;font-weight:600}
 .bn{background:transparent;border:1px solid rgba(201,162,39,.45);color:var(--gold);padding:.38rem .85rem;border-radius:20px;font-size:.78rem;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s;white-space:nowrap}
 .bn:hover{background:var(--gold);color:var(--emd)}
 
-/* ── MAIN ── */
+/* MAIN */
 main{max-width:1200px;margin:0 auto;padding:1.5rem}
 
-/* ── HERO ── */
+/* HERO */
 .hero{background:linear-gradient(135deg,var(--emd) 0%,var(--em) 60%,var(--eml) 100%);border-radius:var(--r);padding:2.5rem;margin-bottom:1.5rem;position:relative;overflow:hidden;color:#fff}
 .hero::before{content:'☪';position:absolute;right:-15px;top:-25px;font-size:11rem;color:rgba(255,255,255,.045);pointer-events:none}
 .htitle{font-family:'Amiri',serif;font-size:clamp(1.4rem,4vw,2.1rem);color:var(--goldl);line-height:1.3}
 .hsub{font-size:.84rem;color:rgba(255,255,255,.8);margin-top:.2rem;margin-bottom:1.4rem}
 .harab{font-family:'Amiri',serif;font-size:1.1rem;color:rgba(201,162,39,.88);direction:rtl}
 
-/* ── YEAR SCROLLER ── */
+/* YEAR SCROLLER */
 .ybar{background:var(--white);border-radius:var(--r);padding:.85rem 1.25rem;box-shadow:var(--sh);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem}
 .ylabel{font-size:.78rem;font-weight:700;color:var(--tm);white-space:nowrap;display:flex;align-items:center;gap:.35rem}
 .yscroll-wrap{flex:1;overflow:hidden;position:relative}
@@ -78,16 +83,15 @@ main{max-width:1200px;margin:0 auto;padding:1.5rem}
 .btn-add-year{background:transparent;border:1.5px dashed var(--gold);color:var(--gold);padding:.35rem .85rem;border-radius:20px;font-size:.8rem;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s;white-space:nowrap;flex-shrink:0}
 .btn-add-year:hover{background:var(--gold);color:var(--emd)}
 
-/* ── SYNC BAR ── */
+/* SYNC BAR */
 .sbar{background:var(--white);border-radius:var(--rs);padding:.55rem 1rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:.65rem;box-shadow:0 2px 8px rgba(0,0,0,.06);font-size:.79rem;color:var(--tl)}
 .sdot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;animation:pulse 2s infinite}
-.sdot.ok{background:#22c55e;animation:none}
-.sdot.err{background:#ef4444;animation:none}
+.sdot.ok{background:#22c55e;animation:none}.sdot.err{background:#ef4444;animation:none}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 .sbtn{margin-left:auto;background:var(--cream);border:1px solid var(--creamd);color:var(--tm);padding:.28rem .75rem;border-radius:20px;font-size:.77rem;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s;display:flex;align-items:center;gap:.3rem}
 .sbtn:hover{background:var(--em);color:#fff;border-color:var(--em)}
 
-/* ── TABS ── */
+/* TABS */
 .tabs{display:flex;gap:.45rem;overflow-x:auto;padding-bottom:.25rem;margin-bottom:1.5rem;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tbtn{background:var(--white);border:none;padding:.55rem 1.1rem;border-radius:30px;font-family:'Poppins',sans-serif;font-size:.81rem;font-weight:500;color:var(--tm);cursor:pointer;white-space:nowrap;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;align-items:center;gap:.38rem}
@@ -95,23 +99,18 @@ main{max-width:1200px;margin:0 auto;padding:1.5rem}
 .tbtn:hover:not(.active){background:var(--creamd)}
 .sec{display:none}.sec.on{display:block}
 
-/* ── STATS ── */
+/* STATS */
 .sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:1rem;margin-bottom:1.5rem}
 .sc{background:var(--white);border-radius:var(--r);padding:1.2rem;box-shadow:var(--sh);border-top:3px solid var(--em);transition:transform .2s}
-.sc:hover{transform:translateY(-2px)}
-.sc.g{border-top-color:var(--gold)}
+.sc:hover{transform:translateY(-2px)}.sc.g{border-top-color:var(--gold)}
 .sic{font-size:1.75rem;margin-bottom:.45rem}
-.sn{font-size:1.95rem;font-weight:700;color:var(--em);line-height:1}
-.sc.g .sn{color:var(--gold)}
+.sn{font-size:1.95rem;font-weight:700;color:var(--em);line-height:1}.sc.g .sn{color:var(--gold)}
 .sl{font-size:.73rem;color:var(--tl);margin-top:.2rem}
-
-/* ── RT ── */
 .rtg{display:grid;grid-template-columns:repeat(auto-fill,minmax(138px,1fr));gap:.7rem;margin-top:.9rem}
 .rtc{background:var(--em);border-radius:var(--rs);padding:.9rem;color:#fff;text-align:center}
-.rtn{font-size:1.75rem;font-weight:700;color:var(--goldl)}
-.rtl{font-size:.72rem;opacity:.9}
+.rtn{font-size:1.75rem;font-weight:700;color:var(--goldl)}.rtl{font-size:.72rem;opacity:.9}
 
-/* ── TABLE CARD ── */
+/* TABLE CARD */
 .tc{background:var(--white);border-radius:var(--r);padding:1.4rem;box-shadow:var(--sh);margin-bottom:1.4rem}
 .th{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.65rem;margin-bottom:1.15rem}
 .tt{font-size:1.05rem;font-weight:600;color:var(--em);display:flex;align-items:center;gap:.45rem}
@@ -129,25 +128,19 @@ main{max-width:1200px;margin:0 auto;padding:1.5rem}
 .dt{width:100%;border-collapse:collapse;font-size:.82rem}
 .dt th{background:var(--cream);color:var(--em);font-weight:600;padding:.65rem .7rem;text-align:left;border-bottom:2px solid var(--creamd);white-space:nowrap}
 .dt td{padding:.55rem .7rem;border-bottom:1px solid var(--creamd);vertical-align:middle}
-.dt tr:hover td{background:var(--cream)}
-.dt .acts{display:flex;gap:.35rem}
+.dt tr:hover td{background:var(--cream)}.dt .acts{display:flex;gap:.35rem}
 .tw{overflow-x:auto}
 
-/* ── BADGE ── */
+/* BADGE */
 .badge{display:inline-block;padding:.18rem .55rem;border-radius:11px;font-size:.7rem;font-weight:600}
-.bs{background:#dcfce7;color:#166534}
-.bk{background:#fef9c3;color:#854d0e}
-.brt10{background:#dbeafe;color:#17c43d}
-.brt03{background:#e0e7ff;color:#3730a3}
-.brt04{background:#fce7f3;color:#9d174d}
-.brt02{background:#ffedd5;color:#9a3412}
-.brt03{background:#d1fae5;color:#065f46}
-.bgurutetap{background:#dbeafe;color:#1e40af}
-.bsesepuh{background:#ede9fe;color:#5b21b6}
-.bulamasetempat{background:#dcfce7;color:#166534}
+.bs{background:#dcfce7;color:#166534}.bk{background:#fef9c3;color:#854d0e}
+.brt01{background:#dbeafe;color:#1e40af}.brt02{background:#e0e7ff;color:#3730a3}
+.brt03{background:#fce7f3;color:#9d174d}.brt04{background:#ffedd5;color:#9a3412}
+.brt05{background:#d1fae5;color:#065f46}
+.bGuru{background:#dbeafe;color:#1e40af}.bSesepuh{background:#ede9fe;color:#5b21b6}
+.bUstadz{background:#dcfce7;color:#166534}
 
-
-/* ── FORM ── */
+/* FORM */
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
 @media(max-width:460px){.fr{grid-template-columns:1fr}}
 .fg{margin-bottom:.9rem}
@@ -162,7 +155,7 @@ select.fc{cursor:pointer}
 .paddbtn{background:var(--cream);border:1px dashed var(--em);color:var(--em);padding:.38rem .75rem;border-radius:6px;font-size:.78rem;cursor:pointer;font-family:'Poppins',sans-serif;margin-top:.2rem;transition:all .2s}
 .paddbtn:hover{background:var(--em);color:#fff}
 
-/* ── EXPORT PANEL ── */
+/* EXPORT PANEL */
 .exp-panel{background:linear-gradient(135deg,var(--emd),var(--em));border-radius:var(--r);padding:1.7rem;margin-bottom:1.4rem;color:#fff}
 .exp-title{font-size:1.05rem;font-weight:600;margin-bottom:.2rem;display:flex;align-items:center;gap:.45rem}
 .exp-sub{font-size:.8rem;opacity:.8;margin-bottom:1.3rem}
@@ -170,30 +163,32 @@ select.fc{cursor:pointer}
 .expbtn{background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.22);color:#fff;padding:.7rem .9rem;border-radius:var(--rs);font-family:'Poppins',sans-serif;font-size:.8rem;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.4rem}
 .expbtn:hover{background:rgba(255,255,255,.22);transform:translateY(-1px)}
 .expbtn.main{background:var(--gold);border-color:var(--gold);color:var(--emd);font-weight:700}
-.expbtn.main:hover{background:var(--goldl)}
 
-/* ── EMPTY ── */
+/* CONFIG PANEL */
+.cfg-info{background:var(--cream);border-radius:var(--rs);padding:.85rem 1rem;font-size:.78rem;color:var(--tl);line-height:1.9;margin-top:.9rem}
+.cfg-info code{background:rgba(13,110,79,.1);color:var(--em);padding:.1rem .35rem;border-radius:4px;font-size:.76rem}
+.cfg-step{display:flex;gap:.5rem;margin-bottom:.2rem}
+.cfg-step-num{background:var(--em);color:#fff;width:20px;height:20px;border-radius:50%;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.05rem}
+
+/* EMPTY */
 .empty{text-align:center;padding:2.5rem 1rem;color:var(--tl)}
 .empty i{font-size:2.8rem;opacity:.28;margin-bottom:.8rem;display:block}
 
-/* ── TOAST ── */
+/* TOAST */
 .tc-wrap{position:fixed;bottom:1.4rem;right:1.4rem;z-index:9000;display:flex;flex-direction:column;gap:.45rem}
 .toast{background:var(--emd);color:#fff;padding:.7rem 1.15rem;border-radius:var(--rs);font-size:.82rem;box-shadow:var(--shl);display:flex;align-items:center;gap:.55rem;animation:toastin .3s ease;max-width:300px}
 .toast.err{background:#dc2626}.toast.warn{background:#d97706}
 @keyframes toastin{from{transform:translateX(48px);opacity:0}to{transform:translateX(0);opacity:1}}
 
-/* ── LOCK ICON (admin-only button visual) ── */
-.admin-only-hint{display:flex;align-items:center;gap:.3rem;font-size:.7rem;color:var(--tl);margin-top:.5rem}
-.admin-only-hint i{color:var(--gold)}
+/* LOADING OVERLAY on save */
+.loading-row{text-align:center;padding:2rem;color:var(--tl);font-size:.83rem}
+.loading-row i{animation:spin 1s linear infinite}
 
 @media(max-width:640px){
-  main{padding:1rem}
-  .hero{padding:1.5rem}
-  .sg{grid-template-columns:repeat(2,1fr)}
-  .tc{padding:1rem}
+  main{padding:1rem}.hero{padding:1.5rem}
+  .sg{grid-template-columns:repeat(2,1fr)}.tc{padding:1rem}
   .dt th,.dt td{padding:.45rem .5rem;font-size:.76rem}
-  .expg{grid-template-columns:1fr 1fr}
-  .na{gap:.3rem}
+  .expg{grid-template-columns:1fr 1fr}.na{gap:.3rem}
   .bn{padding:.32rem .6rem;font-size:.74rem}
 }
 </style>
@@ -203,7 +198,7 @@ select.fc{cursor:pointer}
 <!-- LOADING -->
 <div id="ls">
   <img src="https://i.ibb.co.com/W4rmSh0f/white-mnf2.png" alt="Masjid" style="width:90px;height:90px;filter:drop-shadow(0 4px 12px rgba(201,162,39,.4))">
-  <div class="lt">Musholla Nurul Falah<br><small style="font-size:.65em;color:rgba(201,162,39,.75)">Sistem Manajemen Panitia Qurban</small></div>
+  <div class="lt">Musholla Nurul Falah<br><small style="font-size:.65em;color:rgba(201,162,39,.75)">Sistem Manajemen Qurban</small></div>
   <div class="spin"></div>
 </div>
 
@@ -222,36 +217,37 @@ select.fc{cursor:pointer}
   </div>
 </div>
 
-<!-- GITHUB CONFIG -->
-<div class="mo" id="mo-gh">
+<!-- CONFIG MODAL -->
+<div class="mo" id="mo-cfg">
   <div class="mb">
     <div style="text-align:center;margin-bottom:1.3rem">
       <img src="https://i.ibb.co.com/JwzP9XyJ/mnf-bulat.png" alt="Masjid" style="width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(13,110,79,.25))">
       <div class="mtitle" style="text-align:center">Musholla Nurul Falah</div>
-      <p class="msub">Konfigurasi GitHub sebagai database & deploy</p>
+      <p class="msub">Hubungkan ke Google Apps Script sebagai backend</p>
     </div>
-    <div class="fg"><label class="fl"><i class="fab fa-github"></i> GitHub Token (Personal Access Token)</label>
-      <input type="password" class="fc" id="cfg-token" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx">
-      <small style="color:var(--tl);font-size:.73rem;margin-top:.3rem;display:block">GitHub → Settings → Developer settings → Personal access tokens → Classic (centang <b>repo</b>)</small>
+    <div class="fg">
+      <label class="fl"><i class="fab fa-google" style="color:#4285f4"></i> URL Google Apps Script Web App</label>
+      <input type="text" class="fc" id="cfg-url" placeholder="https://script.google.com/macros/s/AKf.../exec">
+      <small style="color:var(--tl);font-size:.73rem;margin-top:.3rem;display:block">
+        Apps Script → Deploy → New Deployment → Web App → Execute as: Me → Who has access: Anyone
+      </small>
     </div>
-    <div class="fr">
-      <div class="fg"><label class="fl">Username GitHub</label><input type="text" class="fc" id="cfg-owner" placeholder="username"></div>
-      <div class="fg"><label class="fl">Nama Repository</label><input type="text" class="fc" id="cfg-repo" placeholder="qurban-nurul-falah"></div>
-    </div>
-    <div class="fg"><label class="fl">Password Admin Aplikasi</label><input type="password" class="fc" id="cfg-pw" placeholder="Buat password admin Anda"></div>
-    <button class="bp" style="width:100%;justify-content:center" onclick="saveConfig()"><i class="fas fa-save"></i> Simpan & Deploy Otomatis</button>
-    <div style="margin-top:.9rem;padding:.85rem;background:var(--cream);border-radius:8px;font-size:.74rem;color:var(--tl);line-height:1.8">
-      <strong style="color:var(--em)">📋 Panduan agar bisa dibuka di HP lain:</strong><br>
-      1️⃣ Buat repository GitHub baru (misal: <code>qurban-nurul-falah</code>)<br>
-      2️⃣ Upload file <b>index.html</b> ini ke repository<br>
-      3️⃣ Aktifkan <b>GitHub Pages</b> (Settings → Pages → Branch: main)<br>
-      4️⃣ Buka aplikasi lewat URL GitHub Pages, isi form ini & klik Simpan<br>
-      5️⃣ Config otomatis ter-embed ke file — semua HP bisa pakai URL yang sama 🎉
+    <button class="bp" style="width:100%;justify-content:center" onclick="saveConfig()">
+      <i class="fas fa-plug"></i> Sambungkan & Mulai
+    </button>
+    <div class="cfg-info">
+      <strong style="color:var(--em);font-size:.8rem">📋 Langkah Setup:</strong>
+      <div class="cfg-step"><div class="cfg-step-num">1</div><span>Buka <a href="https://script.google.com" target="_blank" style="color:var(--em)">script.google.com</a> → buat project baru</span></div>
+      <div class="cfg-step"><div class="cfg-step-num">2</div><span>Copy-paste seluruh kode <code>Code.gs</code> yang disertakan</span></div>
+      <div class="cfg-step"><div class="cfg-step-num">3</div><span>Isi <code>SPREADSHEET_ID</code> dengan ID Google Sheets Anda</span></div>
+      <div class="cfg-step"><div class="cfg-step-num">4</div><span>Deploy → New Deployment → Web App → Anyone → Copy URL</span></div>
+      <div class="cfg-step"><div class="cfg-step-num">5</div><span>Paste URL di atas & klik Sambungkan</span></div>
+      <div style="margin-top:.5rem;color:var(--em);font-weight:600;font-size:.75rem">🔐 Password admin diubah langsung di kode HTML (baris <code>ADMIN_PASSWORD</code>)</div>
     </div>
   </div>
 </div>
 
-<!-- TAMBAH TAHUN (admin only) -->
+<!-- TAMBAH TAHUN -->
 <div class="mo" id="mo-year" style="display:none">
   <div class="mb">
     <div class="mtitle">📅 Tambah Tahun Qurban</div>
@@ -262,7 +258,7 @@ select.fc{cursor:pointer}
       </div>
       <button class="bp" onclick="addYear()"><i class="fas fa-plus"></i> Tambah</button>
     </div>
-    <div id="year-modal-list" style="margin-top:.5rem"></div>
+    <div id="year-modal-list"></div>
     <div style="text-align:right;margin-top:1rem"><button class="bn" onclick="closeModal('mo-year')">Tutup</button></div>
   </div>
 </div>
@@ -311,34 +307,31 @@ select.fc{cursor:pointer}
       <span class="abadge" id="abadge"><i class="fas fa-shield-alt"></i> Admin</span>
       <span class="ybadge" id="ybadge-nav">1446 H</span>
       <button class="bn" onclick="toggleAdmin()"><i class="fas fa-lock" id="lock-ico"></i> <span id="adm-txt">Admin</span></button>
-      <button class="bn" id="btn-setting" onclick="openGhConfig()" title="Pengaturan GitHub" style="display:none"><i class="fas fa-cog"></i></button>
+      <button class="bn" id="btn-setting" onclick="openCfg()" title="Pengaturan" style="display:none"><i class="fas fa-cog"></i></button>
     </div>
   </div>
 </nav>
 
 <main>
-  <!-- HERO -->
   <div class="hero">
-    <div class="htitle" id="hero-title">PANITIA QURBAN 1446 H</div>
-    <div class="hsub">MUSHOLLA NURUL FALAH — SISTEM MANAJEMEN KEPANITIAN</div>
-    <div class="harab"></div>
+    <div class="htitle" id="hero-title">PANITIA QURBAN</div>
+    <div class="hsub">MUSHOLLA NURUL FALAH - SISTEM MANAJEMEN QURBAN</div>
+    
   </div>
 
   <!-- YEAR SCROLLER -->
   <div class="ybar">
     <span class="ylabel"><i class="fas fa-calendar-alt" style="color:var(--em)"></i> Tahun:</span>
-    <button class="yscroll-btn" onclick="scrollYear(-1)" title="Sebelumnya"><i class="fas fa-chevron-left"></i></button>
-    <div class="yscroll-wrap">
-      <div class="yscroll" id="yscroll"></div>
-    </div>
-    <button class="yscroll-btn" onclick="scrollYear(1)" title="Berikutnya"><i class="fas fa-chevron-right"></i></button>
+    <button class="yscroll-btn" onclick="scrollYear(-1)"><i class="fas fa-chevron-left"></i></button>
+    <div class="yscroll-wrap"><div class="yscroll" id="yscroll"></div></div>
+    <button class="yscroll-btn" onclick="scrollYear(1)"><i class="fas fa-chevron-right"></i></button>
     <button class="btn-add-year" id="btn-add-year" onclick="requireAdmin(openYearModal)" style="display:none"><i class="fas fa-plus"></i> Tahun Baru</button>
   </div>
 
   <!-- SYNC BAR -->
   <div class="sbar">
     <span class="sdot" id="sdot"></span>
-    <span id="stxt">Menghubungkan ke GitHub...</span>
+    <span id="stxt">Menghubungkan ke Google Sheets...</span>
     <button class="sbtn" onclick="syncNow()"><i class="fas fa-sync-alt"></i> Sinkronisasi</button>
   </div>
 
@@ -360,7 +353,7 @@ select.fc{cursor:pointer}
       <div class="sc"><div class="sic">👥</div><div class="sn" id="sp">0</div><div class="sl">Panitia</div></div>
       <div class="sc g"><div class="sic">🤲</div><div class="sn" id="spq">0</div><div class="sl">Total Pequrban</div></div>
       <div class="sc"><div class="sic">🏠</div><div class="sn" id="sm">0</div><div class="sl">Mustahik</div></div>
-      <div class="sc g"><div class="sic">📚</div><div class="sn" id="sg">0</div><div class="sl">Guru & Sepuh</div></div>
+      <div class="sc g"><div class="sic">📚</div><div class="sn" id="sg2">0</div><div class="sl">Guru & Sepuh</div></div>
     </div>
     <div class="tc">
       <div class="tt" style="margin-bottom:.9rem"><i class="fas fa-chart-bar"></i> Mustahik Per RT</div>
@@ -414,7 +407,7 @@ select.fc{cursor:pointer}
         <div style="display:flex;gap:.45rem;flex-wrap:wrap;align-items:center">
           <select class="fc" style="max-width:115px;padding:.38rem .65rem" id="frt" onchange="renderM()">
             <option value="">Semua RT</option>
-            <option>RT 10/04</option><option>RT 03/04</option><option>RT 04/04</option><option>RT 02/03</option><option>RT 03/03</option>
+            <option>RT 02/03</option><option>RT 03/03</option><option>RT 03/04</option><option>RT 04/04</option><option>RT 10/04</option>
           </select>
           <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." id="ms" oninput="renderM()"></div>
           <button class="bp" id="btn-add-mustahik" onclick="requireAdmin(()=>openForm('mustahik'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
@@ -448,7 +441,7 @@ select.fc{cursor:pointer}
   <div class="sec" id="sec-export">
     <div class="exp-panel">
       <div class="exp-title"><i class="fas fa-file-excel"></i> Export Data ke Excel (.xlsx)</div>
-      <div class="exp-sub">Download data qurban dalam format Excel profesional — per kategori atau semua sekaligus</div>
+      <div class="exp-sub">Download data qurban dalam format Excel profesional</div>
       <div class="expg">
         <button class="expbtn main" onclick="openModal('mo-export')"><i class="fas fa-sliders-h"></i> Export Pilihan...</button>
         <button class="expbtn" onclick="quickExport('hewan')"><i class="fas fa-horse"></i> Hewan Qurban</button>
@@ -461,13 +454,13 @@ select.fc{cursor:pointer}
     <div class="tc">
       <div class="tt" style="margin-bottom:.9rem"><i class="fas fa-info-circle"></i> Keterangan Export</div>
       <div style="font-size:.83rem;color:var(--tm);line-height:1.95">
-        <p>🟢 <b>Export Pilihan</b> — Pilih tahun & kategori data, diekspor ke satu file Excel</p>
-        <p>🟢 <b>Tombol Cepat</b> — Download langsung data tahun aktif (<b id="exp-yr-info" style="color:var(--em)"></b>) per kategori</p>
-        <p>🟢 <b>Hewan Qurban</b> — Menghasilkan 2 sheet: Daftar Hewan &amp; Daftar Pequrban (terpisah)</p>
+        <p>🟢 <b>Export Pilihan</b> — Pilih tahun & kategori, diekspor ke satu file Excel</p>
+        <p>🟢 <b>Hewan Qurban</b> — 2 sheet: Daftar Hewan &amp; Daftar Pequrban</p>
         <p>🟢 <b>Mustahik</b> — Sheet utama + sheet per RT</p>
-        <p>🟢 <b>Rekap Dashboard</b> — Ringkasan lengkap semua statistik data tahun aktif</p>
+        <p>🟢 <b>Rekap Dashboard</b> — Ringkasan lengkap semua statistik</p>
         <div style="margin-top:.7rem;padding:.8rem;background:var(--cream);border-radius:8px;font-size:.78rem;color:var(--tl)">
-          💡 Data tersimpan per tahun hijriah secara terpisah — aplikasi bisa digunakan setiap tahun tanpa kehilangan data lama.
+          💡 Data tersimpan di Google Sheets per tahun hijriah secara terpisah.
+          Aktif: <b id="exp-yr-info" style="color:var(--em)"></b>
         </div>
       </div>
     </div>
@@ -475,8 +468,8 @@ select.fc{cursor:pointer}
 </main>
 
 <footer style="text-align:center;padding:1.8rem 1rem;color:var(--tl);font-size:.76rem">
-  <p>Musholla <span style="color:var(--em);font-weight:600">Nurul Falah</span> — Sistem Manajemen Panitia Qurban</p>
-  <p style="margin-top:.2rem">Data tersimpan di GitHub • Aktif: <span id="ft-year" style="color:var(--em);font-weight:600">1446 H</span></p>
+  <p>Musholla <span style="color:var(--em);font-weight:600">Nurul Falah</span> — Sistem Manajemen Qurban</p>
+  <p style="margin-top:.2rem">Data tersimpan di Google Sheets • Aktif: <span id="ft-year" style="color:var(--em);font-weight:600">1446 H</span></p>
 </footer>
 <div class="tc-wrap" id="tc-wrap"></div>
 
@@ -484,90 +477,162 @@ select.fc{cursor:pointer}
 /* ============================================================
    STATE
 ============================================================ */
-let allData = {};         // allData[year] = { hewan, panitia, mustahik, guru }
-let allShas = {};         // allShas[year][type] = sha
+let allData    = {};   // allData[year] = { hewan:[], panitia:[], mustahik:[], guru:[] }
 let activeYear = '1446';
-let isAdmin = false;
-let cfg = {};
-const RT = ['RT 10/04','RT 03/04','RT 04/04','RT 02/03','RT 03/03'];
-const emptyDb = () => ({hewan:[],panitia:[],mustahik:[],guru:[]});
-const db = () => allData[activeYear] || emptyDb();
+let isAdmin    = false;
+let apiUrl     = '';
+const RT       = ['RT 02/03','RT 03/03','RT 03/04','RT 04/04','RT 10/04'];
+const emptyDb  = () => ({hewan:[],panitia:[],mustahik:[],guru:[]});
+const db       = () => allData[activeYear] || emptyDb();
 
 /* ============================================================
    INIT
 ============================================================ */
 window.onload = async () => {
-  await delay(1350);
+  await delay(1200);
   hide('ls');
 
-  // Prioritas 1: config ter-embed di HTML (untuk multi-HP via GitHub Pages)
-  if (window.__QCFG__ && window.__QCFG__.token) {
-    cfg = window.__QCFG__;
-    localStorage.setItem('qcfg', JSON.stringify(cfg));
-    closeModal('mo-gh');
-    await loadAll();
-  }
-  // Prioritas 2: config dari localStorage browser ini
-  else {
-    const saved = localStorage.getItem('qcfg');
-    if (saved) {
-      cfg = JSON.parse(saved);
-      closeModal('mo-gh');
-      await loadAll();
-    } else {
-      setSyncStatus('err');
-    }
+  // Coba ambil API URL dari konstanta HTML atau localStorage
+  const savedUrl = localStorage.getItem('gasUrl');
+  if (typeof API_URL !== 'undefined' && API_URL && API_URL !== 'GANTI_DENGAN_URL_APPS_SCRIPT_WEB_APP') {
+    apiUrl = API_URL;
+    localStorage.setItem('gasUrl', apiUrl);
+  } else if (savedUrl) {
+    apiUrl = savedUrl;
   }
 
-  const cy = JSON.parse(localStorage.getItem('qyears') || '["1446"]');
-  cy.forEach(y => { if (!allData[y]) allData[y] = emptyDb(); });
-  if (!allData[activeYear]) allData[activeYear] = emptyDb();
+  if (apiUrl) {
+    closeModal('mo-cfg');
+    await loadAll();
+  } else {
+    setSyncStatus('err', 'URL Apps Script belum dikonfigurasi');
+    openModal('mo-cfg');
+  }
+
   renderYears(); updateTitles(); renderAll();
 };
 
 const delay = ms => new Promise(r => setTimeout(r, ms));
-function hide(id) { const el=document.getElementById(id); if(el){ el.style.opacity='0'; setTimeout(()=>el.style.display='none',500); } }
-function openModal(id) { document.getElementById(id).style.display='flex'; }
-function closeModal(id) { document.getElementById(id).style.display='none'; }
+function hide(id){const el=document.getElementById(id);if(el){el.style.opacity='0';setTimeout(()=>el.style.display='none',500);}}
+function openModal(id){document.getElementById(id).style.display='flex';}
+function closeModal(id){document.getElementById(id).style.display='none';}
+
+/* ============================================================
+   CONFIG
+============================================================ */
+function openCfg(){
+  document.getElementById('cfg-url').value = apiUrl || '';
+  openModal('mo-cfg');
+}
+
+async function saveConfig(){
+  const url = document.getElementById('cfg-url').value.trim();
+  if(!url){toast('URL tidak boleh kosong!','err');return;}
+  apiUrl = url;
+  localStorage.setItem('gasUrl', url);
+  closeModal('mo-cfg');
+  toast('Konfigurasi disimpan!');
+  await loadAll();
+}
+
+/* ============================================================
+   GOOGLE APPS SCRIPT API
+============================================================ */
+// Semua request via GET untuk menghindari CORS
+// Data kompleks di-encode sebagai JSON string di param "d"
+async function gas(params) {
+  if (!apiUrl) throw new Error('URL Apps Script belum dikonfigurasi');
+  // Pisahkan param "d" (data kompleks) dari param lain
+  const p = {...params};
+  if (p.d && typeof p.d === 'object') {
+    p.d = encodeURIComponent(JSON.stringify(p.d));
+  }
+  const url = apiUrl + '?' + new URLSearchParams(p);
+  const r = await fetch(url, {redirect: 'follow'});
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const data = await r.json();
+  if (!data.ok) throw new Error(data.msg || 'Error dari server');
+  return data;
+}
+// Alias read-only
+const gasCall = gas;
+
+/* ============================================================
+   LOAD DATA
+============================================================ */
+async function loadAll(){
+  setSyncStatus('loading');
+  try {
+    const res = await gasCall({action:'getYears'});
+    const years = res.years || ['1446'];
+    years.forEach(y=>{ if(!allData[y]) allData[y]=emptyDb(); });
+    saveYearsCache(years);
+    await loadYearData(activeYear);
+    setSyncStatus('ok');
+    renderYears(); renderAll();
+  } catch(e){
+    setSyncStatus('err', e.message);
+    toast('Gagal memuat: '+e.message,'err');
+  }
+}
+
+async function loadYearData(yr){
+  if(!allData[yr]) allData[yr]=emptyDb();
+  for(const type of ['hewan','panitia','mustahik','guru']){
+    try{
+      const res = await gasCall({action:'getData', tahun:yr, type});
+      allData[yr][type] = res.rows || [];
+    } catch(e){ allData[yr][type]=[]; }
+  }
+}
+
+async function syncNow(){
+  if(!apiUrl){toast('Konfigurasi URL Apps Script dahulu!','warn');return;}
+  setSyncStatus('loading');
+  try{
+    await loadYearData(activeYear);
+    setSyncStatus('ok'); renderAll();
+    toast('Sinkronisasi berhasil ✓');
+  } catch(e){ setSyncStatus('err',e.message); toast('Sinkronisasi gagal','err'); }
+}
+
+function setSyncStatus(s, msg){
+  const d=document.getElementById('sdot'), t=document.getElementById('stxt');
+  d.className='sdot'+(s==='ok'?' ok':s==='err'?' err':'');
+  t.textContent = s==='ok' ? 'Tersinkron dengan Google Sheets'
+    : s==='err' ? (msg||'Gagal terhubung — cek konfigurasi')
+    : 'Menyinkronkan data...';
+}
 
 /* ============================================================
    YEAR
 ============================================================ */
-function getYears() { const ys=Object.keys(allData); return ys.length?ys.sort():['1446']; }
-function saveYearsCache() { localStorage.setItem('qyears', JSON.stringify(getYears())); }
+function getYears(){ return Object.keys(allData).sort(); }
+function saveYearsCache(years){ localStorage.setItem('qyears', JSON.stringify(years)); }
 
-function renderYears() {
+function renderYears(){
   const years = getYears();
   const el = document.getElementById('yscroll');
-  el.innerHTML = years.map(y =>
-    `<button class="ychip ${y===activeYear?'active':''}" onclick="switchYear('${y}')">${y} H</button>`
-  ).join('');
-  document.getElementById('ybadge-nav').textContent = activeYear + ' H';
-  document.getElementById('ft-year').textContent = activeYear + ' H';
-  const expInfo = document.getElementById('exp-yr-info');
-  if (expInfo) expInfo.textContent = activeYear + ' H';
-  // Scroll active chip into view
-  setTimeout(() => {
-    const active = el.querySelector('.ychip.active');
-    if (active) active.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
-  }, 50);
+  el.innerHTML = years.length
+    ? years.map(y=>`<button class="ychip ${y===activeYear?'active':''}" onclick="switchYear('${y}')">${y} H</button>`).join('')
+    : `<button class="ychip active">${activeYear} H</button>`;
+  document.getElementById('ybadge-nav').textContent = activeYear+' H';
+  document.getElementById('ft-year').textContent    = activeYear+' H';
+  const ei=document.getElementById('exp-yr-info'); if(ei) ei.textContent=activeYear+' H';
+  setTimeout(()=>{ const a=el.querySelector('.ychip.active'); if(a) a.scrollIntoView({inline:'center',behavior:'smooth'}); },50);
 }
 
-function scrollYear(dir) {
-  const el = document.getElementById('yscroll');
-  el.scrollBy({left: dir * 120, behavior:'smooth'});
+function scrollYear(dir){ document.getElementById('yscroll').scrollBy({left:dir*120,behavior:'smooth'}); }
+
+function updateTitles(){
+  document.getElementById('hero-title').textContent=`PANITIA QURBAN ${activeYear} H`;
+  const ei=document.getElementById('exp-yr-info'); if(ei) ei.textContent=activeYear+' H';
 }
 
-function updateTitles() {
-  document.getElementById('hero-title').textContent = `PANITIA QURBAN ${activeYear} H`;
-  const expInfo = document.getElementById('exp-yr-info');
-  if (expInfo) expInfo.textContent = activeYear + ' H';
-}
-
-async function switchYear(y) {
-  activeYear = y;
+async function switchYear(y){
+  activeYear=y;
   renderYears(); updateTitles();
-  if (!allData[y]?.hewan?.length && !allData[y]?.panitia?.length) {
+  if(!allData[y] || !allData[y].hewan.length){
     setSyncStatus('loading');
     await loadYearData(y);
     setSyncStatus('ok');
@@ -575,178 +640,39 @@ async function switchYear(y) {
   renderAll();
 }
 
-function openYearModal() {
+function openYearModal(){
   openModal('mo-year');
-  document.getElementById('new-year').value = '';
-  renderYearModalList();
-}
-function renderYearModalList() {
-  const years = getYears();
-  document.getElementById('year-modal-list').innerHTML =
+  document.getElementById('new-year').value='';
+  const years=getYears();
+  document.getElementById('year-modal-list').innerHTML=
     `<div style="font-size:.78rem;font-weight:600;color:var(--tm);margin-bottom:.4rem">Tahun Tersedia:</div>
-     <div style="display:flex;flex-wrap:wrap;gap:.4rem">
-       ${years.map(y=>`<span style="padding:.3rem .8rem;background:${y===activeYear?'var(--em)':'var(--creamd)'};color:${y===activeYear?'#fff':'var(--tm)'};border-radius:20px;font-size:.79rem;font-weight:${y===activeYear?'600':'400'}">${y} H${y===activeYear?' ✓':''}</span>`).join('')}
-     </div>`;
+     <div style="display:flex;flex-wrap:wrap;gap:.4rem">${years.map(y=>`<span style="padding:.3rem .8rem;background:${y===activeYear?'var(--em)':'var(--creamd)'};color:${y===activeYear?'#fff':'var(--tm)'};border-radius:20px;font-size:.79rem">${y} H${y===activeYear?' ✓':''}</span>`).join('')}</div>`;
 }
 
-async function addYear() {
-  const val = document.getElementById('new-year').value.trim();
-  if (!val || isNaN(val) || +val < 1440 || +val > 1520) { toast('Masukkan tahun hijriah valid (1440–1520)!','err'); return; }
-  if (allData[val]) { toast('Tahun '+val+' H sudah ada!','warn'); return; }
-  allData[val] = emptyDb();
-  saveYearsCache();
-  if (cfg.token) {
-    for (const t of ['hewan','panitia','mustahik','guru']) await saveFile(val,t,[]);
-    await updateIndex();
-  }
-  activeYear = val;
-  closeModal('mo-year');
-  renderYears(); updateTitles(); renderAll();
-  toast('Tahun '+val+' H berhasil ditambahkan! 🎉');
-}
-
-/* ============================================================
-   GITHUB CONFIG
-============================================================ */
-async function saveConfig() {
-  const token=V('cfg-token'),owner=V('cfg-owner'),repo=V('cfg-repo'),pw=V('cfg-pw');
-  if (!token||!owner||!repo||!pw) { toast('Semua field harus diisi!','err'); return; }
-  cfg={token,owner,repo,adminpw:pw};
-
-  // Simpan ke localStorage (lokal)
-  localStorage.setItem('qcfg', JSON.stringify(cfg));
-
-  // Otomatis update file HTML di GitHub dengan config ter-embed
-  // agar saat dibuka di HP lain tetap terhubung
-  closeModal('mo-gh');
-  toast('Konfigurasi disimpan! Memperbarui file deploy...','warn');
-  await embedConfigToGithub(token, owner, repo, pw);
-  await loadAll();
-}
-
-async function embedConfigToGithub(token, owner, repo, pw) {
-  try {
-    // Ambil file HTML ini dari GitHub
-    const fileRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/index.html`,
-      {headers:{Authorization:`token ${token}`,Accept:'application/vnd.github.v3+json'}});
-    if (!fileRes.ok) { toast('File index.html belum ada di repo, upload manual dulu.','warn'); return; }
-    const fileData = await fileRes.json();
-    const currentContent = decodeURIComponent(escape(atob(fileData.content)));
-    const sha = fileData.sha;
-
-    // Inject config ke dalam HTML
-    const newContent = injectConfig(currentContent, token, owner, repo, pw);
-
-    // Push kembali ke GitHub
-    await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/index.html`, {
-      method:'PUT',
-      headers:{Authorization:`token ${token}`,'Content-Type':'application/json'},
-      body:JSON.stringify({
-        message:'Auto-embed config for cross-device access',
-        content: btoa(unescape(encodeURIComponent(newContent))),
-        sha
-      })
-    });
-    toast('✅ Config berhasil di-embed! Semua HP bisa akses data.','ok');
-  } catch(e) {
-    console.warn('Auto-embed failed:', e.message);
-    toast('Config lokal tersimpan. Upload index.html manual ke GitHub untuk akses multi-HP.','warn');
-  }
-}
-
-function injectConfig(html, token, owner, repo, pw) {
-  const marker = '/* __EMBEDDED_CONFIG__ */';
-  const injection = `/* __EMBEDDED_CONFIG__ */\nwindow.__QCFG__={token:'${token}',owner:'${owner}',repo:'${repo}',adminpw:'${pw}'};`;
-  if (html.includes(marker)) {
-    return html.replace(/\/\* __EMBEDDED_CONFIG__ \*\/[\s\S]*?;/, injection);
-  }
-  return html.replace('<script>', `<script>\n${injection}\n`);
-}
-
-function openGhConfig() {
-  if(cfg.token){S('cfg-token',cfg.token);S('cfg-owner',cfg.owner);S('cfg-repo',cfg.repo);S('cfg-pw',cfg.adminpw||'');}
-  openModal('mo-gh');
-}
-const V = id => document.getElementById(id)?.value?.trim() || '';
-const S = (id,v) => { const el=document.getElementById(id); if(el) el.value=v||''; };
-
-/* ============================================================
-   GITHUB API
-============================================================ */
-async function ghGet(path) {
-  if (!cfg.token) return null;
-  const r = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`,
-    {headers:{Authorization:`token ${cfg.token}`,Accept:'application/vnd.github.v3+json'}});
-  if (r.status===404) return null;
-  if (!r.ok) throw new Error(await r.text());
-  return r.json();
-}
-async function ghPut(path, content, sha) {
-  if (!cfg.token) return null;
-  const r = await fetch(`https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`,{
-    method:'PUT',headers:{Authorization:`token ${cfg.token}`,'Content-Type':'application/json'},
-    body:JSON.stringify({message:`Update ${path}`,content:btoa(unescape(encodeURIComponent(JSON.stringify(content,null,2)))),...(sha&&{sha})})
-  });
-  if (!r.ok) throw new Error(await r.text());
-  return (await r.json()).content.sha;
-}
-
-async function loadAll() {
+async function addYear(){
+  const val=document.getElementById('new-year').value.trim();
+  if(!val||isNaN(val)||+val<1440||+val>1520){toast('Masukkan tahun hijriah valid (1440–1520)!','err');return;}
+  if(allData[val]){toast('Tahun '+val+' H sudah ada!','warn');return;}
   setSyncStatus('loading');
-  try {
-    const idx = await ghGet('index.json');
-    let years = ['1446'];
-    if (idx) years = JSON.parse(decodeURIComponent(escape(atob(idx.content))));
-    years.forEach(y=>{ if(!allData[y]) allData[y]=emptyDb(); });
-    saveYearsCache();
-    await loadYearData(activeYear);
-    setSyncStatus('ok'); renderYears(); renderAll();
-  } catch(e) { setSyncStatus('err'); toast('Gagal memuat data: '+e.message,'err'); }
-}
-async function loadYearData(yr) {
-  if (!allShas[yr]) allShas[yr]={};
-  for (const t of ['hewan','panitia','mustahik','guru']) {
-    try {
-      const d = await ghGet(`data/${yr}/${t}.json`);
-      if(d){allShas[yr][t]=d.sha;allData[yr][t]=JSON.parse(decodeURIComponent(escape(atob(d.content))));}
-      else allData[yr][t]=[];
-    } catch(e){allData[yr][t]=[];}
-  }
-}
-async function saveFile(yr,type,data) {
-  try {
-    const sha=allShas[yr]?.[type];
-    const ns=await ghPut(`data/${yr}/${type}.json`,data,sha);
-    if(!allShas[yr]) allShas[yr]={};
-    allShas[yr][type]=ns; return true;
-  } catch(e){toast('Gagal menyimpan: '+e.message,'err');return false;}
-}
-async function updateIndex() {
-  try{const i=await ghGet('index.json');await ghPut('index.json',getYears(),i?.sha);}catch(e){}
-}
-async function syncNow() {
-  if(!cfg.token){toast('Konfigurasi GitHub dahulu!','warn');return;}
-  setSyncStatus('loading');
-  try{await loadYearData(activeYear);setSyncStatus('ok');renderAll();toast('Sinkronisasi berhasil ✓');}
-  catch(e){setSyncStatus('err');toast('Sinkronisasi gagal','err');}
-}
-function setSyncStatus(s) {
-  const d=document.getElementById('sdot'),t=document.getElementById('stxt');
-  d.className='sdot'+(s==='ok'?' ok':s==='err'?' err':'');
-  t.textContent=s==='ok'?'Tersinkron dengan GitHub':s==='err'?'Belum terhubung — konfigurasi GitHub dahulu':'Menyinkronkan...';
+  try{
+    await gas({action:'addYear', tahun:val});
+    allData[val]=emptyDb();
+    saveYearsCache(Object.keys(allData).sort());
+    activeYear=val;
+    closeModal('mo-year');
+    renderYears(); updateTitles(); renderAll();
+    setSyncStatus('ok');
+    toast('Tahun '+val+' H berhasil ditambahkan! 🎉');
+  } catch(e){ setSyncStatus('err',e.message); toast('Gagal: '+e.message,'err'); }
 }
 
 /* ============================================================
    ADMIN
 ============================================================ */
-function toggleAdmin() {
-  if (isAdmin) logoutAdmin();
-  else { openModal('mo-admin'); setTimeout(()=>document.getElementById('adm-pw').focus(),120); }
-}
-function doLogin() {
-  const pw = document.getElementById('adm-pw').value;
-  if (!cfg.adminpw) { toast('Konfigurasi belum diatur!','err'); return; }
-  if (pw===cfg.adminpw) {
+function toggleAdmin(){ isAdmin ? logoutAdmin() : (() => {openModal('mo-admin');setTimeout(()=>document.getElementById('adm-pw').focus(),120);})(); }
+function doLogin(){
+  const pw=document.getElementById('adm-pw').value;
+  if(pw===ADMIN_PASSWORD){
     isAdmin=true;
     document.getElementById('abadge').classList.add('on');
     document.getElementById('adm-txt').textContent='Keluar';
@@ -756,7 +682,7 @@ function doLogin() {
     toast('Login admin berhasil! 🔓');
   } else toast('Password salah!','err');
 }
-function logoutAdmin() {
+function logoutAdmin(){
   isAdmin=false;
   document.getElementById('abadge').classList.remove('on');
   document.getElementById('adm-txt').textContent='Admin';
@@ -764,56 +690,46 @@ function logoutAdmin() {
   setAdminUI(false);
   toast('Keluar dari mode admin');
 }
-function setAdminUI(on) {
-  const ids=['h-act','p-act','m-act','g-act'];
-  ids.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=on?'':'none';});
-  const addBtns=['btn-add-hewan','btn-add-panitia','btn-add-mustahik','btn-add-guru','btn-add-year'];
-  addBtns.forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=on?'':'none';});
-  const setting=document.getElementById('btn-setting');if(setting)setting.style.display=on?'':'none';
+function setAdminUI(on){
+  ['h-act','p-act','m-act','g-act'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=on?'':'none';});
+  ['btn-add-hewan','btn-add-panitia','btn-add-mustahik','btn-add-guru','btn-add-year'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=on?'':'none';});
+  const s=document.getElementById('btn-setting'); if(s) s.style.display=on?'':'none';
   renderAll();
 }
-function requireAdmin(fn, btn) {
-  if (!cfg.token) { toast('Konfigurasi GitHub dahulu!','warn'); return; }
-  if (isAdmin) { if(typeof fn==='function') fn(); }
-  else { openModal('mo-admin'); setTimeout(()=>document.getElementById('adm-pw').focus(),120); }
+function requireAdmin(fn){
+  if(!apiUrl){toast('Konfigurasi URL Apps Script dahulu!','warn');return;}
+  if(isAdmin){ if(typeof fn==='function') fn(); }
+  else{ openModal('mo-admin'); setTimeout(()=>document.getElementById('adm-pw').focus(),120); }
 }
 
 /* ============================================================
    TABS
 ============================================================ */
-function showTab(tab, btn) {
-  if (tab==='export' && !isAdmin) {
-    requireAdmin(()=>{ _showTab(tab,btn); });
-    return;
-  }
+function showTab(tab, btn){
+  if(tab==='export'&&!isAdmin){ requireAdmin(()=>{ _showTab(tab,btn); }); return; }
   _showTab(tab, btn);
 }
-function _showTab(tab, btn) {
+function _showTab(tab, btn){
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
   document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('active'));
   document.getElementById('sec-'+tab).classList.add('on');
   if(btn) btn.classList.add('active');
-  else {
-    // find and activate the right tab button
-    document.querySelectorAll('.tbtn').forEach(b=>{
-      if(b.getAttribute('onclick')?.includes("'"+tab+"'")) b.classList.add('active');
-    });
-  }
+  else document.querySelectorAll('.tbtn').forEach(b=>{ if(b.getAttribute('onclick')?.includes("'"+tab+"'")) b.classList.add('active'); });
 }
 
 /* ============================================================
    RENDER
 ============================================================ */
-function renderAll() { renderDash(); renderH(); renderP(); renderM(); renderG(); }
+function renderAll(){ renderDash(); renderH(); renderP(); renderM(); renderG(); }
 
-function renderDash() {
+function renderDash(){
   const d=db();
   const allPq=[];
-  d.hewan.forEach(h=>{const ps=Array.isArray(h.pq)?h.pq:[h.pq||''];ps.filter(p=>p&&p.trim()).forEach(p=>allPq.push({nama:p.trim(),jenis:h.jenis,no:h.no}));});
+  d.hewan.forEach(h=>{ const ps=parsePq(h.pequrban); ps.forEach(p=>allPq.push({nama:p,jenis:h.jenis,no:h.no})); });
   set('ss',d.hewan.filter(h=>h.jenis==='Sapi').length);
   set('sk',d.hewan.filter(h=>h.jenis==='Kambing').length);
   set('sp',d.panitia.length); set('spq',allPq.length);
-  set('sm',d.mustahik.length); set('sg',d.guru.length);
+  set('sm',d.mustahik.length); set('sg2',d.guru.length);
   document.getElementById('rtg').innerHTML=RT.map(rt=>{
     const c=d.mustahik.filter(m=>m.rt===rt).length;
     return `<div class="rtc"><div class="rtn">${c}</div><div class="rtl">Mustahik ${rt}</div></div>`;
@@ -823,24 +739,32 @@ function renderDash() {
     :`<tr><td colspan="4" style="text-align:center;color:var(--tl);padding:2rem">Belum ada data pequrban</td></tr>`;
 }
 
-function renderH() {
-  const d=db(),tb=document.getElementById('htb');
+function parsePq(val){
+  if(!val) return [];
+  if(Array.isArray(val)) return val.filter(p=>p&&String(p).trim());
+  return String(val).split('|').map(p=>p.trim()).filter(Boolean);
+}
+
+function renderH(){
+  const d=db(), tb=document.getElementById('htb');
   if(!d.hewan.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty"><i class="fas fa-horse"></i><p>Belum ada data hewan</p></div></td></tr>`;return;}
   tb.innerHTML=d.hewan.map((h,i)=>{
-    const ps=Array.isArray(h.pq)?h.pq.filter(p=>p.trim()).join(', '):(h.pq||'');
-    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('hewan',${i}))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('hewan',${i}))"><i class="fas fa-trash"></i></button></div></td>`:'';
+    const ps=parsePq(h.pequrban).join(', ');
+    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('hewan','${h.id || i}'))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('hewan','${h.id || i}'))"><i class="fas fa-trash"></i></button></div></td>`:'';
     return `<tr><td>${i+1}</td><td><strong>${h.no||'-'}</strong></td><td><span class="badge ${h.jenis==='Sapi'?'bs':'bk'}">${h.jenis}</span></td><td style="max-width:200px;word-break:break-word">${ps||'-'}</td><td>${h.ket||'-'}</td>${ac}</tr>`;
   }).join('');
 }
-function renderP() {
-  const d=db(),tb=document.getElementById('ptb');
+
+function renderP(){
+  const d=db(), tb=document.getElementById('ptb');
   if(!d.panitia.length){tb.innerHTML=`<tr><td colspan="5"><div class="empty"><i class="fas fa-users"></i><p>Belum ada data panitia</p></div></td></tr>`;return;}
   tb.innerHTML=d.panitia.map((p,i)=>{
-    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('panitia',${i}))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('panitia',${i}))"><i class="fas fa-trash"></i></button></div></td>`:'';
+    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('panitia','${p.id||i}'))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('panitia','${p.id||i}'))"><i class="fas fa-trash"></i></button></div></td>`:'';
     return `<tr><td>${i+1}</td><td><strong>${p.nama}</strong></td><td>${p.jabatan||'-'}</td><td>${p.hp||'-'}</td>${ac}</tr>`;
   }).join('');
 }
-function renderM() {
+
+function renderM(){
   const d=db();
   const fRT=document.getElementById('frt').value;
   const fS=document.getElementById('ms').value.toLowerCase();
@@ -850,94 +774,99 @@ function renderM() {
   const tb=document.getElementById('mtb');
   if(!data.length){tb.innerHTML=`<tr><td colspan="5"><div class="empty"><i class="fas fa-hands-helping"></i><p>Belum ada data mustahik</p></div></td></tr>`;return;}
   tb.innerHTML=data.map((m,i)=>{
-    const ri=db().mustahik.indexOf(m);
-    const rk='brt'+(m.rt||'RT 10/04').replace(/\s/g,'').replace('RT','').padStart(2,'0');
-    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('mustahik',${ri}))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('mustahik',${ri}))"><i class="fas fa-trash"></i></button></div></td>`:'';
+    const rk='brt'+(m.rt||'RT 01').replace(/\s/g,'').replace('RT','').padStart(2,'0');
+    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('mustahik','${m.id||i}'))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('mustahik','${m.id||i}'))"><i class="fas fa-trash"></i></button></div></td>`:'';
     return `<tr><td>${i+1}</td><td><strong>${m.nama}</strong></td><td><span class="badge ${rk}">${m.rt||'-'}</span></td><td>${m.ket||'-'}</td>${ac}</tr>`;
   }).join('');
 }
-function renderG() {
-  const d=db(),tb=document.getElementById('gtb');
+
+function renderG(){
+  const d=db(), tb=document.getElementById('gtb');
   if(!d.guru.length){tb.innerHTML=`<tr><td colspan="5"><div class="empty"><i class="fas fa-user-graduate"></i><p>Belum ada data guru & sesepuh</p></div></td></tr>`;return;}
   tb.innerHTML=d.guru.map((g,i)=>{
-    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('guru',${i}))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('guru',${i}))"><i class="fas fa-trash"></i></button></div></td>`:'';
-    const bk='b'+(g.kat||'guru').toLowerCase();
+    const bk='b'+(g.kat||'Guru');
+    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('guru','${g.id||i}'))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('guru','${g.id||i}'))"><i class="fas fa-trash"></i></button></div></td>`:'';
     return `<tr><td>${i+1}</td><td><strong>${g.nama}</strong></td><td><span class="badge ${bk}">${g.kat||'-'}</span></td><td>${g.ket||'-'}</td>${ac}</tr>`;
   }).join('');
 }
+
 function set(id,v){const el=document.getElementById(id);if(el)el.textContent=v;}
 function filt(id,v){document.querySelectorAll('#'+id+' tr').forEach(r=>{r.style.display=r.textContent.toLowerCase().includes(v.toLowerCase())?'':'none';});}
+const V = id => document.getElementById(id)?.value?.trim()||'';
 
 /* ============================================================
    FORMS
 ============================================================ */
-function openForm(type, idx) {
-  const isEdit=idx!==undefined;
+function openForm(type, rowId){
   const d=db();
+  const isEdit = rowId !== undefined;
+  let item = {};
+  if(isEdit){
+    const list = d[type];
+    item = list.find(r=>String(r.id)===String(rowId)) || list[parseInt(rowId)] || {};
+  }
   let html='';
-  if (type==='hewan') {
-    const h=isEdit?{...d.hewan[idx]}:{jenis:'Sapi',pq:[''],no:'',ket:''};
-    if(!Array.isArray(h.pq)) h.pq=[h.pq||''];
+
+  if(type==='hewan'){
+    const pqs = isEdit ? parsePq(item.pequrban) : [''];
+    if(!pqs.length) pqs.push('');
     html=`<div class="mtitle">${isEdit?'✏️ Edit':'➕ Tambah'} Hewan Qurban</div>
     <p class="msub">Tahun ${activeYear} H</p>
     <div class="fr">
       <div class="fg"><label class="fl">Jenis Hewan *</label>
         <select class="fc" id="f-jenis" onchange="upPq()">
-          <option value="Sapi" ${h.jenis==='Sapi'?'selected':''}>🐄 Sapi (maks. 7 pequrban)</option>
-          <option value="Kambing" ${h.jenis==='Kambing'?'selected':''}>🐐 Kambing (individu)</option>
+          <option value="Sapi" ${item.jenis==='Sapi'?'selected':''}>🐄 Sapi (maks. 7 pequrban)</option>
+          <option value="Kambing" ${item.jenis==='Kambing'?'selected':''}>🐐 Kambing (individu)</option>
         </select></div>
-      <div class="fg"><label class="fl">No. Hewan *</label><input class="fc" id="f-no" value="${h.no||''}" placeholder="Cth: S-01 / K-01"></div>
+      <div class="fg"><label class="fl">No. Hewan *</label><input class="fc" id="f-no" value="${item.no||''}" placeholder="Cth: S-01 / K-01"></div>
     </div>
-    <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${h.ket||''}" placeholder="Opsional"></div>
+    <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${item.ket||''}" placeholder="Opsional"></div>
     <div class="fg"><label class="fl">Nama Pequrban <small id="pq-hint" style="color:var(--tl)"></small></label>
-      <div id="pq-inputs">${h.pq.map((p,i)=>`<div class="pitem" id="pi${i}"><input class="fc pqi" value="${p||''}" placeholder="Nama pequrban ${i+1}"><button class="prmbtn" onclick="rmPq(${i})">×</button></div>`).join('')}</div>
+      <div id="pq-inputs">${pqs.map((p,i)=>`<div class="pitem" id="pi${i}"><input class="fc pqi" value="${p||''}" placeholder="Nama pequrban ${i+1}"><button class="prmbtn" onclick="rmPq(${i})">×</button></div>`).join('')}</div>
       <button class="paddbtn" id="paddbtn" onclick="addPq()"><i class="fas fa-plus"></i> Tambah Pequrban</button>
     </div>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.5rem">
       <button class="bn" onclick="closeModal('mo-form')">Batal</button>
-      <button class="bp" onclick="saveH(${isEdit?idx:-1})"><i class="fas fa-save"></i> Simpan</button>
+      <button class="bp" onclick="saveH('${isEdit?rowId:''}')"><i class="fas fa-save"></i> Simpan</button>
     </div>`;
-  } else if(type==='panitia') {
-    const p=isEdit?d.panitia[idx]:{};
+  } else if(type==='panitia'){
     html=`<div class="mtitle">${isEdit?'✏️ Edit':'➕ Tambah'} Panitia</div>
     <p class="msub">Tahun ${activeYear} H</p>
-    <div class="fg"><label class="fl">Nama Lengkap *</label><input class="fc" id="f-nama" value="${p.nama||''}" placeholder="Nama lengkap panitia"></div>
+    <div class="fg"><label class="fl">Nama Lengkap *</label><input class="fc" id="f-nama" value="${item.nama||''}" placeholder="Nama lengkap panitia"></div>
     <div class="fr">
-      <div class="fg"><label class="fl">Jabatan</label><input class="fc" id="f-jabatan" value="${p.jabatan||''}" placeholder="Ketua / Sekretaris / dll"></div>
-      <div class="fg"><label class="fl">No. HP</label><input class="fc" id="f-hp" value="${p.hp||''}" placeholder="08xxxxxxxxxx"></div>
+      <div class="fg"><label class="fl">Jabatan</label><input class="fc" id="f-jabatan" value="${item.jabatan||''}" placeholder="Ketua / Sekretaris / dll"></div>
+      <div class="fg"><label class="fl">No. HP</label><input class="fc" id="f-hp" value="${item.hp||''}" placeholder="08xxxxxxxxxx"></div>
     </div>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.5rem">
       <button class="bn" onclick="closeModal('mo-form')">Batal</button>
-      <button class="bp" onclick="saveP(${isEdit?idx:-1})"><i class="fas fa-save"></i> Simpan</button>
+      <button class="bp" onclick="saveP('${isEdit?rowId:''}')"><i class="fas fa-save"></i> Simpan</button>
     </div>`;
-  } else if(type==='mustahik') {
-    const m=isEdit?d.mustahik[idx]:{};
+  } else if(type==='mustahik'){
     html=`<div class="mtitle">${isEdit?'✏️ Edit':'➕ Tambah'} Mustahik</div>
-    <p class="msub">Tahun ${activeYear} H — Penerima daging qurban</p>
-    <div class="fg"><label class="fl">Nama Lengkap *</label><input class="fc" id="f-nama" value="${m.nama||''}" placeholder="Nama kepala keluarga / mustahik"></div>
+    <p class="msub">Tahun ${activeYear} H</p>
+    <div class="fg"><label class="fl">Nama Lengkap *</label><input class="fc" id="f-nama" value="${item.nama||''}" placeholder="Nama kepala keluarga / mustahik"></div>
     <div class="fg"><label class="fl">RT *</label>
-      <select class="fc" id="f-rt">${RT.map(r=>`<option value="${r}" ${m.rt===r?'selected':''}>${r}</option>`).join('')}</select></div>
-    <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${m.ket||''}" placeholder="Opsional (cth: janda, dhuafa, lansia)"></div>
+      <select class="fc" id="f-rt">${RT.map(r=>`<option value="${r}" ${item.rt===r?'selected':''}>${r}</option>`).join('')}</select></div>
+    <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${item.ket||''}" placeholder="Opsional"></div>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.5rem">
       <button class="bn" onclick="closeModal('mo-form')">Batal</button>
-      <button class="bp" onclick="saveM(${isEdit?idx:-1})"><i class="fas fa-save"></i> Simpan</button>
+      <button class="bp" onclick="saveM('${isEdit?rowId:''}')"><i class="fas fa-save"></i> Simpan</button>
     </div>`;
-  } else if(type==='guru') {
-    const g=isEdit?d.guru[idx]:{};
+  } else if(type==='guru'){
     html=`<div class="mtitle">${isEdit?'✏️ Edit':'➕ Tambah'} Guru & Sesepuh</div>
     <p class="msub">Tahun ${activeYear} H</p>
-    <div class="fg"><label class="fl">Nama Lengkap *</label><input class="fc" id="f-nama" value="${g.nama||''}" placeholder="Nama lengkap"></div>
+    <div class="fg"><label class="fl">Nama Lengkap *</label><input class="fc" id="f-nama" value="${item.nama||''}" placeholder="Nama lengkap"></div>
     <div class="fg"><label class="fl">Kategori *</label>
       <select class="fc" id="f-kat">
-        <option value="Guru Tetap" ${g.kat==='Guru Tetap'?'selected':''}>📚 Guru Tetap</option>
-        <option value="Sesepuh" ${g.kat==='Sesepuh'?'selected':''}>👴 Sesepuh</option>
-        <option value="Ulama Setempat" ${g.kat==='Ulama Setempat'?'selected':''}>🕌 Ulama Setempat</option>
+        <option value="Guru Tetap" ${item.kat==='Guru Tetap'?'selected':''}>📚 Guru Tetap</option>
+        <option value="Sesepuh" ${item.kat==='Sesepuh'?'selected':''}>👴 Sesepuh</option>
+        <option value="Ulama Setempat" ${item.kat==='Ulama Setempat'?'selected':''}>🕌 Ulama Setempat</option>
         
       </select></div>
-    <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${g.ket||''}" placeholder="Opsional"></div>
+    <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${item.ket||''}" placeholder="Opsional"></div>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.5rem">
       <button class="bn" onclick="closeModal('mo-form')">Batal</button>
-      <button class="bp" onclick="saveG(${isEdit?idx:-1})"><i class="fas fa-save"></i> Simpan</button>
+      <button class="bp" onclick="saveG('${isEdit?rowId:''}')"><i class="fas fa-save"></i> Simpan</button>
     </div>`;
   }
   document.getElementById('fm-box').innerHTML=html;
@@ -945,7 +874,7 @@ function openForm(type, idx) {
   if(type==='hewan') upPq();
 }
 
-function upPq() {
+function upPq(){
   const jenis=document.getElementById('f-jenis')?.value;
   const count=document.querySelectorAll('.pqi').length;
   const hint=document.getElementById('pq-hint');
@@ -954,7 +883,7 @@ function upPq() {
   if(jenis==='Sapi'){hint.textContent=`(Maks. 7, saat ini: ${count})`;if(btn)btn.style.display=count>=7?'none':'';}
   else{hint.textContent='(1 orang — individu)';if(btn)btn.style.display=count>=1?'none':'';}
 }
-function addPq() {
+function addPq(){
   const jenis=document.getElementById('f-jenis').value;
   const count=document.querySelectorAll('.pqi').length;
   const max=jenis==='Sapi'?7:1;
@@ -964,7 +893,7 @@ function addPq() {
   div.innerHTML=`<input class="fc pqi" placeholder="Nama pequrban ${count+1}"><button class="prmbtn" onclick="rmPq(${count})">×</button>`;
   c.appendChild(div);upPq();
 }
-function rmPq(i) {
+function rmPq(i){
   const items=document.querySelectorAll('.pitem');
   if(items.length<=1){toast('Minimal 1 pequrban!','warn');return;}
   items[i].remove();
@@ -972,266 +901,198 @@ function rmPq(i) {
   upPq();
 }
 
-async function saveH(idx) {
-  const no=V('f-no'),jenis=V('f-jenis')||document.getElementById('f-jenis').value,ket=V('f-ket');
-  const pq=Array.from(document.querySelectorAll('.pqi')).map(i=>i.value.trim());
+/* ── SAVE helpers ─────────────────────────────────────── */
+async function apiBuildSave(type, row, rowId){
+  const yr = activeYear;
+  let res;
+  if(rowId){
+    res = await gas({action:'updateRow', tahun:yr, type, id:rowId, d:row});
+  } else {
+    res = await gas({action:'addRow', tahun:yr, type, d:row});
+  }
+  // Reload data
+  await loadYearData(yr);
+  renderAll();
+  closeModal('mo-form');
+  toast(rowId?'Data diubah!':'Data ditambah!');
+  return res;
+}
+
+async function saveH(rowId){
+  const no=V('f-no'), jenis=document.getElementById('f-jenis').value, ket=V('f-ket');
+  const pq=Array.from(document.querySelectorAll('.pqi')).map(i=>i.value.trim()).filter(Boolean);
   if(!no){toast('No. hewan wajib diisi!','err');return;}
-  if(!pq.some(p=>p)){toast('Isi minimal 1 nama pequrban!','err');return;}
-  const d=db(),item={jenis,no,ket,pq};
-  if(idx>=0)d.hewan[idx]=item;else d.hewan.push(item);
-  const ok=await saveFile(activeYear,'hewan',d.hewan);
-  if(ok){closeModal('mo-form');renderAll();toast(idx>=0?'Data diubah!':'Data ditambah!');}
+  if(!pq.length){toast('Isi minimal 1 nama pequrban!','err');return;}
+  const row={jenis, no, ket, pequrban:pq.join('|')};
+  try{ await apiBuildSave('hewan', row, rowId||null); } catch(e){toast('Gagal: '+e.message,'err');}
 }
-async function saveP(idx) {
-  const nama=V('f-nama');if(!nama){toast('Nama wajib diisi!','err');return;}
-  const d=db(),item={nama,jabatan:V('f-jabatan'),hp:V('f-hp')};
-  if(idx>=0)d.panitia[idx]=item;else d.panitia.push(item);
-  const ok=await saveFile(activeYear,'panitia',d.panitia);
-  if(ok){closeModal('mo-form');renderAll();toast(idx>=0?'Data diubah!':'Data ditambah!');}
+async function saveP(rowId){
+  const nama=V('f-nama'); if(!nama){toast('Nama wajib diisi!','err');return;}
+  const row={nama, jabatan:V('f-jabatan'), hp:V('f-hp')};
+  try{ await apiBuildSave('panitia', row, rowId||null); } catch(e){toast('Gagal: '+e.message,'err');}
 }
-async function saveM(idx) {
-  const nama=V('f-nama');if(!nama){toast('Nama wajib diisi!','err');return;}
-  const d=db(),rt=document.getElementById('f-rt').value,ket=V('f-ket');
-  const item={nama,rt,ket};
-  if(idx>=0)d.mustahik[idx]=item;else d.mustahik.push(item);
-  const ok=await saveFile(activeYear,'mustahik',d.mustahik);
-  if(ok){closeModal('mo-form');renderAll();toast(idx>=0?'Data diubah!':'Data ditambah!');}
+async function saveM(rowId){
+  const nama=V('f-nama'); if(!nama){toast('Nama wajib diisi!','err');return;}
+  const row={nama, rt:document.getElementById('f-rt').value, ket:V('f-ket')};
+  try{ await apiBuildSave('mustahik', row, rowId||null); } catch(e){toast('Gagal: '+e.message,'err');}
 }
-async function saveG(idx) {
-  const nama=V('f-nama');if(!nama){toast('Nama wajib diisi!','err');return;}
-  const d=db(),kat=document.getElementById('f-kat').value,ket=V('f-ket');
-  const item={nama,kat,ket};
-  if(idx>=0)d.guru[idx]=item;else d.guru.push(item);
-  const ok=await saveFile(activeYear,'guru',d.guru);
-  if(ok){closeModal('mo-form');renderAll();toast(idx>=0?'Data diubah!':'Data ditambah!');}
+async function saveG(rowId){
+  const nama=V('f-nama'); if(!nama){toast('Nama wajib diisi!','err');return;}
+  const row={nama, kat:document.getElementById('f-kat').value, ket:V('f-ket')};
+  try{ await apiBuildSave('guru', row, rowId||null); } catch(e){toast('Gagal: '+e.message,'err');}
 }
-async function del(type,idx) {
+
+async function del(type, rowId){
   if(!confirm('Yakin ingin menghapus data ini?')) return;
-  const d=db();d[type].splice(idx,1);
-  const ok=await saveFile(activeYear,type,d[type]);
-  if(ok){renderAll();toast('Data dihapus!');}
+  try{
+    await gas({action:'deleteRow', tahun:activeYear, type, id:rowId});
+    await loadYearData(activeYear);
+    renderAll();
+    toast('Data dihapus!');
+  } catch(e){toast('Gagal menghapus: '+e.message,'err');}
 }
 
 /* ============================================================
    EXPORT EXCEL — PROFESSIONAL
 ============================================================ */
-const MOSQ   = 'Musholla Nurul Falah';
-const ORG    = 'Panitia Qurban';
+const MOSQ = 'Musholla Nurul Falah';
 
-// Helper: convert column index to Excel letter (A, B, ... Z, AA, ...)
-function colLetter(n) {
-  let s='';
-  n++;
-  while(n>0){const r=(n-1)%26;s=String.fromCharCode(65+r)+s;n=Math.floor((n-1)/26);}
-  return s;
-}
+function colLetter(n){let s='';n++;while(n>0){const r=(n-1)%26;s=String.fromCharCode(65+r)+s;n=Math.floor((n-1)/26);}return s;}
+const cel=(r,c)=>colLetter(c)+(r+1);
 
-// Cell address
-const cel = (r,c) => colLetter(c)+(r+1);
+function proSheet(title, subtitle, headers, rows){
+  const ws={};
+  const nc=headers.length;
+  let r=0;
+  const put=(row,col,v,s)=>{ws[cel(row,col)]={t:typeof v==='number'?'n':'s',v,s:s||{}};};
+  const hFill={fgColor:{rgb:'F0EAD8'}}, tFill={fgColor:{rgb:'094D37'}}, sFill={fgColor:{rgb:'FAF7F0'}};
+  const hdrFill={fgColor:{rgb:'0D6E4F'}};
+  const border={top:{style:'thin',color:{rgb:'E5E7EB'}},bottom:{style:'thin',color:{rgb:'E5E7EB'}},left:{style:'thin',color:{rgb:'E5E7EB'}},right:{style:'thin',color:{rgb:'E5E7EB'}}};
+  const hdrBorder={top:{style:'thin',color:{rgb:'094D37'}},bottom:{style:'thin',color:{rgb:'094D37'}},left:{style:'thin',color:{rgb:'094D37'}},right:{style:'thin',color:{rgb:'094D37'}}};
 
-// Apply styles to a range of cells
-function styleRange(ws, r1, c1, r2, c2, style) {
-  for(let r=r1;r<=r2;r++) for(let c=c1;c<=c2;c++) {
-    const addr=cel(r,c);
-    if(!ws[addr]) ws[addr]={t:'s',v:''};
-    ws[addr].s=Object.assign({},ws[addr].s||{},style);
-  }
-}
+  // Title rows
+  for(let c=0;c<nc;c++){
+    put(r,c,c===0?MOSQ:'',{font:{bold:true,sz:14,color:{rgb:'0D6E4F'}},alignment:{horizontal:'center',vertical:'center'},fill:hFill});
+  }r++;
+  for(let c=0;c<nc;c++){
+    put(r,c,c===0?title:'',{font:{bold:true,sz:12,color:{rgb:'FFFFFF'}},alignment:{horizontal:'center',vertical:'center'},fill:tFill});
+  }r++;
+  for(let c=0;c<nc;c++){
+    put(r,c,c===0?subtitle:'',{font:{italic:true,sz:10,color:{rgb:'3D3D5C'}},alignment:{horizontal:'center',vertical:'center'},fill:sFill});
+  }r++;
+  const dateStr='Diekspor: '+new Date().toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
+  for(let c=0;c<nc;c++){
+    put(r,c,c===0?dateStr:'',{font:{sz:9,color:{rgb:'6B7280'}},alignment:{horizontal:'center',vertical:'center'},fill:sFill});
+  }r++;
+  for(let c=0;c<nc;c++) put(r,c,'',{});r++;
 
-// Create professional sheet
-function proSheet(title, subtitle, headers, rows, extraInfo) {
-  const ws = {};
-  const nc = headers.length;
-  let r = 0;
-
-  // Row 0: Mosque name (merged)
-  ws[cel(r,0)] = {t:'s', v:MOSQ, s:{font:{bold:true,sz:14,color:{rgb:'0D6E4F'}}, alignment:{horizontal:'center',vertical:'center'}, fill:{fgColor:{rgb:'F0EAD8'}}}};
-  for(let c=1;c<nc;c++) ws[cel(r,c)]={t:'s',v:'',s:{fill:{fgColor:{rgb:'F0EAD8'}}}};
-  r++;
-
-  // Row 1: Title
-  ws[cel(r,0)] = {t:'s', v:title, s:{font:{bold:true,sz:12,color:{rgb:'FFFFFF'}}, alignment:{horizontal:'center',vertical:'center'}, fill:{fgColor:{rgb:'094D37'}}}};
-  for(let c=1;c<nc;c++) ws[cel(r,c)]={t:'s',v:'',s:{fill:{fgColor:{rgb:'094D37'}}}};
-  r++;
-
-  // Row 2: Subtitle / year info
-  ws[cel(r,0)] = {t:'s', v:subtitle, s:{font:{italic:true,sz:10,color:{rgb:'3D3D5C'}}, alignment:{horizontal:'center',vertical:'center'}, fill:{fgColor:{rgb:'FAF7F0'}}}};
-  for(let c=1;c<nc;c++) ws[cel(r,c)]={t:'s',v:'',s:{fill:{fgColor:{rgb:'FAF7F0'}}}};
-  r++;
-
-  // Row 3: Export date + extra
-  const dateStr = 'Diekspor: ' + new Date().toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'});
-  ws[cel(r,0)] = {t:'s', v:dateStr+(extraInfo?' | '+extraInfo:''), s:{font:{sz:9,color:{rgb:'6B7280'}}, alignment:{horizontal:'center',vertical:'center'}, fill:{fgColor:{rgb:'FAF7F0'}}}};
-  for(let c=1;c<nc;c++) ws[cel(r,c)]={t:'s',v:'',s:{fill:{fgColor:{rgb:'FAF7F0'}}}};
-  r++;
-
-  // Row 4: empty separator
-  for(let c=0;c<nc;c++) ws[cel(r,c)]={t:'s',v:''};
-  r++;
-
-  // Row 5: Headers
-  headers.forEach((h,c)=>{
-    ws[cel(r,c)]={t:'s',v:h,s:{font:{bold:true,sz:10,color:{rgb:'FFFFFF'}},alignment:{horizontal:'center',vertical:'center',wrapText:true},fill:{fgColor:{rgb:'0D6E4F'}},border:{top:{style:'thin',color:{rgb:'094D37'}},bottom:{style:'thin',color:{rgb:'094D37'}},left:{style:'thin',color:{rgb:'094D37'}},right:{style:'thin',color:{rgb:'094D37'}}}}};
-  });
-  const headerRow = r;
+  // Header row
+  headers.forEach((h,c)=>put(r,c,h,{font:{bold:true,sz:10,color:{rgb:'FFFFFF'}},alignment:{horizontal:'center',vertical:'center',wrapText:true},fill:hdrFill,border:hdrBorder}));
   r++;
 
   // Data rows
   rows.forEach((row,ri)=>{
-    const even=ri%2===0;
-    const bg=even?'FFFFFF':'F0FFF4';
+    const bg=ri%2===0?'FFFFFF':'F0FFF4';
     headers.forEach((h,c)=>{
       const v=row[h]===undefined||row[h]===null?'':row[h];
-      const isNum=typeof v==='number';
-      ws[cel(r,c)]={t:isNum?'n':'s',v,s:{
-        font:{sz:10,color:{rgb:'1A1A2E'}},
-        alignment:{horizontal:c===0?'center':(isNum?'center':'left'),vertical:'center',wrapText:true},
-        fill:{fgColor:{rgb:bg}},
-        border:{top:{style:'thin',color:{rgb:'E5E7EB'}},bottom:{style:'thin',color:{rgb:'E5E7EB'}},left:{style:'thin',color:{rgb:'E5E7EB'}},right:{style:'thin',color:{rgb:'E5E7EB'}}}
-      }};
-    });
-    r++;
+      put(r,c,v,{font:{sz:10,color:{rgb:'1A1A2E'}},alignment:{horizontal:c===0?'center':'left',vertical:'center',wrapText:true},fill:{fgColor:{rgb:bg}},border});
+    });r++;
   });
 
-  // Total row (if data exists)
-  if(rows.length>0){
-    ws[cel(r,0)]={t:'s',v:'Total',s:{font:{bold:true,sz:10,color:{rgb:'0D6E4F'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'D1FAE5'}},border:{top:{style:'medium',color:{rgb:'0D6E4F'}},bottom:{style:'medium',color:{rgb:'0D6E4F'}},left:{style:'thin',color:{rgb:'0D6E4F'}},right:{style:'thin',color:{rgb:'0D6E4F'}}}}};
-    ws[cel(r,1)]={t:'s',v:rows.length+' data',s:{font:{bold:true,sz:10,color:{rgb:'0D6E4F'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'D1FAE5'}},border:{top:{style:'medium',color:{rgb:'0D6E4F'}},bottom:{style:'medium',color:{rgb:'0D6E4F'}},left:{style:'thin',color:{rgb:'0D6E4F'}},right:{style:'thin',color:{rgb:'0D6E4F'}}}}};
-    for(let c=2;c<nc;c++) ws[cel(r,c)]={t:'s',v:'',s:{fill:{fgColor:{rgb:'D1FAE5'}},border:{top:{style:'medium',color:{rgb:'0D6E4F'}},bottom:{style:'medium',color:{rgb:'0D6E4F'}},left:{style:'thin',color:{rgb:'0D6E4F'}},right:{style:'thin',color:{rgb:'0D6E4F'}}}}};
-    r++;
+  // Total row
+  if(rows.length){
+    for(let c=0;c<nc;c++){
+      put(r,c,c===0?'Total':c===1?rows.length+' data':'',{font:{bold:true,sz:10,color:{rgb:'0D6E4F'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'D1FAE5'}},border:{top:{style:'medium',color:{rgb:'0D6E4F'}},bottom:{style:'medium',color:{rgb:'0D6E4F'}},left:{style:'thin',color:{rgb:'0D6E4F'}},right:{style:'thin',color:{rgb:'0D6E4F'}}}});
+    }r++;
   }
 
-  // Merges for header rows
-  ws['!merges']=[
-    {s:{r:0,c:0},e:{r:0,c:nc-1}},
-    {s:{r:1,c:0},e:{r:1,c:nc-1}},
-    {s:{r:2,c:0},e:{r:2,c:nc-1}},
-    {s:{r:3,c:0},e:{r:3,c:nc-1}},
-    {s:{r:4,c:0},e:{r:4,c:nc-1}},
-  ];
-
-  // Column widths
-  ws['!cols']=headers.map((h,i)=>{
-    if(i===0) return {wch:6};  // No
-    const maxData=rows.reduce((mx,row)=>{const v=String(row[h]||'');return Math.max(mx,v.length);},h.length);
-    return {wch:Math.min(Math.max(maxData+3,12),45)};
-  });
-
-  // Row heights
+  ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:nc-1}},{s:{r:1,c:0},e:{r:1,c:nc-1}},{s:{r:2,c:0},e:{r:2,c:nc-1}},{s:{r:3,c:0},e:{r:3,c:nc-1}},{s:{r:4,c:0},e:{r:4,c:nc-1}}];
+  ws['!cols']=headers.map((h,i)=>i===0?{wch:6}:{wch:Math.min(Math.max(rows.reduce((mx,row)=>Math.max(mx,String(row[h]||'').length),h.length)+3,12),45)});
   ws['!rows']=[{hpt:28},{hpt:26},{hpt:18},{hpt:16},{hpt:8},{hpt:22}];
-
   ws['!ref']=cel(0,0)+':'+cel(r-1,nc-1);
   return ws;
 }
 
-// Rekap sheet (special layout)
-function rekapSheet(d, year) {
-  const ws = {};
-  const nc = 3;
-  let r = 0;
-  const allPq=[];
-  d.hewan.forEach(h=>{const ps=Array.isArray(h.pq)?h.pq:[h.pq||''];ps.filter(p=>p&&p.trim()).forEach(p=>allPq.push(p));});
-
-  const headerStyle = {font:{bold:true,sz:14,color:{rgb:'0D6E4F'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'F0EAD8'}}};
-  const titleStyle  = {font:{bold:true,sz:12,color:{rgb:'FFFFFF'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'094D37'}}};
-  const subStyle    = {font:{italic:true,sz:10,color:{rgb:'3D3D5C'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'FAF7F0'}}};
-  const secStyle    = {font:{bold:true,sz:10,color:{rgb:'FFFFFF'}},alignment:{horizontal:'left',vertical:'center'},fill:{fgColor:{rgb:'0D6E4F'}},border:{top:{style:'thin',color:{rgb:'094D37'}},bottom:{style:'thin',color:{rgb:'094D37'}},left:{style:'thin',color:{rgb:'094D37'}},right:{style:'thin',color:{rgb:'094D37'}}}};
-  const labelStyle  = {font:{sz:10,color:{rgb:'3D3D5C'}},alignment:{horizontal:'left',vertical:'center'},fill:{fgColor:{rgb:'FFFFFF'}},border:{top:{style:'thin',color:{rgb:'E5E7EB'}},bottom:{style:'thin',color:{rgb:'E5E7EB'}},left:{style:'thin',color:{rgb:'E5E7EB'}},right:{style:'thin',color:{rgb:'E5E7EB'}}}};
-  const valStyle    = {font:{bold:true,sz:11,color:{rgb:'0D6E4F'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'F0FFF4'}},border:{top:{style:'thin',color:{rgb:'E5E7EB'}},bottom:{style:'thin',color:{rgb:'E5E7EB'}},left:{style:'thin',color:{rgb:'E5E7EB'}},right:{style:'thin',color:{rgb:'E5E7EB'}}}};
-  const satStyle    = {font:{sz:9,color:{rgb:'6B7280'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'FFFFFF'}},border:{top:{style:'thin',color:{rgb:'E5E7EB'}},bottom:{style:'thin',color:{rgb:'E5E7EB'}},left:{style:'thin',color:{rgb:'E5E7EB'}},right:{style:'thin',color:{rgb:'E5E7EB'}}}};
-
-  const addRow=(a,b,c,sa,sb,sc)=>{
-    ws[cel(r,0)]={t:'s',v:a,s:sa};ws[cel(r,1)]={t:b!==undefined&&typeof b==='number'?'n':'s',v:b===undefined||b===null?'':b,s:sb};ws[cel(r,2)]={t:'s',v:c||'',s:sc};r++;
-  };
-
-  addRow(MOSQ,'','',headerStyle,headerStyle,headerStyle);
-  addRow(`Rekap Dashboard Qurban ${year} H`,'','',titleStyle,titleStyle,titleStyle);
-  addRow(`${ORG} — Tahun ${year} H`,'','',subStyle,subStyle,subStyle);
-  addRow('Diekspor: '+new Date().toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}),'','',subStyle,subStyle,subStyle);
-  addRow('','','',{fill:{fgColor:{rgb:'FFFFFF'}}},{fill:{fgColor:{rgb:'FFFFFF'}}},{fill:{fgColor:{rgb:'FFFFFF'}}});
-  addRow('RINGKASAN DATA','Jumlah','Satuan',secStyle,secStyle,secStyle);
-  addRow('🐄 Total Sapi',d.hewan.filter(h=>h.jenis==='Sapi').length,'Ekor',labelStyle,valStyle,satStyle);
-  addRow('🐐 Total Kambing',d.hewan.filter(h=>h.jenis==='Kambing').length,'Ekor',labelStyle,valStyle,satStyle);
-  addRow('🤲 Total Pequrban',allPq.length,'Orang',labelStyle,valStyle,satStyle);
-  addRow('👥 Total Panitia',d.panitia.length,'Orang',labelStyle,valStyle,satStyle);
-  addRow('🏠 Total Mustahik',d.mustahik.length,'KK',labelStyle,valStyle,satStyle);
-  addRow('📚 Total Guru & Sesepuh',d.guru.length,'Orang',labelStyle,valStyle,satStyle);
-  addRow('🐄🐐 Total Hewan',d.hewan.length,'Ekor',labelStyle,valStyle,satStyle);
-  addRow('','','',{fill:{fgColor:{rgb:'FFFFFF'}}},{fill:{fgColor:{rgb:'FFFFFF'}}},{fill:{fgColor:{rgb:'FFFFFF'}}});
-  addRow('MUSTAHIK PER RT','Jumlah','Satuan',secStyle,secStyle,secStyle);
-  RT.forEach(rt=>{addRow('🏘 Mustahik '+rt,d.mustahik.filter(m=>m.rt===rt).length,'KK',labelStyle,valStyle,satStyle);});
-
-  ws['!merges']=[
-    {s:{r:0,c:0},e:{r:0,c:2}},{s:{r:1,c:0},e:{r:1,c:2}},
-    {s:{r:2,c:0},e:{r:2,c:2}},{s:{r:3,c:0},e:{r:3,c:2}},{s:{r:4,c:0},e:{r:4,c:2}}
-  ];
-  ws['!cols']=[{wch:34},{wch:12},{wch:10}];
-  ws['!rows']=[{hpt:28},{hpt:26},{hpt:18},{hpt:16},{hpt:8},{hpt:22}];
+function rekapSheet(d, year){
+  const ws={};const nc=3;let r=0;
+  const allPq=[];d.hewan.forEach(h=>parsePq(h.pequrban).forEach(p=>allPq.push(p)));
+  const hs=(v,t)=>({font:{bold:true,sz:t||10,color:{rgb:t===14?'0D6E4F':'FFFFFF'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:t===14?'F0EAD8':t===12?'094D37':'0D6E4F'}}});
+  const ls={font:{sz:10,color:{rgb:'3D3D5C'}},alignment:{horizontal:'left',vertical:'center'},fill:{fgColor:{rgb:'FFFFFF'}},border:{top:{style:'thin',color:{rgb:'E5E7EB'}},bottom:{style:'thin',color:{rgb:'E5E7EB'}},left:{style:'thin',color:{rgb:'E5E7EB'}},right:{style:'thin',color:{rgb:'E5E7EB'}}}};
+  const vs={font:{bold:true,sz:11,color:{rgb:'0D6E4F'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'F0FFF4'}},border:{top:{style:'thin',color:{rgb:'E5E7EB'}},bottom:{style:'thin',color:{rgb:'E5E7EB'}},left:{style:'thin',color:{rgb:'E5E7EB'}},right:{style:'thin',color:{rgb:'E5E7EB'}}}};
+  const ss={font:{sz:9,color:{rgb:'6B7280'}},alignment:{horizontal:'center',vertical:'center'},fill:{fgColor:{rgb:'FFFFFF'}},border:{top:{style:'thin',color:{rgb:'E5E7EB'}},bottom:{style:'thin',color:{rgb:'E5E7EB'}},left:{style:'thin',color:{rgb:'E5E7EB'}},right:{style:'thin',color:{rgb:'E5E7EB'}}}};
+  const p=(a,b,c,sa,sb,sc)=>{ws[cel(r,0)]={t:'s',v:a,s:sa};ws[cel(r,1)]={t:typeof b==='number'?'n':'s',v:b===undefined?'':b,s:sb};ws[cel(r,2)]={t:'s',v:c||'',s:sc};r++;};
+  p(MOSQ,'','',hs(0,14),hs(0,14),hs(0,14));
+  p(`Rekap Dashboard Qurban ${year} H`,'','',hs(0,12),hs(0,12),hs(0,12));
+  p(`Panitia Qurban — Tahun ${year} H`,'','',{font:{italic:true,sz:10},alignment:{horizontal:'center'},fill:{fgColor:{rgb:'FAF7F0'}}},{font:{italic:true,sz:10},alignment:{horizontal:'center'},fill:{fgColor:{rgb:'FAF7F0'}}},{font:{italic:true,sz:10},alignment:{horizontal:'center'},fill:{fgColor:{rgb:'FAF7F0'}}});
+  p('Diekspor: '+new Date().toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}),'','',{font:{sz:9,color:{rgb:'6B7280'}},alignment:{horizontal:'center'},fill:{fgColor:{rgb:'FAF7F0'}}},{font:{sz:9},alignment:{horizontal:'center'},fill:{fgColor:{rgb:'FAF7F0'}}},{font:{sz:9},alignment:{horizontal:'center'},fill:{fgColor:{rgb:'FAF7F0'}}});
+  p('','','',{},{},{});
+  p('RINGKASAN DATA','Jumlah','Satuan',hs(0),hs(0),hs(0));
+  [['🐄 Total Sapi',d.hewan.filter(h=>h.jenis==='Sapi').length,'Ekor'],['🐐 Total Kambing',d.hewan.filter(h=>h.jenis==='Kambing').length,'Ekor'],['🤲 Total Pequrban',allPq.length,'Orang'],['👥 Total Panitia',d.panitia.length,'Orang'],['🏠 Total Mustahik',d.mustahik.length,'KK'],['📚 Total Guru & Sesepuh',d.guru.length,'Orang'],['🐄🐐 Total Hewan',d.hewan.length,'Ekor']].forEach(([a,b,c])=>p(a,b,c,ls,vs,ss));
+  p('','','',{},{},{});
+  p('MUSTAHIK PER RT','Jumlah','Satuan',hs(0),hs(0),hs(0));
+  RT.forEach(rt=>p('🏘 Mustahik '+rt,d.mustahik.filter(m=>m.rt===rt).length,'KK',ls,vs,ss));
+  ws['!merges']=[{s:{r:0,c:0},e:{r:0,c:2}},{s:{r:1,c:0},e:{r:1,c:2}},{s:{r:2,c:0},e:{r:2,c:2}},{s:{r:3,c:0},e:{r:3,c:2}},{s:{r:4,c:0},e:{r:4,c:2}}];
+  ws['!cols']=[{wch:34},{wch:12},{wch:10}];ws['!rows']=[{hpt:28},{hpt:26},{hpt:18},{hpt:16},{hpt:8},{hpt:22}];
   ws['!ref']=cel(0,0)+':'+cel(r-1,2);
   return ws;
 }
 
-function getDataForYear(yr) {
-  return allData[yr] || emptyDb();
+function pqN(h,i){const ps=parsePq(h.pequrban);return ps[i]||'';}
+function hewanRows(d){return d.hewan.map((h,i)=>({'No':i+1,'No. Hewan':h.no||'','Jenis Hewan':h.jenis,'Pequrban 1':pqN(h,0),'Pequrban 2':pqN(h,1),'Pequrban 3':pqN(h,2),'Pequrban 4':pqN(h,3),'Pequrban 5':pqN(h,4),'Pequrban 6':pqN(h,5),'Pequrban 7':pqN(h,6),'Keterangan':h.ket||''}));}
+function pqRows(d){const out=[];d.hewan.forEach(h=>{parsePq(h.pequrban).forEach((p,pi)=>out.push({'No':out.length+1,'No. Hewan':h.no||'','Jenis':h.jenis,'Ke-':pi+1,'Nama Pequrban':p}));});return out;}
+function panitiaRows(d){return d.panitia.map((p,i)=>({'No':i+1,'Nama Lengkap':p.nama||'','Jabatan':p.jabatan||'','No. HP':p.hp||''}));}
+function mustahikRows(d,rt){const data=rt?d.mustahik.filter(m=>m.rt===rt):d.mustahik;return data.map((m,i)=>({'No':i+1,'Nama Lengkap':m.nama||'','RT':m.rt||'','Keterangan':m.ket||''}));}
+function guruRows(d){return d.guru.map((g,i)=>({'No':i+1,'Nama Lengkap':g.nama||'','Kategori':g.kat||'','Keterangan':g.ket||''}));}
+
+function today(){return new Date().toISOString().slice(0,10);}
+
+function buildWorkbook(wb, years){
+  const multi=years.length>1;
+  years.forEach(yr=>{
+    const d=allData[yr]||emptyDb();
+    const pfx=multi?yr+'H_':'';
+    if(document.getElementById('ex-h')?.checked){
+      XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Hewan Qurban ${yr} H`,`${MOSQ} — Tahun ${yr} H | Total: ${d.hewan.length} hewan`,['No','No. Hewan','Jenis Hewan','Pequrban 1','Pequrban 2','Pequrban 3','Pequrban 4','Pequrban 5','Pequrban 6','Pequrban 7','Keterangan'],hewanRows(d)),pfx+'Hewan Qurban');
+      const prw=pqRows(d);if(prw.length)XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Pequrban ${yr} H`,`${MOSQ} — Total: ${prw.length} pequrban`,['No','No. Hewan','Jenis','Ke-','Nama Pequrban'],prw),pfx+'Daftar Pequrban');
+    }
+    if(document.getElementById('ex-p')?.checked) XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Panitia ${yr} H`,`${MOSQ} — Total: ${d.panitia.length} orang`,['No','Nama Lengkap','Jabatan','No. HP'],panitiaRows(d)),pfx+'Panitia');
+    if(document.getElementById('ex-m')?.checked){
+      XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Mustahik ${yr} H`,`${MOSQ} — Total: ${d.mustahik.length} KK`,['No','Nama Lengkap','RT','Keterangan'],mustahikRows(d)),pfx+'Mustahik');
+      RT.forEach(rt=>{const rr=mustahikRows(d,rt);if(rr.length)XLSX.utils.book_append_sheet(wb,proSheet(`Mustahik ${rt} — ${yr} H`,`${MOSQ} | ${rt}: ${rr.length} KK`,['No','Nama Lengkap','RT','Keterangan'],rr),pfx+'Mustahik '+rt.replace(' ',''));});
+    }
+    if(document.getElementById('ex-g')?.checked) XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Guru & Sesepuh ${yr} H`,`${MOSQ} — Total: ${d.guru.length} orang`,['No','Nama Lengkap','Kategori','Keterangan'],guruRows(d)),pfx+'Guru & Sepuh');
+    if(document.getElementById('ex-r')?.checked) XLSX.utils.book_append_sheet(wb,rekapSheet(d,yr),pfx+'Rekap');
+  });
 }
 
-function hewanRows(d) {
-  return d.hewan.map((h,i)=>({
-    'No':i+1,'No. Hewan':h.no||'','Jenis Hewan':h.jenis,
-    'Pequrban 1':pqN(h,0),'Pequrban 2':pqN(h,1),'Pequrban 3':pqN(h,2),
-    'Pequrban 4':pqN(h,3),'Pequrban 5':pqN(h,4),'Pequrban 6':pqN(h,5),'Pequrban 7':pqN(h,6),
-    'Keterangan':h.ket||''
-  }));
-}
-function pqRows(d) {
-  const out=[];
-  d.hewan.forEach(h=>{const ps=Array.isArray(h.pq)?h.pq:[h.pq||''];ps.filter(p=>p&&p.trim()).forEach((p,pi)=>out.push({'No':out.length+1,'No. Hewan':h.no||'','Jenis':h.jenis,'Ke-':pi+1,'Nama Pequrban':p}));});
-  return out;
-}
-function panitiaRows(d) { return d.panitia.map((p,i)=>({'No':i+1,'Nama Lengkap':p.nama||'','Jabatan':p.jabatan||'','No. HP':p.hp||''})); }
-function mustahikRows(d,rt) { const data=rt?d.mustahik.filter(m=>m.rt===rt):d.mustahik; return data.map((m,i)=>({'No':i+1,'Nama Lengkap':m.nama||'','RT':m.rt||'','Keterangan':m.ket||''})); }
-function guruRows(d) { return d.guru.map((g,i)=>({'No':i+1,'Nama Lengkap':g.nama||'','Kategori':g.kat||'','Keterangan':g.ket||''})); }
-function pqN(h,i){return Array.isArray(h.pq)?h.pq[i]||'':i===0?(h.pq||''):'';}
-
-async function doExport() {
+async function doExport(){
   const yearMode=document.getElementById('exp-yr').value;
   const years=yearMode==='all'?getYears():[activeYear];
-  if(yearMode==='all'){toast('Memuat semua data tahun...','warn');for(const y of years){if(!allData[y]||!allData[y].hewan)await loadYearData(y);}}
-  const wb=XLSX.utils.book_new();
-  const multi=years.length>1;
-  for(const yr of years){
-    const d=getDataForYear(yr);const pfx=multi?yr+'H_':'';
-    if(document.getElementById('ex-h').checked){
-      XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Hewan Qurban ${yr} H`,`${MOSQ} — Tahun ${yr} H | Total: ${d.hewan.length} hewan`,['No','No. Hewan','Jenis Hewan','Pequrban 1','Pequrban 2','Pequrban 3','Pequrban 4','Pequrban 5','Pequrban 6','Pequrban 7','Keterangan'],hewanRows(d)),pfx+'Hewan Qurban');
-      const prw=pqRows(d);if(prw.length)XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Pequrban ${yr} H`,`${MOSQ} — Tahun ${yr} H | Total: ${prw.length} pequrban`,['No','No. Hewan','Jenis','Ke-','Nama Pequrban'],prw),pfx+'Daftar Pequrban');
-    }
-    if(document.getElementById('ex-p').checked)XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Panitia Qurban ${yr} H`,`${MOSQ} — Tahun ${yr} H | Total: ${d.panitia.length} orang`,['No','Nama Lengkap','Jabatan','No. HP'],panitiaRows(d)),pfx+'Panitia');
-    if(document.getElementById('ex-m').checked){
-      XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Mustahik Qurban ${yr} H`,`${MOSQ} — Tahun ${yr} H | Total: ${d.mustahik.length} KK`,['No','Nama Lengkap','RT','Keterangan'],mustahikRows(d)),pfx+'Mustahik');
-      RT.forEach(rt=>{const rr=mustahikRows(d,rt);if(rr.length)XLSX.utils.book_append_sheet(wb,proSheet(`Mustahik ${rt} — ${yr} H`,`${MOSQ} — Tahun ${yr} H | ${rt}: ${rr.length} KK`,['No','Nama Lengkap','RT','Keterangan'],rr),pfx+'Mustahik '+rt.replace(' ',''));});
-    }
-    if(document.getElementById('ex-g').checked)XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Guru & Sesepuh ${yr} H`,`${MOSQ} — Tahun ${yr} H | Total: ${d.guru.length} orang`,['No','Nama Lengkap','Kategori','Keterangan'],guruRows(d)),pfx+'Guru & Sepuh');
-    if(document.getElementById('ex-r').checked)XLSX.utils.book_append_sheet(wb,rekapSheet(d,yr),pfx+'Rekap');
+  if(yearMode==='all'){
+    toast('Memuat semua data tahun...','warn');
+    for(const y of years){ if(!allData[y]?.hewan?.length) await loadYearData(y); }
   }
-  if(!wb.SheetNames.length){toast('Pilih minimal 1 kategori data!','warn');return;}
+  const wb=XLSX.utils.book_new();
+  buildWorkbook(wb, years);
+  if(!wb.SheetNames.length){toast('Pilih minimal 1 kategori!','warn');return;}
   const label=yearMode==='all'?'SemuaTahun':activeYear+'H';
   XLSX.writeFile(wb,`Qurban_NurulFalah_${label}_${today()}.xlsx`,{bookType:'xlsx',type:'binary',cellStyles:true});
   closeModal('mo-export');
   toast('✅ File Excel berhasil didownload!');
 }
 
-async function quickExport(type) {
-  const d=db();const wb=XLSX.utils.book_new();
+async function quickExport(type){
+  const d=db(), wb=XLSX.utils.book_new();
   if(type==='hewan'){
-    XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Hewan Qurban ${activeYear} H`,`${MOSQ} — Tahun ${activeYear} H | Total: ${d.hewan.length} hewan`,['No','No. Hewan','Jenis Hewan','Pequrban 1','Pequrban 2','Pequrban 3','Pequrban 4','Pequrban 5','Pequrban 6','Pequrban 7','Keterangan'],hewanRows(d)),'Hewan Qurban');
-    const prw=pqRows(d);if(prw.length)XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Pequrban ${activeYear} H`,`${MOSQ} — Tahun ${activeYear} H | Total: ${prw.length} pequrban`,['No','No. Hewan','Jenis','Ke-','Nama Pequrban'],prw),'Daftar Pequrban');
+    XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Hewan Qurban ${activeYear} H`,`${MOSQ} — Total: ${d.hewan.length} hewan`,['No','No. Hewan','Jenis Hewan','Pequrban 1','Pequrban 2','Pequrban 3','Pequrban 4','Pequrban 5','Pequrban 6','Pequrban 7','Keterangan'],hewanRows(d)),'Hewan Qurban');
+    const prw=pqRows(d);if(prw.length)XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Pequrban ${activeYear} H`,`${MOSQ} — Total: ${prw.length} pequrban`,['No','No. Hewan','Jenis','Ke-','Nama Pequrban'],prw),'Daftar Pequrban');
   }else if(type==='panitia'){
-    XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Panitia ${activeYear} H`,`${MOSQ} — Tahun ${activeYear} H | Total: ${d.panitia.length} orang`,['No','Nama Lengkap','Jabatan','No. HP'],panitiaRows(d)),'Panitia');
+    XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Panitia ${activeYear} H`,`${MOSQ} — Total: ${d.panitia.length} orang`,['No','Nama Lengkap','Jabatan','No. HP'],panitiaRows(d)),'Panitia');
   }else if(type==='mustahik'){
-    XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Mustahik ${activeYear} H`,`${MOSQ} — Tahun ${activeYear} H | Total: ${d.mustahik.length} KK`,['No','Nama Lengkap','RT','Keterangan'],mustahikRows(d)),'Mustahik');
+    XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Mustahik ${activeYear} H`,`${MOSQ} — Total: ${d.mustahik.length} KK`,['No','Nama Lengkap','RT','Keterangan'],mustahikRows(d)),'Mustahik');
     RT.forEach(rt=>{const rr=mustahikRows(d,rt);if(rr.length)XLSX.utils.book_append_sheet(wb,proSheet(`Mustahik ${rt} — ${activeYear} H`,`${MOSQ} | ${rt}: ${rr.length} KK`,['No','Nama Lengkap','RT','Keterangan'],rr),'Mustahik '+rt.replace(' ',''));});
   }else if(type==='guru'){
-    XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Guru & Sesepuh ${activeYear} H`,`${MOSQ} — Tahun ${activeYear} H | Total: ${d.guru.length} orang`,['No','Nama Lengkap','Kategori','Keterangan'],guruRows(d)),'Guru & Sepuh');
+    XLSX.utils.book_append_sheet(wb,proSheet(`Daftar Guru & Sesepuh ${activeYear} H`,`${MOSQ} — Total: ${d.guru.length} orang`,['No','Nama Lengkap','Kategori','Keterangan'],guruRows(d)),'Guru & Sepuh');
   }else if(type==='rekap'){
     XLSX.utils.book_append_sheet(wb,rekapSheet(d,activeYear),'Rekap Dashboard');
   }
@@ -1240,12 +1101,10 @@ async function quickExport(type) {
   toast('✅ File Excel berhasil didownload!');
 }
 
-function today(){return new Date().toISOString().slice(0,10);}
-
 /* ============================================================
    TOAST
 ============================================================ */
-function toast(msg,type='ok') {
+function toast(msg, type='ok'){
   const c=document.getElementById('tc-wrap');
   const t=document.createElement('div');
   t.className=`toast ${type==='ok'?'':type}`;
@@ -1254,11 +1113,8 @@ function toast(msg,type='ok') {
   c.appendChild(t); setTimeout(()=>t.remove(),3500);
 }
 
-/* ============================================================
-   MODAL CLOSE ON OVERLAY
-============================================================ */
 document.querySelectorAll('.mo').forEach(el=>{
-  el.addEventListener('click',e=>{if(e.target===el&&el.id!=='mo-gh')closeModal(el.id);});
+  el.addEventListener('click',e=>{if(e.target===el&&el.id!=='mo-cfg')closeModal(el.id);});
 });
 </script>
 </body>
