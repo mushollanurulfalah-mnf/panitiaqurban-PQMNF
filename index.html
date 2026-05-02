@@ -12,7 +12,7 @@
    Setelah deploy Apps Script, paste URL Web App di bawah.
    Password admin juga diubah di sini.
 ──────────────────────────────────────────────────────────── */
-const API_URL       = 'https://script.google.com/macros/s/AKfycbwLSiyYppMzMS3hzGp6z2-pzXLYAmAlNNszLZXc4MZTzeYvOmUcCr283fLUGBobce6-QA/exec';
+const API_URL       = 'https://script.google.com/macros/s/AKfycbxoagdrc-vp6sTJCzppZb8FvZQC7rWiIFm_2HR4NAi7auy8Ec5J-AuNqn90jhdOMYde5Q/exec';
 const ADMIN_PASSWORD = 'PQMNF2026';
 /* ────────────────────────────────────────────────────────── */
 </script>
@@ -184,10 +184,24 @@ main{max-width:1200px;margin:0 auto;padding:1.5rem}
 
 /* BADGE */
 .badge{display:inline-block;padding:.18rem .55rem;border-radius:11px;font-size:.7rem;font-weight:600}
+
+/* CENTANG STATUS */
+.cek-btn{
+  display:inline-flex;align-items:center;gap:.3rem;
+  padding:.25rem .6rem;border-radius:20px;border:none;
+  font-family:'Poppins',sans-serif;font-size:.74rem;
+  cursor:pointer;transition:all .22s;font-weight:600;
+  white-space:nowrap;
+}
+.cek-btn.on{background:#dcfce7;color:#166534;border:1.5px solid #86efac}
+.cek-btn.on:hover{background:#bbf7d0}
+.cek-btn.off{background:#f3f4f6;color:#6b7280;border:1.5px solid #d1d5db}
+.cek-btn.off:hover{background:#e5e7eb}
+.cek-btn .cek-ico{font-size:.85rem}
 .bs{background:#dcfce7;color:#166534}.bk{background:#fef9c3;color:#854d0e}
-.brt01{background:#dbeafe;color:#1e40af}.brt02{background:#e0e7ff;color:#3730a3}
-.brt03{background:#fce7f3;color:#9d174d}.brt04{background:#ffedd5;color:#9a3412}
-.brt05{background:#d1fae5;color:#065f46}
+.brt10-04{background:#dbeafe;color:#1eaf56}.brt03-04{background:#e0e7ff;color:#3730a3}
+.brt04-04{background:#fce7f3;color:#9d174d}.brt02-03{background:#ffedd5;color:#b3097a}
+.brt03-03{background:#d1fae5;color:#f10909}
 .bGuruTetap{background:#dbeafe;color:#1e40af}.bSesepuh{background:#ede9fe;color:#5b21b6}
 .bUlamaSetempat{background:#dcfce7;color:#166534}
 
@@ -337,7 +351,7 @@ select.fc{cursor:pointer}
 
 <!-- LOADING -->
 <div id="ls">
-  <img src="https://i.ibb.co.com/W4rmSh0f/white-mnf2.png" alt="MNF" style="width:90px;height:90px;filter:drop-shadow(0 4px 12px rgba(201,162,39,.4))">
+  <img src="https://i.ibb.co.com/W4rmSh0f/white-mnf2.png" alt="Masjid" style="width:90px;height:90px;filter:drop-shadow(0 4px 12px rgba(201,162,39,.4))">
   <div class="lt">Musholla Nurul Falah<br><small style="font-size:.65em;color:rgba(201,162,39,.75)">Sistem Manajemen Qurban</small></div>
   <div class="spin"></div>
 </div>
@@ -361,7 +375,7 @@ select.fc{cursor:pointer}
 <div class="mo" id="mo-cfg">
   <div class="mb">
     <div style="text-align:center;margin-bottom:1.3rem">
-      <img src="https://i.ibb.co.com/JwzP9XyJ/mnf-bulat.png" alt="MNF" style="width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(13,110,79,.25))">
+      <img src="https://i.ibb.co.com/KpLTpmnn/logo-mnf-new-ijo.png" alt="Masjid" style="width:72px;height:72px;filter:drop-shadow(0 2px 8px rgba(13,110,79,.25))">
       <div class="mtitle" style="text-align:center">Musholla Nurul Falah</div>
       <p class="msub">Hubungkan ke Google Apps Script sebagai backend</p>
     </div>
@@ -423,29 +437,29 @@ select.fc{cursor:pointer}
       <div class="fg"><label class="fl">🏘 Filter Mustahik per RT</label>
         <select class="fc" id="exp-rt">
           <option value="">Semua RT (+ Sheet per RT)</option>
-          <option value="RT 10/04">RT 10/04</option>
-          <option value="RT 03/04">RT 03/04</option>
-          <option value="RT 04/04">RT 04/04</option>
-          <option value="RT 02/03">RT 02/03</option>
-          <option value="RT 03/03">RT 03/03</option>
+          <option value="RT 10-04">RT 10-04</option>
+          <option value="RT 03-04">RT 03-04</option>
+          <option value="RT 04-04">RT 04-04</option>
+          <option value="RT 02-03">RT 02-03</option>
+          <option value="RT 03-03">RT 03-03</option>
         </select>
       </div>
     </div>
     <div class="fg">
       <label class="fl" style="margin-bottom:.65rem">Pilih Kategori Data</label>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem">
-        <label class="ex-chk"><input type="checkbox" id="ex-h" checked><span>Hewan Qurban</span></label>
-        <label class="ex-chk"><input type="checkbox" id="ex-p" checked><span>Panitia</span></label>
-        <label class="ex-chk"><input type="checkbox" id="ex-m" checked><span>Mustahik</span></label>
-        <label class="ex-chk"><input type="checkbox" id="ex-g" checked><span>Guru & Sepuh</span></label>
-        <label class="ex-chk" style="grid-column:1/-1"><input type="checkbox" id="ex-r" checked><span>Rekap Dashboard</span></label>
+        <label class="ex-chk"><input type="checkbox" id="ex-h" checked><span>🐄 Hewan Qurban</span></label>
+        <label class="ex-chk"><input type="checkbox" id="ex-p" checked><span>👥 Panitia</span></label>
+        <label class="ex-chk"><input type="checkbox" id="ex-m" checked><span>🤲 Mustahik</span></label>
+        <label class="ex-chk"><input type="checkbox" id="ex-g" checked><span>📚 Guru & Sepuh</span></label>
+        <label class="ex-chk" style="grid-column:1/-1"><input type="checkbox" id="ex-r" checked><span>📋 Rekap Dashboard</span></label>
       </div>
     </div>
     <div class="fg" id="hewan-filter-row">
-      <label class="fl" style="margin-bottom:.5rem">Filter Jenis Hewan (jika Hewan Qurban dicentang)</label>
+      <label class="fl" style="margin-bottom:.5rem">🐄 Filter Jenis Hewan (jika Hewan Qurban dicentang)</label>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem">
-        <label class="ex-chk"><input type="checkbox" id="ex-sapi" checked><span>Sapi</span></label>
-        <label class="ex-chk"><input type="checkbox" id="ex-kambing" checked><span>Kambing</span></label>
+        <label class="ex-chk"><input type="checkbox" id="ex-sapi" checked><span>🐄 Sapi</span></label>
+        <label class="ex-chk"><input type="checkbox" id="ex-kambing" checked><span>🐐 Kambing</span></label>
       </div>
     </div>
     <div style="display:flex;gap:.65rem;justify-content:flex-end;margin-top:.75rem">
@@ -459,7 +473,7 @@ select.fc{cursor:pointer}
 <nav>
   <div class="ni">
     <div class="nb">
-      <img src="https://i.ibb.co.com/W4rmSh0f/white-mnf2.png" alt="MNF" style="width:38px;height:38px;filter:drop-shadow(0 1px 4px rgba(201,162,39,.35))">
+      <img src="https://i.ibb.co.com/W4rmSh0f/white-mnf2.png" alt="Masjid" style="width:38px;height:38px;filter:drop-shadow(0 1px 4px rgba(201,162,39,.35))">
       <div><span>PQ-MNF</span><span class="nbs"></span></div>
     </div>
     <div class="na">
@@ -474,7 +488,7 @@ select.fc{cursor:pointer}
 <main>
   <div class="hero">
     <div class="htitle" id="hero-title">PANITIA QURBAN</div>
-    <div class="hsub">MANAJEMEN QURBAN - MUSHOLLA NURUL FALAH</div>
+    <div class="hsub">SISTEM MANAJEMEN QURBAN - MUSHOLLA NURUL FALAH</div>
     <div class="harab"></div>
   </div>
 
@@ -506,13 +520,15 @@ select.fc{cursor:pointer}
   <!-- DASHBOARD -->
   <div class="sec on" id="sec-dash">
     <div class="sg">
-      <div class="sc"><div class="sic"></div><div class="sn" id="ss">0</div><div class="sl">Sapi</div></div>
-      <div class="sc g"><div class="sic"></div><div class="sn" id="sk">0</div><div class="sl">Kambing</div></div>
-      <div class="sc"><div class="sic"></div><div class="sn" id="sp">0</div><div class="sl">Panitia</div></div>
-      <div class="sc g"><div class="sic"></div><div class="sn" id="spq">0</div><div class="sl">Total Pequrban</div></div>
-      <div class="sc"><div class="sic"></div><div class="sn" id="sm">0</div><div class="sl">Mustahik</div></div>
-      <div class="sc g"><div class="sic"></div><div class="sn" id="sg2">0</div><div class="sl">Guru & Sepuh</div></div>
+      <div class="sc"><div class="sic">🐄</div><div class="sn" id="ss">0</div><div class="red">sapi</div></div>
+      <div class="sc g"><div class="sic">🐐</div><div class="sn" id="sk">0</div><div class="red">Kambing</div></div>
+      <div class="sc"><div class="sic">👥</div><div class="sn" id="sp">0</div><div class="red">Panitia</div></div>
+      <div class="sc g"><div class="sic">🤲</div><div class="sn" id="spq">0</div><div class="sl">TOTAL PEQURBAN</div></div>
+      <div class="sc"><div class="sic">🏠</div><div class="sn" id="sm">0</div><div class="sl">TOTAL MUSTAHIK</div></div>
+      <div class="sc g"><div class="sic">📚</div><div class="sn" id="sg2">0</div><div class="sl">GURU & SEPUH</div></div>
     </div>
+    <!-- Progress Centangan -->
+    <div class="sg" id="progress-cek" style="margin-top:0"></div>
     <div class="tc">
       <div class="tt" style="margin-bottom:.9rem"><i class="fas fa-chart-bar"></i> Mustahik Per RT</div>
       <div class="rtg" id="rtg"></div>
@@ -535,7 +551,7 @@ select.fc{cursor:pointer}
         </div>
       </div>
       <div class="tw"><table class="dt">
-        <thead><tr><th>No</th><th>No. Hewan</th><th>Jenis</th><th>Pequrban</th><th>Keterangan</th><th id="h-act" style="display:none">Aksi</th></tr></thead>
+        <thead><tr><th>No</th><th>No. Hewan</th><th>Jenis</th><th>Pequrban</th><th>Keterangan</th><th>Dipotong</th><th id="h-act" style="display:none">Aksi</th></tr></thead>
         <tbody id="htb"></tbody>
       </table></div>
       <div class="tinfo" id="tinfo-hewan"></div>
@@ -553,7 +569,7 @@ select.fc{cursor:pointer}
         </div>
       </div>
       <div class="tw"><table class="dt">
-        <thead><tr><th>No</th><th>Nama</th><th>Jabatan</th><th>No. HP</th><th id="p-act" style="display:none">Aksi</th></tr></thead>
+        <thead><tr><th>No</th><th>Nama</th><th>Jabatan</th><th>Keterangan</th><th>Hadir</th><th id="p-act" style="display:none">Aksi</th></tr></thead>
         <tbody id="ptb"></tbody>
       </table></div>
       <div class="tinfo" id="tinfo-panitia"></div>
@@ -568,14 +584,14 @@ select.fc{cursor:pointer}
         <div style="display:flex;gap:.45rem;flex-wrap:wrap;align-items:center">
           <select class="fc" style="max-width:115px;padding:.38rem .65rem" id="frt" onchange="renderM()">
             <option value="">Semua RT</option>
-            <option>RT 10/04</option><option>RT 03/04</option><option>RT 04/04</option><option>RT 02/03</option><option>RT 03/03</option>
+            <option>RT 10-04</option><option>RT 03-04</option><option>RT 04-04</option><option>RT 02-03</option><option>RT 03-03</option>
           </select>
           <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." id="ms" oninput="renderM()"></div>
           <button class="bp" id="btn-add-mustahik" onclick="requireAdmin(()=>openForm('mustahik'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
         </div>
       </div>
       <div class="tw"><table class="dt">
-        <thead><tr><th>No</th><th>Nama</th><th>RT</th><th>Keterangan</th><th id="m-act" style="display:none">Aksi</th></tr></thead>
+        <thead><tr><th>No</th><th>Nama</th><th>RT</th><th>Keterangan</th><th>Daging Diambil</th><th id="m-act" style="display:none">Aksi</th></tr></thead>
         <tbody id="mtb"></tbody>
       </table></div>
       <div class="tinfo" id="tinfo-mustahik"></div>
@@ -593,7 +609,7 @@ select.fc{cursor:pointer}
         </div>
       </div>
       <div class="tw"><table class="dt">
-        <thead><tr><th>No</th><th>Nama</th><th>Kategori</th><th>Keterangan</th><th id="g-act" style="display:none">Aksi</th></tr></thead>
+        <thead><tr><th>No</th><th>Nama</th><th>Kategori</th><th>Keterangan</th><th>Daging Dibawakan</th><th id="g-act" style="display:none">Aksi</th></tr></thead>
         <tbody id="gtb"></tbody>
       </table></div>
       <div class="tinfo" id="tinfo-guru"></div>
@@ -626,11 +642,11 @@ select.fc{cursor:pointer}
       <div class="exp-group-label" style="margin-top:.9rem">🏘 Mustahik per RT</div>
       <div class="expg">
         <button class="expbtn" onclick="xls('mustahik')"><i class="fas fa-hands-helping"></i> Semua RT</button>
-        <button class="expbtn" onclick="xls('mustahik','RT 10/04')"><i class="fas fa-home"></i> RT 10/04</button>
-        <button class="expbtn" onclick="xls('mustahik','RT 03/04')"><i class="fas fa-home"></i> RT 03/04</button>
-        <button class="expbtn" onclick="xls('mustahik','RT 04/04')"><i class="fas fa-home"></i> RT 04/04</button>
-        <button class="expbtn" onclick="xls('mustahik','RT 02/03')"><i class="fas fa-home"></i> RT 02/03</button>
-        <button class="expbtn" onclick="xls('mustahik','RT 03/03')"><i class="fas fa-home"></i> RT 03/03</button>
+        <button class="expbtn" onclick="xls('mustahik','RT 10-04')"><i class="fas fa-home"></i> RT 10-04</button>
+        <button class="expbtn" onclick="xls('mustahik','RT 03-04')"><i class="fas fa-home"></i> RT 03-04</button>
+        <button class="expbtn" onclick="xls('mustahik','RT 04-04')"><i class="fas fa-home"></i> RT 04-04</button>
+        <button class="expbtn" onclick="xls('mustahik','RT 02-03')"><i class="fas fa-home"></i> RT 02-03</button>
+        <button class="expbtn" onclick="xls('mustahik','RT 03-03')"><i class="fas fa-home"></i> RT 04-04</button>
       </div>
     </div>
 
@@ -647,7 +663,7 @@ select.fc{cursor:pointer}
         <button class="expbtn" onclick="pdf('rekap')"><i class="fas fa-chart-bar"></i> Rekap</button>
       </div>
 
-      <div class="exp-group-label" style="margin-top:.9rem">Hewan Qurban</div>
+      <div class="exp-group-label" style="margin-top:.9rem">🐄 Hewan Qurban</div>
       <div class="expg">
         <button class="expbtn" onclick="pdf('hewan')"><i class="fas fa-horse"></i> Semua Hewan</button>
         <button class="expbtn" onclick="pdf('sapi')"><i class="fas fa-horse"></i> Sapi</button>
@@ -657,11 +673,11 @@ select.fc{cursor:pointer}
       <div class="exp-group-label" style="margin-top:.9rem">🏘 Mustahik per RT</div>
       <div class="expg">
         <button class="expbtn" onclick="pdf('mustahik')"><i class="fas fa-hands-helping"></i> Semua RT</button>
-        <button class="expbtn" onclick="pdf('mustahik','RT 10/04')"><i class="fas fa-home"></i> RT 10/04</button>
-        <button class="expbtn" onclick="pdf('mustahik','RT 03/04')"><i class="fas fa-home"></i> RT 03/04</button>
-        <button class="expbtn" onclick="pdf('mustahik','RT 04/04')"><i class="fas fa-home"></i> RT 04/04</button>
-        <button class="expbtn" onclick="pdf('mustahik','RT 02/03')"><i class="fas fa-home"></i> RT 02/03</button>
-        <button class="expbtn" onclick="pdf('mustahik','RT 03/03')"><i class="fas fa-home"></i> RT 03/03</button>
+        <button class="expbtn" onclick="pdf('mustahik','RT 10-04')"><i class="fas fa-home"></i> RT 10-04</button>
+        <button class="expbtn" onclick="pdf('mustahik','RT 03-04')"><i class="fas fa-home"></i> RT 03-04</button>
+        <button class="expbtn" onclick="pdf('mustahik','RT 04-04')"><i class="fas fa-home"></i> RT 04-04</button>
+        <button class="expbtn" onclick="pdf('mustahik','RT 02-03')"><i class="fas fa-home"></i> RT 02-03</button>
+        <button class="expbtn" onclick="pdf('mustahik','RT 03-03')"><i class="fas fa-home"></i> RT 03-03</button>
       </div>
     </div>
 
@@ -686,7 +702,7 @@ let allData    = {};   // allData[year] = { hewan:[], panitia:[], mustahik:[], g
 let activeYear = '1447';
 let isAdmin    = false;
 let apiUrl     = '';
-const RT       = ['RT 10/04','RT 03/04','RT 04/04','RT 02/03','RT 03/03'];
+const RT       = ['RT 10-04','RT 03-04','RT 04-04','RT 02-03','RT 03-03'];
 const emptyDb  = () => ({hewan:[],panitia:[],mustahik:[],guru:[]});
 const db       = () => allData[activeYear] || emptyDb();
 
@@ -967,7 +983,11 @@ function sortedPanitia(list){
 function sortedMustahik(list){
   return [...list].sort((a,b)=>(a.nama||'').localeCompare(b.nama||'','id'));
 }
-function renderAll(){ renderDash(); renderH(); renderP(); renderM(); renderG(); }
+function renderAll(){
+  // Reset centang registry setiap render
+  window._CR = {}; window._CR._n = 0;
+  renderDash(); renderH(); renderP(); renderM(); renderG();
+}
 
 function renderDash(){
   const d=db();
@@ -985,6 +1005,33 @@ function renderDash(){
   tb.innerHTML=allPq.length?allPq.map((p,i)=>`<tr><td>${i+1}</td><td><strong>${p.nama}</strong></td><td><span class="badge ${p.jenis==='Sapi'?'bs':'bk'}">${p.jenis}</span></td><td>${p.no||'-'}</td></tr>`).join('')
     :`<tr><td colspan="4" style="text-align:center;color:var(--tl);padding:2rem">Belum ada data pequrban</td></tr>`;
   setTinfo('tinfo-dash', allPq.length, 'pequrban');
+
+  // Progress centangan
+  const dipotong=d.hewan.filter(h=>h.dipotong==='1').length;
+  const hadir=d.panitia.filter(p=>p.hadir==='1').length;
+  const diambil=d.mustahik.filter(m=>m.diambil==='1').length;
+  const dibawakan=d.guru.filter(g=>g.dibawakan==='1').length;
+  const progEl=document.getElementById('progress-cek');
+  if(progEl) progEl.innerHTML=[
+    {ic:'✂️', lbl:'Hewan Dipotong', v:dipotong, t:d.hewan.length, col:'em'},
+    {ic:'👥', lbl:'Panitia Hadir',  v:hadir,    t:d.panitia.length, col:'gold'},
+    {ic:'🥩', lbl:'Mustahik Ambil', v:diambil,  t:d.mustahik.length, col:'em'},
+    {ic:'📦', lbl:'Guru Dibawakan', v:dibawakan,t:d.guru.length, col:'gold'},
+  ].map(({ic,lbl,v,t,col})=>{
+    const pct=t?Math.round((v/t)*100):0;
+    return `<div class="sc ${col==='gold'?'g':''}">
+      <div class="sic">${ic}</div>
+      <div style="font-size:.75rem;font-weight:600;color:var(--${col});margin-bottom:.2rem">${lbl}</div>
+      <div style="display:flex;align-items:baseline;gap:.25rem">
+        <span style="font-size:1.5rem;font-weight:700;color:var(--${col})">${v}</span>
+        <span style="font-size:.8rem;color:var(--tl)">/ ${t}</span>
+      </div>
+      <div style="margin-top:.4rem;height:5px;background:var(--creamd);border-radius:3px;overflow:hidden">
+        <div style="width:${pct}%;height:100%;background:var(--${col});border-radius:3px;transition:width .4s"></div>
+      </div>
+      <div style="font-size:.7rem;color:var(--tl);margin-top:.2rem">${pct}%</div>
+    </div>`;
+  }).join('');
 }
 
 function parsePq(val){
@@ -993,25 +1040,191 @@ function parsePq(val){
   return String(val).split('|').map(p=>p.trim()).filter(Boolean);
 }
 
+/* ════════════════════════════════════════════════════════
+   CENTANGAN — Sistem global registry agar onclick aman
+   Semua data disimpan di window._CR, tombol cukup pakai index
+════════════════════════════════════════════════════════ */
+window._CR = {}; // centang registry
+
+function regCek(obj){
+  const k = '_cr_'+(window._CR._n=(window._CR._n||0)+1);
+  window._CR[k] = obj;
+  return k;
+}
+
+function ckBtn(k, isOn, lblOn, lblOff){
+  var cls = 'cek-btn ' + (isOn ? 'on' : 'off');
+  var ico = isOn ? '✅' : '⬜';
+  var lbl = isOn ? lblOn : lblOff;
+  return '<button class="' + cls + '" data-k="' + k + '" onclick="doCek(this.dataset.k,this)">'
+    + '<span class="cek-ico">' + ico + '</span>&nbsp;' + lbl
+    + '</button>';
+}
+
+async function doCek(k, btnEl){
+  const o = window._CR[k];
+  if(!o){toast('Data tidak ditemukan','err');return;}
+  if(o.pqDag !== undefined){
+    // Mode: toggle daging per pequrban
+    await _togPqDag(o, btnEl);
+  } else {
+    // Mode: toggle field biasa
+    await _togField(o, btnEl);
+  }
+}
+
+async function _togField(o, btnEl){
+  const {type, id, field, lblOn, lblOff} = o;
+  const d    = db();
+  const item = d[type] && d[type].find(r=>String(r.id)===String(id));
+  if(!item){toast('Data tidak ditemukan','err');return;}
+  const curOn = item[field]==='1';
+  if(curOn && !isAdmin){
+    toast('Batalkan centang hanya bisa dilakukan admin','warn');
+    return;
+  }
+  const willOn = !curOn;
+  // UI optimistis langsung
+  btnEl.disabled = true;
+  btnEl.className = 'cek-btn '+(willOn?'on':'off');
+  btnEl.innerHTML = '<span class="cek-ico">'+(willOn?'✅':'⬜')+'</span> '+(willOn?lblOn:lblOff);
+  try{
+    const res = await gas({action:'toggleCheck', tahun:activeYear, type, id, field});
+    item[field] = res.value;
+  }catch(e){
+    toast('Gagal: '+e.message,'err');
+    item[field] = curOn?'1':'0';
+  }finally{
+    btnEl.disabled = false;
+    renderAll();
+  }
+}
+
+/* Dispatcher admin actions (edit/hapus) via data-k */
+function doAdminAct(btnEl){
+  var k = btnEl.dataset.k;
+  var o = window._CR[k];
+  if(!o || !o.fn){ return; }
+  requireAdmin(o.fn);
+}
+
+async function _togPqDag(o, btnEl){
+  const {id, pqDag:idx, lblOn, lblOff} = o;
+  const d    = db();
+  const item = d.hewan && d.hewan.find(r=>String(r.id)===String(id));
+  if(!item){toast('Data tidak ditemukan','err');return;}
+  const arr   = (item.pq_daging||'').split('|');
+  const pqLen = parsePq(item.pequrban).length;
+  while(arr.length<pqLen) arr.push('0');
+  const curOn  = arr[idx]==='1';
+  if(curOn && !isAdmin){
+    toast('Batalkan centang hanya bisa dilakukan admin','warn');
+    return;
+  }
+  const willOn = !curOn;
+  btnEl.disabled = true;
+  btnEl.className = 'cek-btn '+(willOn?'on':'off');
+  btnEl.innerHTML = '<span class="cek-ico">'+(willOn?'✅':'⬜')+'</span> '+(willOn?lblOn:lblOff);
+  arr[idx] = willOn?'1':'0';
+  try{
+    const newRow = {...item, pq_daging:arr.join('|')};
+    await gas({action:'updateRow', tahun:activeYear, type:'hewan', id, d:newRow});
+    item.pq_daging = arr.join('|');
+  }catch(e){
+    toast('Gagal: '+e.message,'err');
+    arr[idx] = curOn?'1':'0';
+    item.pq_daging = arr.join('|');
+  }finally{
+    btnEl.disabled = false;
+    renderAll();
+  }
+}
+
+/* ══ renderH ══════════════════════════════════════════ */
 function renderH(){
   const d=db(), tb=document.getElementById('htb');
-  if(!d.hewan.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty"><i class="fas fa-horse"></i><p>Belum ada data hewan</p></div></td></tr>`;return;}
-  tb.innerHTML=d.hewan.map((h,i)=>{
-    const ps=parsePq(h.pequrban).join(', ');
-    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('hewan','${h.id || i}'))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('hewan','${h.id || i}'))"><i class="fas fa-trash"></i></button></div></td>`:'';
-    return `<tr><td>${i+1}</td><td><strong>${h.no||'-'}</strong></td><td><span class="badge ${h.jenis==='Sapi'?'bs':'bk'}">${h.jenis}</span></td><td style="max-width:200px;word-break:break-word">${ps||'-'}</td><td>${h.ket||'-'}</td>${ac}</tr>`;
-  }).join('');
+  if(!d.hewan.length){
+    tb.innerHTML='<tr><td colspan="7"><div class="empty"><i class="fas fa-horse"></i><p>Belum ada data hewan</p></div></td></tr>';
+    return;
+  }
+  const rows = d.hewan.map((h,i)=>{
+    const hid    = String(h.id||i);
+    const pqList = parsePq(h.pequrban);
+    const dagArr = (h.pq_daging||'').split('|');
+
+    // Pequrban + centang daging (seperti contoh di pequrban)
+    const pqDisp = pqList.length ? pqList.map((p,pi)=>{
+      const dagOn = dagArr[pi]==='1';
+      const k = regCek({id:hid, pqDag:pi, lblOn:'Dibagikan', lblOff:'Belum'});
+      return '<div style="display:flex;align-items:center;gap:.4rem;padding:3px 0;border-bottom:1px dotted #e5e7eb;">'
+        +'<span style="flex:1;font-size:.8rem;color:#1f2937">'+(pi+1)+'. '+p+'</span>'
+        +ckBtn(k, dagOn, 'Dibagikan', 'Belum')
+        +'</div>';
+    }).join('') : '<span style="color:#9ca3af">-</span>';
+
+    // Centang dipotong
+    const dipOn = h.dipotong==='1';
+    const kDip  = regCek({type:'hewan', id:hid, field:'dipotong', lblOn:'Dipotong', lblOff:'Belum'});
+    const cekDip = ckBtn(kDip, dipOn, 'Dipotong', 'Belum');
+
+    // Admin actions
+    const kEdit = '_he_'+i, kDel = '_hd_'+i;
+    window._CR[kEdit] = {fn:()=>openForm('hewan',hid)};
+    window._CR[kDel]  = {fn:()=>del('hewan',hid)};
+    const ac = isAdmin
+      ? '<td><div class="acts">'
+          +'<button class="bedit" data-k="'+kEdit+'" onclick="doAdminAct(this)"><i class="fas fa-edit"></i></button>'
+          +'<button class="bdel"  data-k="'+kDel+'"  onclick="doAdminAct(this)"><i class="fas fa-trash"></i></button>'
+          +'</div></td>'
+      : '';
+
+    return '<tr>'
+      +'<td>'+(i+1)+'</td>'
+      +'<td><strong>'+(h.no||'-')+'</strong></td>'
+      +'<td><span class="badge '+(h.jenis==='Sapi'?'bs':'bk')+'">'+(h.jenis||'-')+'</span></td>'
+      +'<td style="min-width:200px">'+pqDisp+'</td>'
+      +'<td>'+(h.ket||'-')+'</td>'
+      +'<td style="text-align:center">'+cekDip+'</td>'
+      +ac
+      +'</tr>';
+  });
+  tb.innerHTML = rows.join('');
   setTinfo('tinfo-hewan', d.hewan.length, 'hewan');
 }
 
+/* ══ renderP ══════════════════════════════════════════ */
 function renderP(){
   const d=db(), tb=document.getElementById('ptb');
-  if(!d.panitia.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty"><i class="fas fa-users"></i><p>Belum ada data panitia</p></div></td></tr>`;return;}
-  const sorted=sortedPanitia(d.panitia);
-  tb.innerHTML=sorted.map((p,i)=>{
-    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('panitia','${p.id||i}'))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('panitia','${p.id||i}'))"><i class="fas fa-trash"></i></button></div></td>`:'';
-    return `<tr><td>${i+1}</td><td><strong>${p.nama}</strong></td><td>${p.jabatan||'-'}</td><td>${p.hp||'-'}</td>${ac}</tr>`;
-  }).join('');
+  if(!d.panitia.length){
+    tb.innerHTML='<tr><td colspan="6"><div class="empty"><i class="fas fa-users"></i><p>Belum ada data panitia</p></div></td></tr>';
+    return;
+  }
+  const sorted = sortedPanitia(d.panitia);
+  const rows = sorted.map((p,i)=>{
+    const pid    = String(p.id||i);
+    const hadirOn = p.hadir==='1';
+    const kH = regCek({type:'panitia', id:pid, field:'hadir', lblOn:'Hadir', lblOff:'Tidak Hadir'});
+
+    const kEdit = '_pe_'+i, kDel = '_pd_'+i;
+    window._CR[kEdit] = {fn:()=>openForm('panitia',pid)};
+    window._CR[kDel]  = {fn:()=>del('panitia',pid)};
+    const ac = isAdmin
+      ? '<td><div class="acts">'
+          +'<button class="bedit" data-k="'+kEdit+'" onclick="doAdminAct(this)"><i class="fas fa-edit"></i></button>'
+          +'<button class="bdel"  data-k="'+kDel+'"  onclick="doAdminAct(this)"><i class="fas fa-trash"></i></button>'
+          +'</div></td>'
+      : '';
+
+    return '<tr>'
+      +'<td>'+(i+1)+'</td>'
+      +'<td><strong>'+(p.nama||'-')+'</strong></td>'
+      +'<td>'+(p.jabatan||'-')+'</td>'
+      +'<td>'+(p.ket||p.hp||'-')+'</td>'
+      +'<td style="text-align:center">'+ckBtn(kH, hadirOn, 'Hadir', 'Tidak Hadir')+'</td>'
+      +ac
+      +'</tr>';
+  });
+  tb.innerHTML = rows.join('');
   setTinfo('tinfo-panitia', d.panitia.length, 'anggota');
 }
 
@@ -1025,21 +1238,61 @@ function renderM(){
   const tb=document.getElementById('mtb');
   if(!data.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty"><i class="fas fa-hands-helping"></i><p>Belum ada data mustahik</p></div></td></tr>`;return;}
   tb.innerHTML=data.map((m,i)=>{
-    const rk='brt'+(m.rt||'RT 10/04').replace(/\s/g,'').replace('RT','').padStart(2,'0');
-    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('mustahik','${m.id||i}'))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('mustahik','${m.id||i}'))"><i class="fas fa-trash"></i></button></div></td>`:'';
-    return `<tr><td>${i+1}</td><td><strong>${m.nama}</strong></td><td><span class="badge ${rk}">${m.rt||'-'}</span></td><td>${m.ket||'-'}</td>${ac}</tr>`;
+    const mid = String(m.id||i);
+    const rk  = 'brt'+(m.rt||'RT 10-04').replace(/\s/g,'').replace('RT','').padStart(2,'0');
+    const diambilOn = m.diambil==='1';
+    const kA = regCek({type:'mustahik', id:mid, field:'diambil', lblOn:'Sudah Diambil', lblOff:'Belum'});
+    const kEdit = '_me_'+i, kDel = '_md_'+i;
+    window._CR[kEdit]={fn:()=>openForm('mustahik',mid)};
+    window._CR[kDel] ={fn:()=>del('mustahik',mid)};
+    const ac  = isAdmin
+      ? '<td><div class="acts">'
+          +'<button class="bedit" data-k="'+kEdit+'" onclick="doAdminAct(this)"><i class="fas fa-edit"></i></button>'
+          +'<button class="bdel"  data-k="'+kDel+'"  onclick="doAdminAct(this)"><i class="fas fa-trash"></i></button>'
+          +'</div></td>'
+      : '';
+    return '<tr>'
+      +'<td>'+String(i+1)+'</td>'
+      +'<td><strong>'+String(m.nama||'-')+'</strong></td>'
+      +'<td><span class="badge '+rk+'">'+String(m.rt||'-')+'</span></td>'
+      +'<td>'+String(m.ket||'-')+'</td>'
+      +'<td style="text-align:center">'+ckBtn(kA,diambilOn,'Sudah Diambil','Belum')+'</td>'
+      +ac
+      +'</tr>';
   }).join('');
   setTinfo('tinfo-mustahik', data.length, 'mustahik', d.mustahik.length!==data.length?` dari ${d.mustahik.length}`:'');
 }
 
 function renderG(){
   const d=db(), tb=document.getElementById('gtb');
-  if(!d.guru.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty"><i class="fas fa-user-graduate"></i><p>Belum ada data guru & sesepuh</p></div></td></tr>`;return;}
-  tb.innerHTML=d.guru.map((g,i)=>{
-    const bk='b'+(g.kat||'Guru');
-    const ac=isAdmin?`<td><div class="acts"><button class="bedit" onclick="requireAdmin(()=>openForm('guru','${g.id||i}'))"><i class="fas fa-edit"></i></button><button class="bdel" onclick="requireAdmin(()=>del('guru','${g.id||i}'))"><i class="fas fa-trash"></i></button></div></td>`:'';
-    return `<tr><td>${i+1}</td><td><strong>${g.nama}</strong></td><td><span class="badge ${bk}">${g.kat||'-'}</span></td><td>${g.ket||'-'}</td>${ac}</tr>`;
-  }).join('');
+  if(!d.guru.length){
+    tb.innerHTML='<tr><td colspan="6"><div class="empty"><i class="fas fa-user-graduate"></i><p>Belum ada data guru & sesepuh</p></div></td></tr>';
+    return;
+  }
+  const rows = d.guru.map((g,i)=>{
+    const gid   = String(g.id||i);
+    const bk    = 'b'+(g.kat||'Guru');
+    const dibOn = g.dibawakan==='1';
+    const kD    = regCek({type:'guru', id:gid, field:'dibawakan', lblOn:'Sudah Dibawakan', lblOff:'Belum'});
+    const kEdit = '_ge_'+i, kDel = '_gd_'+i;
+    window._CR[kEdit]={fn:()=>openForm('guru',gid)};
+    window._CR[kDel] ={fn:()=>del('guru',gid)};
+    const ac = isAdmin
+      ? '<td><div class="acts">'
+          +'<button class="bedit" data-k="'+kEdit+'" onclick="doAdminAct(this)"><i class="fas fa-edit"></i></button>'
+          +'<button class="bdel"  data-k="'+kDel+'"  onclick="doAdminAct(this)"><i class="fas fa-trash"></i></button>'
+          +'</div></td>'
+      : '';
+    return '<tr>'
+      +'<td>'+(i+1)+'</td>'
+      +'<td><strong>'+(g.nama||'-')+'</strong></td>'
+      +'<td><span class="badge '+bk+'">'+(g.kat||'-')+'</span></td>'
+      +'<td>'+(g.ket||'-')+'</td>'
+      +'<td style="text-align:center">'+ckBtn(kD,dibOn,'Sudah Dibawakan','Belum')+'</td>'
+      +ac
+      +'</tr>';
+  });
+  tb.innerHTML = rows.join('');
   setTinfo('tinfo-guru', d.guru.length, 'orang');
 }
 
@@ -1072,8 +1325,8 @@ function openForm(type, rowId){
     <div class="fr">
       <div class="fg"><label class="fl">Jenis Hewan *</label>
         <select class="fc" id="f-jenis" onchange="upPq()">
-          <option value="Sapi" ${item.jenis==='Sapi'?'selected':''}>Sapi (maks. 7 pequrban)</option>
-          <option value="Kambing" ${item.jenis==='Kambing'?'selected':''}>Kambing (individu)</option>
+          <option value="Sapi" ${item.jenis==='Sapi'?'selected':''}>🐄 Sapi (maks. 7 pequrban)</option>
+          <option value="Kambing" ${item.jenis==='Kambing'?'selected':''}>🐐 Kambing (individu)</option>
         </select></div>
       <div class="fg"><label class="fl">No. Hewan *</label><input class="fc" id="f-no" value="${item.no||''}" placeholder="Cth: S-01 / K-01"></div>
     </div>
@@ -1092,7 +1345,7 @@ function openForm(type, rowId){
     <div class="fg"><label class="fl">Nama Lengkap *</label><input class="fc" id="f-nama" value="${item.nama||''}" placeholder="Nama lengkap panitia"></div>
     <div class="fr">
       <div class="fg"><label class="fl">Jabatan</label><input class="fc" id="f-jabatan" value="${item.jabatan||''}" placeholder="Ketua / Sekretaris / dll"></div>
-      <div class="fg"><label class="fl">No. HP</label><input class="fc" id="f-hp" value="${item.hp||''}" placeholder="08xxxxxxxxxx"></div>
+      <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${item.ket||''}" placeholder="Opsional"></div>
     </div>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.5rem">
       <button class="bn" onclick="closeModal('mo-form')">Batal</button>
@@ -1115,9 +1368,10 @@ function openForm(type, rowId){
     <div class="fg"><label class="fl">Nama Lengkap *</label><input class="fc" id="f-nama" value="${item.nama||''}" placeholder="Nama lengkap"></div>
     <div class="fg"><label class="fl">Kategori *</label>
       <select class="fc" id="f-kat">
-        <option value="GuruTetap" ${item.kat==='GuruTetap'?'selected':''}>GuruTetap</option>
+        <option value="GuruTetap" ${item.kat==='GuruTetap'?'selected':''}>Guru Tetap</option>
         <option value="Sesepuh" ${item.kat==='Sesepuh'?'selected':''}>Sesepuh</option>
-        <option value="UlamaSetempat" ${item.kat==='UlamaSetempat'?'selected':''}>UlamaSetempat</option>
+        <option value="UlamaSetempat" ${item.kat==='UlamaSetempat'?'selected':''}>Ulama Setempat</option>
+        
       </select></div>
     <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${item.ket||''}" placeholder="Opsional"></div>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.5rem">
@@ -1179,17 +1433,21 @@ async function saveH(rowId){
   const pq=Array.from(document.querySelectorAll('.pqi')).map(i=>i.value.trim()).filter(Boolean);
   if(!no){toast('No. hewan wajib diisi!','err');return;}
   if(!pq.length){toast('Isi minimal 1 nama pequrban!','err');return;}
-  const row={jenis, no, ket, pequrban:pq.join('|')};
+  const existing=db().hewan.find(h=>String(h.id)===String(rowId));
+  const row={jenis, no, ket, pequrban:pq.join('|'),
+    dipotong: existing?.dipotong||'0',
+    pq_daging: existing?.pq_daging||''};
   try{ await apiBuildSave('hewan', row, rowId||null); } catch(e){toast('Gagal: '+e.message,'err');}
 }
 async function saveP(rowId){
   const nama=V('f-nama');
   if(!nama){toast('Nama wajib diisi!','err');return;}
-  // Cek duplikat NAMA (anti-double)
   const normNama=nama.trim().toLowerCase();
   const dupNama=db().panitia.find(p=>p.nama.trim().toLowerCase()===normNama && String(p.id)!==String(rowId));
   if(dupNama){ toast('Nama "'+nama+'" sudah terdaftar di Panitia!','err'); return; }
-  const row={nama, jabatan:V('f-jabatan'), hp:V('f-hp')};
+  // Pertahankan nilai hadir yang sudah ada
+  const existing=db().panitia.find(p=>String(p.id)===String(rowId));
+  const row={nama, jabatan:V('f-jabatan'), ket:V('f-ket'), hadir:existing?.hadir||'0'};
   try{ await apiBuildSave('panitia', row, rowId||null); } catch(e){toast('Gagal: '+e.message,'err');}
 }
 async function saveM(rowId){
@@ -1205,7 +1463,8 @@ async function saveM(rowId){
 async function saveG(rowId){
   const nama=V('f-nama');
   if(!nama){toast('Nama wajib diisi!','err');return;}
-  const row={nama, kat:document.getElementById('f-kat').value, ket:V('f-ket')};
+  const existing=db().guru.find(g=>String(g.id)===String(rowId));
+  const row={nama, kat:document.getElementById('f-kat').value, ket:V('f-ket'), dibawakan:existing?.dibawakan||'0'};
   try{ await apiBuildSave('guru', row, rowId||null); } catch(e){toast('Gagal: '+e.message,'err');}
 }
 
@@ -1218,6 +1477,11 @@ async function del(type, rowId){
     toast('Data dihapus!');
   } catch(e){toast('Gagal menghapus: '+e.message,'err');}
 }
+
+/* ── Toggle centangan — bisa tanpa admin, ubah hanya via admin ── */
+/* toggleCek diganti oleh _togField di dalam doCek */
+
+/* cekBtn & handleCek diganti oleh ckBtn & doCek */
 
 /* ============================================================
    EXPORT — EXCEL (ExcelJS) & PDF
@@ -1509,7 +1773,7 @@ function buildRekapSheet(wb, d, year){
     ['Total Hewan',d.hewan.length,                               'Ekor'],
     ['Total Pequrban',allPq.length,                                'Orang'],
     ['Total Panitia', d.panitia.length,                            'Orang'],
-    ['Total Mustahik',d.mustahik.length,                           'Mustahik'],
+    ['Total Mustahik',d.mustahik.length,                           'KK'],
     ['Guru & Sesepuh',d.guru.length,                               'Orang'],
   ];
   items.forEach(([a,b,c],i)=>dataRow(a,b,c,i,i===items.length-1));
@@ -1549,7 +1813,7 @@ const COL_HEWAN = [
   {header:'Pequrban 7',key:'p7',  width:20},
   {header:'Keterangan',key:'ket', width:22},
 ];
-const COL_PANITIA  = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Lengkap',key:'nama',width:32},{header:'Jabatan',key:'jbt',width:24},{header:'No. HP',key:'hp',width:16}];
+const COL_PANITIA  = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Lengkap',key:'nama',width:32},{header:'Jabatan',key:'jbt',width:24},{header:'Ket',key:'ket',width:16}];
 const COL_MUSTAHIK = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Mustahik',key:'nama',width:34},{header:'RT',key:'rt',width:8,align:'center'},{header:'Keterangan',key:'ket',width:24}];
 const COL_GURU     = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Lengkap',key:'nama',width:32},{header:'Kategori',key:'kat',width:14,align:'center'},{header:'Keterangan',key:'ket',width:26}];
 
@@ -1580,16 +1844,16 @@ async function xls(type, filter){
     const rows = mustahikRows(d, rt);
     if(!rows.length){toast('Tidak ada data mustahik'+(rt?' '+rt:''),'warn');return;}
     if(rt){
-      buildSheet(wb, rt.replace(' ',''), 'DAFTAR MUSTAHIK '+rt+' — '+yr+' H', MOSQ+' | '+rt+': '+rows.length+' Mustahik', COL_MUSTAHIK, rows);
+      buildSheet(wb, rt.replace(' ',''), 'DATA MUSTAHIK '+rt+' — '+yr+' H', MOSQ+' | '+rt+': '+rows.length+' Mustahik', COL_MUSTAHIK, rows);
     } else {
-      buildSheet(wb,'Mustahik Semua RT','DAFTAR MUSTAHIK QURBAN '+yr+' H',MOSQ+' | Total Semua RT: '+rows.length+' Mustahik',COL_MUSTAHIK,rows);
+      buildSheet(wb,'Mustahik Semua RT','DATA MUSTAHIK QURBAN '+yr+' H',MOSQ+' | Total Semua RT: '+rows.length+' Mustahik',COL_MUSTAHIK,rows);
       RT.forEach(r=>{const rr=mustahikRows(d,r);if(rr.length) buildSheet(wb,r.replace(' ',''),'MUSTAHIK '+r+' — '+yr+' H',MOSQ+' | '+r+': '+rr.length+' dari '+rows.length+' KK',COL_MUSTAHIK,rr);});
     }
   }
   else if(type==='guru'){
     const rows=guruRows(d);
     if(!rows.length){toast('Tidak ada data guru & sesepuh','warn');return;}
-    buildSheet(wb,'Guru & Sesepuh','DAFTAR GURU & SESEPUH '+yr+' H',MOSQ+' | Total: '+rows.length+' orang',COL_GURU,rows);
+    buildSheet(wb,'Guru & Sesepuh','DATA GURU & SESEPUH '+yr+' H',MOSQ+' | Total: '+rows.length+' orang',COL_GURU,rows);
   }
   else if(type==='rekap'){
     buildRekapSheet(wb, d, yr);
@@ -1630,9 +1894,9 @@ async function doExport(){
     }
     if(chk('ex-p')){const rows=panitiaRows(d);if(rows.length) buildSheet(wb,pfx+'Panitia','PANITIA QURBAN '+yr+' H',MOSQ+' | '+rows.length+' anggota',COL_PANITIA,rows);}
     if(chk('ex-m')){
-      if(rtF){const rr=mustahikRows(d,rtF);if(rr.length) buildSheet(wb,pfx+rtF.replace(' ',''),'MUSTAHIK '+rtF+' '+yr+' H',MOSQ+' | '+rr.length+' KK',COL_MUSTAHIK,rr);}
+      if(rtF){const rr=mustahikRows(d,rtF);if(rr.length) buildSheet(wb,pfx+rtF.replace(' ',''),'MUSTAHIK '+rtF+' '+yr+' H',MOSQ+' | '+rr.length+' Mustahik',COL_MUSTAHIK,rr);}
       else{
-        const rows=mustahikRows(d);if(rows.length) buildSheet(wb,pfx+'Mustahik','MUSTAHIK QURBAN '+yr+' H',MOSQ+' | Semua RT: '+rows.length+' KK',COL_MUSTAHIK,rows);
+        const rows=mustahikRows(d);if(rows.length) buildSheet(wb,pfx+'Mustahik','MUSTAHIK QURBAN '+yr+' H',MOSQ+' | Semua RT: '+rows.length+' Mustahik',COL_MUSTAHIK,rows);
         RT.forEach(r=>{const rr=mustahikRows(d,r);if(rr.length) buildSheet(wb,pfx+r.replace(' ',''),'MUSTAHIK '+r+' '+yr+' H',MOSQ+' | '+r+': '+rr.length+' KK',COL_MUSTAHIK,rr);});
       }
     }
@@ -1666,7 +1930,7 @@ function pdf(type, filter){
   const tglS = new Date().toLocaleDateString('id-ID',{day:'2-digit',month:'long',year:'numeric'});
 
   const kop = `<div class="pdf-kop">
-    <img src="https://i.ibb.co.com/JwzP9XyJ/mnf-bulat.png" alt="logo">
+    <img src="https://i.ibb.co.com/KpLTpmnn/logo-mnf-new-ijo.png" alt="logo">
     <div class="pdf-kop-text"><h1>MUSHOLLA NURUL FALAH</h1><p>Panitia Qurban &nbsp;•&nbsp; Tahun ${activeYear} H</p></div>
     <div class="pdf-kop-right"><div style="font-size:7.5pt;color:#666">Tanggal Cetak:</div><div style="font-weight:700;color:#0a3d2b">${tglS}</div></div>
   </div>`;
@@ -1695,9 +1959,9 @@ function pdf(type, filter){
 
   if(type==='panitia'||isAll){
     out+=page(`
-      ${titleBlock('DAFTAR PANITIA QURBAN '+activeYear+' H', MOSQ+' — Total: '+d.panitia.length+' Panitia','Data Kepanitiaan')}
+      ${titleBlock('DAFTAR PANITIA QURBAN '+activeYear+' H', MOSQ+' — Total: '+d.panitia.length+' anggota','Data Kepanitiaan')}
       <table class="pdf-table">
-        <thead><tr><th>No</th><th>Nama Lengkap</th><th>Jabatan</th><th>No. HP</th></tr></thead>
+        <thead><tr><th>No</th><th>Nama Lengkap</th><th>Jabatan</th><th>Keterangan</th></tr></thead>
         <tbody>${sortedPanitia(d.panitia).map((p,i)=>'<tr><td class="col-no">'+(i+1)+'</td><td class="col-nama">'+(p.nama||'-')+'</td><td style="color:#094d37;font-weight:600">'+(p.jabatan||'-')+'</td><td style="font-size:8pt">'+(p.hp||'-')+'</td></tr>').join('')}</tbody>
         <tfoot><tr><td colspan="3">TOTAL PANITIA</td><td style="text-align:center">${d.panitia.length} Orang</td></tr></tfoot>
       </table>${ttd}`, isAll&&out.length>0);
@@ -1707,7 +1971,7 @@ function pdf(type, filter){
     const rt   = filter||null;
     const list = sortedMustahik(rt?d.mustahik.filter(m=>m.rt===rt):d.mustahik);
     out+=page(`
-      ${titleBlock('DAFTAR MUSTAHIK QURBAN '+activeYear+' H'+(rt?' — '+rt:''), MOSQ+' — '+(rt?rt+': '+list.length+' Mustahik':'Semua RT: '+list.length+' KK'),'Penerima Daging Qurban')}
+      ${titleBlock('DAFTAR MUSTAHIK QURBAN '+activeYear+' H'+(rt?' — '+rt:''), MOSQ+' — '+(rt?rt+': '+list.length+' Mustahik':'Semua RT: '+list.length+' Mustahik'),'Penerima Daging Qurban')}
       <table class="pdf-table">
         <thead><tr><th>No</th><th>Nama Mustahik</th><th>RT</th><th>Keterangan</th></tr></thead>
         <tbody>${list.map((m,i)=>'<tr><td class="col-no">'+(i+1)+'</td><td class="col-nama">'+(m.nama||'-')+'</td><td style="text-align:center;font-weight:700;color:#0a3d2b">'+(m.rt||'-')+'</td><td style="font-size:8pt;color:#555">'+(m.ket||'-')+'</td></tr>').join('')}</tbody>
@@ -1719,7 +1983,7 @@ function pdf(type, filter){
 
   if(type==='guru'||isAll){
     out+=page(`
-      ${titleBlock('DAFTAR GURU & SESEPUH '+activeYear+' H', MOSQ+' — Total: '+d.guru.length+' orang','Data Guru, Sesepuh, Ustadz & Ustadzah')}
+      ${titleBlock('DAFTAR GURU & SESEPUH '+activeYear+' H', MOSQ+' — Total: '+d.guru.length+' orang','Data Guru Tetap, Sesepuh, Ulama Setempat')}
       <table class="pdf-table">
         <thead><tr><th>No</th><th>Nama Lengkap</th><th>Kategori</th><th>Keterangan</th></tr></thead>
         <tbody>${d.guru.map((g,i)=>'<tr><td class="col-no">'+(i+1)+'</td><td class="col-nama">'+(g.nama||'-')+'</td><td style="text-align:center;font-weight:600;color:#094d37">'+(g.kat||'-')+'</td><td style="font-size:8pt;color:#555">'+(g.ket||'-')+'</td></tr>').join('')}</tbody>
@@ -1741,7 +2005,7 @@ function pdf(type, filter){
       </div>
       <div class="pdf-section-title">🏘 DISTRIBUSI MUSTAHIK PER RT</div>
       <table class="pdf-table">
-        <thead><tr><th>RT</th><th>Jumlah KK</th><th>Persentase</th></tr></thead>
+        <thead><tr><th>RT</th><th>Jumlah Mustahik</th><th>Persentase</th></tr></thead>
         <tbody>${RT.map(rt=>{const c=d.mustahik.filter(m=>m.rt===rt).length;const pct=d.mustahik.length?((c/d.mustahik.length)*100).toFixed(1)+'%':'0%';return '<tr><td style="font-weight:700">'+rt+'</td><td style="text-align:center;font-size:12pt;font-weight:700;color:#0d6e4f">'+c+'</td><td style="text-align:center">'+pct+'</td></tr>';}).join('')}</tbody>
       </table>`, isAll&&out.length>0);
   }
