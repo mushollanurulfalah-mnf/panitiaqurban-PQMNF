@@ -12,8 +12,9 @@
    Setelah deploy Apps Script, paste URL Web App di bawah.
    Password admin juga diubah di sini.
 ──────────────────────────────────────────────────────────── */
-const API_URL       = 'https://script.google.com/macros/s/AKfycbxoagdrc-vp6sTJCzppZb8FvZQC7rWiIFm_2HR4NAi7auy8Ec5J-AuNqn90jhdOMYde5Q/exec';
-const ADMIN_PASSWORD = 'PQMNF2026';
+const API_URL            = 'https://script.google.com/macros/s/AKfycbye7fJMHG6zf3-px_lz-J8Mefu-u5MUb7DeqwWWw9afpNY-aaNN_cgWT6XrDJDzZ6_Q/exec';
+const ADMIN_PASSWORD      = 'PQMNF2026';    // ← ubah password admin
+const SEKRE_PASSWORD      = 'sekretaris2026';    // ← ubah password sekretaris
 /* ────────────────────────────────────────────────────────── */
 </script>
 <style>
@@ -50,8 +51,10 @@ nav{background:var(--emd);padding:0 1.5rem;position:sticky;top:0;z-index:100;box
 .nb{display:flex;align-items:center;gap:.75rem;color:var(--gold);font-family:'Amiri',serif;font-size:1.1rem}
 .nbs{font-size:.64rem;color:rgba(201,162,39,.7);display:block}
 .na{display:flex;align-items:center;gap:.45rem}
-.abadge{background:var(--gold);color:var(--emd);padding:.28rem .75rem;border-radius:20px;font-size:.74rem;font-weight:600;display:none}
+.abadge{padding:.28rem .75rem;border-radius:20px;font-size:.74rem;font-weight:600;display:none}
 .abadge.on{display:inline-block}
+.abadge.admin{background:var(--gold);color:var(--emd)}
+.abadge.sekre{background:#3b82f6;color:#fff}
 .ybadge{background:rgba(201,162,39,.18);border:1px solid var(--gold);color:var(--gold);padding:.28rem .8rem;border-radius:20px;font-size:.8rem;font-weight:600}
 .bn{background:transparent;border:1px solid rgba(201,162,39,.45);color:var(--gold);padding:.38rem .85rem;border-radius:20px;font-size:.78rem;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s;white-space:nowrap}
 .bn:hover{background:var(--gold);color:var(--emd)}
@@ -182,6 +185,18 @@ main{max-width:1200px;margin:0 auto;padding:1.5rem}
 .tinfo{font-size:.74rem;color:var(--tl);margin-top:.5rem;text-align:right;padding-right:.2rem}
 .tinfo b{color:var(--em)}
 
+/* ADMIN PANEL */
+.apnl-tab{background:var(--cream);border:1.5px solid var(--creamd);color:var(--tm);padding:.38rem .85rem;border-radius:20px;font-size:.78rem;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s;white-space:nowrap}
+.apnl-tab.active{background:var(--em);border-color:var(--em);color:#fff;font-weight:600}
+.apnl-sec{animation:su .2s ease}
+.apnl-step{font-size:.74rem;font-weight:700;color:var(--em);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.6rem;display:flex;align-items:center;gap:.35rem}
+.apnl-step::before{content:'';display:block;width:3px;height:14px;background:var(--gold);border-radius:2px;flex-shrink:0}
+.rt-btn{padding:.45rem 1rem;border-radius:10px;border:2px solid var(--creamd);background:var(--cream);color:var(--tm);font-size:.82rem;font-weight:500;cursor:pointer;font-family:'Poppins',sans-serif;transition:all .2s;min-width:100px;text-align:center}
+.rt-btn.sel{background:var(--em);border-color:var(--em);color:#fff;font-weight:700;box-shadow:0 2px 8px rgba(13,110,79,.25)}
+.rt-btn:hover:not(.sel){border-color:var(--em);color:var(--em)}
+.del-rt-lbl{display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;cursor:pointer;font-size:.82rem}
+.del-rt-lbl input{accent-color:#dc2626;width:15px;height:15px}
+
 /* BADGE */
 .badge{display:inline-block;padding:.18rem .55rem;border-radius:11px;font-size:.7rem;font-weight:600}
 
@@ -199,11 +214,12 @@ main{max-width:1200px;margin:0 auto;padding:1.5rem}
 .cek-btn.off:hover{background:#e5e7eb}
 .cek-btn .cek-ico{font-size:.85rem}
 .bs{background:#dcfce7;color:#166534}.bk{background:#fef9c3;color:#854d0e}
-.brt10-04{background:#dbeafe;color:#1eaf56}.brt03-04{background:#e0e7ff;color:#3730a3}
-.brt04-04{background:#fce7f3;color:#9d174d}.brt02-03{background:#ffedd5;color:#b3097a}
-.brt03-03{background:#d1fae5;color:#f10909}
+.brt10-04{background:#dbeafe;color:#1e40af}.brt03-04{background:#e0e7ff;color:#3730a3}
+.brt04-04{background:#fce7f3;color:#9d174d}.brt02-03{background:#ffedd5;color:#9a3412}
+.brt03-03{background:#d1fae5;color:#065f46}
 .bGuruTetap{background:#dbeafe;color:#1e40af}.bSesepuh{background:#ede9fe;color:#5b21b6}
-.bUlamaSetempat{background:#dcfce7;color:#166534}
+.bUlamaSetempat{background:#dcfce7;color:#166534}.bPanitiaSepuh{background:#fce7f3;color:#9d174d}
+.bPejabatSetempat{background:#fce7f3;color:#1ddf37}
 
 /* FORM */
 .fr{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
@@ -356,12 +372,31 @@ select.fc{cursor:pointer}
   <div class="spin"></div>
 </div>
 
-<!-- ADMIN LOGIN -->
+<!-- LOGIN MODAL -->
 <div class="mo" id="mo-admin" style="display:none">
   <div class="mb">
-    <div class="mtitle">🔐 Login Admin</div>
-    <p class="msub">Masukkan password admin untuk mengakses fitur pengelolaan data.</p>
-    <div class="fg"><label class="fl">Password Admin</label>
+    <div style="text-align:center;margin-bottom:1.2rem">
+      <div style="font-size:2.5rem">🔐</div>
+      <div class="mtitle" style="text-align:center">Login dulu bro</div>
+      <p class="msub">Pilih peran dan masukkan password</p>
+    </div>
+    <!-- Role selector -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.1rem">
+      <label class="ex-chk" id="role-admin-lbl" style="justify-content:center;flex-direction:column;gap:.2rem;padding:.7rem">
+        <input type="radio" name="login-role" value="admin" checked onchange="updateRoleUI()">
+        <span style="font-size:1.3rem">🛡️</span>
+        <span style="font-size:.82rem;font-weight:600">Admin</span>
+        <span style="font-size:.7rem;opacity:.7">Akses penuh + Import</span>
+      </label>
+      <label class="ex-chk" id="role-sekre-lbl" style="justify-content:center;flex-direction:column;gap:.2rem;padding:.7rem">
+        <input type="radio" name="login-role" value="sekretaris" onchange="updateRoleUI()">
+        <span style="font-size:1.3rem">📝</span>
+        <span style="font-size:.82rem;font-weight:600">Sekretaris</span>
+        <span style="font-size:.7rem;opacity:.7">CRUD + Export + Centang</span>
+      </label>
+    </div>
+    <div class="fg">
+      <label class="fl" id="pw-label">Password Admin</label>
       <input type="password" class="fc" id="adm-pw" placeholder="Masukkan password..." onkeydown="if(event.key==='Enter')doLogin()">
     </div>
     <div style="display:flex;gap:.65rem;justify-content:flex-end">
@@ -417,6 +452,102 @@ select.fc{cursor:pointer}
   </div>
 </div>
 
+<!-- IMPORT PANITIA MODAL -->
+<!-- ══ PANEL ADMIN — IMPORT & HAPUS RT ══════════════════ -->
+<div class="mo" id="mo-admin-panel" style="display:none">
+  <div class="mb wide" style="max-width:660px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.2rem">
+      <div class="mtitle" style="margin:0">⚙️ Panel Admin</div>
+      <button class="bn" onclick="closeModal('mo-admin-panel')"><i class="fas fa-times"></i></button>
+    </div>
+
+    <!-- TAB PANEL -->
+    <div style="display:flex;gap:.4rem;margin-bottom:1.2rem;border-bottom:2px solid var(--creamd);padding-bottom:.65rem">
+      <button class="apnl-tab active" onclick="showAdminTab('import-m',this)">📥 Import Mustahik</button>
+      <button class="apnl-tab" onclick="showAdminTab('import-p',this)">📥 Import Panitia</button>
+      <button class="apnl-tab" onclick="showAdminTab('del-rt',this)">🗑️ Hapus per RT</button>
+    </div>
+
+    <!-- ── TAB: IMPORT MUSTAHIK ── -->
+    <div id="apnl-import-m" class="apnl-sec">
+      <div class="apnl-step">① PILIH RT TUJUAN IMPORT</div>
+      <div id="imp-m-rt-btns" style="display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:.9rem"></div>
+      <div style="display:flex;gap:.5rem;margin-bottom:.9rem">
+        <div class="fg" style="margin:0;flex:1">
+          <label class="fl">Tahun</label>
+          <select class="fc" id="imp-m-yr"></select>
+        </div>
+        <button class="bn" style="align-self:flex-end;margin-bottom:.02rem" onclick="selectAllRT()">Pilih Semua RT</button>
+        <button class="bn" style="align-self:flex-end" onclick="resetImpM()">Reset</button>
+      </div>
+      <div class="apnl-step">② INPUT NAMA MUSTAHIK (SATU NAMA PER BARIS)</div>
+      <textarea id="imp-m-txt" class="fc" rows="9" placeholder="Tom Cruise&#10;Sahrukhan&#10;Dewi Persik&#10;..." style="font-size:.85rem;resize:vertical;margin-bottom:.65rem"></textarea>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem">
+        <button class="bp" style="background:#475569;font-size:.78rem" onclick="pasteClipboardM()"><i class="fas fa-clipboard"></i> Tempel dari Clipboard</button>
+        <button class="bn" style="font-size:.78rem" onclick="document.getElementById('imp-m-txt').value=''">✕ Kosongkan</button>
+        <label class="bp" style="background:#b45309;font-size:.78rem;cursor:pointer"><i class="fas fa-folder-open"></i> Buka File CSV<input type="file" accept=".csv,.txt" style="display:none" onchange="loadFileM(this)"></label>
+      </div>
+      <div id="imp-m-preview"></div>
+      <div style="display:flex;gap:.5rem;margin-top:.75rem">
+        <button class="bp" style="flex:1;justify-content:center;background:#16a34a" onclick="doImportM()"><i class="fas fa-cloud-upload-alt"></i> Simpan Import</button>
+        <button class="bn" onclick="resetImpM()"><i class="fas fa-redo"></i> Reset Semua</button>
+      </div>
+    </div>
+
+    <!-- ── TAB: IMPORT PANITIA ── -->
+    <div id="apnl-import-p" class="apnl-sec" style="display:none">
+      <div class="apnl-step">① INPUT DATA PANITIA (SATU BARIS = SATU ORANG)</div>
+      <div style="background:var(--cream);border-radius:8px;padding:.65rem .85rem;font-size:.77rem;color:var(--tl);margin-bottom:.75rem;line-height:1.8">
+        Format: <code>Nama | Jabatan | Keterangan</code> &nbsp;—&nbsp; Jabatan & keterangan opsional<br>
+        Contoh: <code>Ariel Noah | Ketua | Koordinator Sapi</code>
+      </div>
+      <div class="fg" style="margin-bottom:.65rem">
+        <label class="fl">Tahun</label>
+        <select class="fc" id="imp-p-yr" style="max-width:180px"></select>
+      </div>
+      <textarea id="imp-p-txt" class="fc" rows="9" placeholder="Ronaldo | Ketua&#10;Messi | Sekretaris&#10;Robert | Bendahara&#10;Buffon | Pemotongan&#10;..." style="font-size:.85rem;resize:vertical;margin-bottom:.65rem"></textarea>
+      <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem">
+        <button class="bp" style="background:#475569;font-size:.78rem" onclick="pasteClipboardP()"><i class="fas fa-clipboard"></i> Tempel dari Clipboard</button>
+        <button class="bn" style="font-size:.78rem" onclick="document.getElementById('imp-p-txt').value=''">✕ Kosongkan</button>
+        <label class="bp" style="background:#b45309;font-size:.78rem;cursor:pointer"><i class="fas fa-folder-open"></i> Buka File CSV<input type="file" accept=".csv,.txt" style="display:none" onchange="loadFileP(this)"></label>
+      </div>
+      <div id="imp-p-preview"></div>
+      <div style="display:flex;gap:.5rem;margin-top:.75rem">
+        <button class="bp" style="flex:1;justify-content:center;background:#16a34a" onclick="doImportP()"><i class="fas fa-cloud-upload-alt"></i> Simpan Import</button>
+        <button class="bn" onclick="document.getElementById('imp-p-txt').value='';document.getElementById('imp-p-preview').innerHTML=''"><i class="fas fa-redo"></i> Reset</button>
+      </div>
+    </div>
+
+    <!-- ── TAB: HAPUS PER RT ── -->
+    <div id="apnl-del-rt" class="apnl-sec" style="display:none">
+      <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:8px;padding:.75rem 1rem;margin-bottom:1rem;font-size:.82rem;color:#7f1d1d">
+        ⚠️ <b>Peringatan:</b> Data yang dihapus tidak dapat dikembalikan!
+      </div>
+      <div class="apnl-step">PILIH RT YANG AKAN DIHAPUS SEMUA DATANYA</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1rem" id="del-rt-list">
+        <label class="del-rt-lbl"><input type="checkbox" value="RT 10-04"> RT 10-04 — <span id="cnt-rt10-04">0</span> mustahik</label>
+        <label class="del-rt-lbl"><input type="checkbox" value="RT 03-04"> RT 03-04 — <span id="cnt-rt03-04">0</span> mustahik</label>
+        <label class="del-rt-lbl"><input type="checkbox" value="RT 04-04"> RT 04-04 — <span id="cnt-rt04-04">0</span> mustahik</label>
+        <label class="del-rt-lbl"><input type="checkbox" value="RT 02-03"> RT 02-03 — <span id="cnt-rt02-03">0</span> mustahik</label>
+        <label class="del-rt-lbl" style="grid-column:1/-1"><input type="checkbox" value="RT 03-03"> RT 03-03 — <span id="cnt-rt03-03">0</span> mustahik</label>
+      </div>
+      <button class="bp" style="background:#dc2626;width:100%;justify-content:center" onclick="doDelRT()">
+        <i class="fas fa-trash"></i> Hapus Semua yang Dipilih
+      </button>
+    </div>
+  </div>
+</div>
+
+
+<!-- IMPORT MUSTAHIK PER RT MODAL -->
+
+
+<!-- HAPUS DATA PER RT MODAL -->
+
+
+<!-- IMPORT PANITIA MODAL -->
+<!-- IMPORT MUSTAHIK MODAL -->
+<!-- HAPUS PER RT MODAL -->
 <!-- FORM MODAL -->
 <div class="mo" id="mo-form" style="display:none">
   <div class="mb wide" id="fm-box"></div>
@@ -477,10 +608,11 @@ select.fc{cursor:pointer}
       <div><span>PQ-MNF</span><span class="nbs"></span></div>
     </div>
     <div class="na">
-      <span class="abadge" id="abadge"><i class="fas fa-shield-alt"></i> Admin</span>
+      <span class="abadge" id="abadge" style="display:none"></span>
       <span class="ybadge" id="ybadge-nav">1447 H</span>
-      <button class="bn" onclick="toggleAdmin()"><i class="fas fa-lock" id="lock-ico"></i> <span id="adm-txt">Admin</span></button>
+      <button class="bn" onclick="toggleLogin()"><i class="fas fa-lock" id="lock-ico"></i> <span id="adm-txt">Masuk</span></button>
       <button class="bn" id="btn-setting" onclick="openCfg()" title="Pengaturan" style="display:none"><i class="fas fa-cog"></i></button>
+      <button class="bn" id="btn-admin-panel" onclick="openAdminPanel('import-m')" title="Panel Admin" style="display:none;background:rgba(201,162,39,.15);border-color:var(--gold);color:var(--gold)"><i class="fas fa-tools"></i></button>
     </div>
   </div>
 </nav>
@@ -514,18 +646,18 @@ select.fc{cursor:pointer}
     <button class="tbtn" onclick="showTab('panitia',this)"><i class="fas fa-users"></i> Panitia</button>
     <button class="tbtn" onclick="showTab('mustahik',this)"><i class="fas fa-hands-helping"></i> Mustahik</button>
     <button class="tbtn" onclick="showTab('guru',this)"><i class="fas fa-user-graduate"></i> Guru & Sepuh</button>
-    <button class="tbtn" onclick="requireAdmin(()=>showTab('export',this),this)"><i class="fas fa-file-excel"></i> Export</button>
+    <button class="tbtn" data-tab="export" onclick="showTab('export',this)"><i class="fas fa-file-excel"></i> Export</button>
   </div>
 
   <!-- DASHBOARD -->
   <div class="sec on" id="sec-dash">
     <div class="sg">
-      <div class="sc"><div class="sic">🐄</div><div class="sn" id="ss">0</div><div class="red">sapi</div></div>
-      <div class="sc g"><div class="sic">🐐</div><div class="sn" id="sk">0</div><div class="red">Kambing</div></div>
-      <div class="sc"><div class="sic">👥</div><div class="sn" id="sp">0</div><div class="red">Panitia</div></div>
-      <div class="sc g"><div class="sic">🤲</div><div class="sn" id="spq">0</div><div class="sl">TOTAL PEQURBAN</div></div>
-      <div class="sc"><div class="sic">🏠</div><div class="sn" id="sm">0</div><div class="sl">TOTAL MUSTAHIK</div></div>
-      <div class="sc g"><div class="sic">📚</div><div class="sn" id="sg2">0</div><div class="sl">GURU & SEPUH</div></div>
+      <div class="sc"><div class="sic">🐄</div><div class="sn" id="ss">0</div><div class="sl">Sapi</div></div>
+      <div class="sc g"><div class="sic">🐐</div><div class="sn" id="sk">0</div><div class="sl">Kambing</div></div>
+      <div class="sc"><div class="sic">👥</div><div class="sn" id="sp">0</div><div class="sl">Panitia</div></div>
+      <div class="sc g"><div class="sic">🤲</div><div class="sn" id="spq">0</div><div class="sl">Total Pequrban</div></div>
+      <div class="sc"><div class="sic">🏠</div><div class="sn" id="sm">0</div><div class="sl">Mustahik</div></div>
+      <div class="sc g"><div class="sic">📚</div><div class="sn" id="sg2">0</div><div class="sl">Guru & Sepuh</div></div>
     </div>
     <!-- Progress Centangan -->
     <div class="sg" id="progress-cek" style="margin-top:0"></div>
@@ -547,7 +679,7 @@ select.fc{cursor:pointer}
         <div class="tt"><i class="fas fa-horse"></i> Data Hewan Qurban</div>
         <div style="display:flex;gap:.45rem;flex-wrap:wrap">
           <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." oninput="filt('htb',this.value)"></div>
-          <button class="bp" id="btn-add-hewan" onclick="requireAdmin(()=>openForm('hewan'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
+          <button class="bp" id="btn-add-hewan" onclick="requireEdit(()=>openForm('hewan'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
         </div>
       </div>
       <div class="tw"><table class="dt">
@@ -565,7 +697,8 @@ select.fc{cursor:pointer}
         <div class="tt"><i class="fas fa-users"></i> Data Panitia</div>
         <div style="display:flex;gap:.45rem;flex-wrap:wrap">
           <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." oninput="filt('ptb',this.value)"></div>
-          <button class="bp" id="btn-add-panitia" onclick="requireAdmin(()=>openForm('panitia'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
+          <button class="bp" id="btn-add-panitia" onclick="requireEdit(()=>openForm('panitia'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
+          <button class="bp" id="btn-import-panitia" onclick="requireAdmin(()=>openAdminPanel('import-p'))" style="display:none;background:#2563eb"><i class="fas fa-file-import"></i> Import</button>
         </div>
       </div>
       <div class="tw"><table class="dt">
@@ -587,7 +720,9 @@ select.fc{cursor:pointer}
             <option>RT 10-04</option><option>RT 03-04</option><option>RT 04-04</option><option>RT 02-03</option><option>RT 03-03</option>
           </select>
           <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." id="ms" oninput="renderM()"></div>
-          <button class="bp" id="btn-add-mustahik" onclick="requireAdmin(()=>openForm('mustahik'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
+          <button class="bp" id="btn-add-mustahik" onclick="requireEdit(()=>openForm('mustahik'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
+          <button class="bp" id="btn-import-mustahik" onclick="requireAdmin(()=>openAdminPanel('import-m'))" style="display:none;background:#2563eb"><i class="fas fa-file-import"></i> Import</button>
+          <button class="bp" id="btn-del-rt" onclick="requireAdmin(()=>openAdminPanel('del-rt'))" style="display:none;background:#dc2626"><i class="fas fa-trash"></i> Hapus per RT</button>
         </div>
       </div>
       <div class="tw"><table class="dt">
@@ -605,7 +740,7 @@ select.fc{cursor:pointer}
         <div class="tt"><i class="fas fa-user-graduate"></i> Data Guru & Sesepuh</div>
         <div style="display:flex;gap:.45rem;flex-wrap:wrap">
           <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." oninput="filt('gtb',this.value)"></div>
-          <button class="bp" id="btn-add-guru" onclick="requireAdmin(()=>openForm('guru'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
+          <button class="bp" id="btn-add-guru" onclick="requireEdit(()=>openForm('guru'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
         </div>
       </div>
       <div class="tw"><table class="dt">
@@ -635,8 +770,8 @@ select.fc{cursor:pointer}
       <div class="exp-group-label" style="margin-top:.9rem">🐄 Hewan Qurban</div>
       <div class="expg">
         <button class="expbtn" onclick="xls('hewan')"><i class="fas fa-horse"></i> Semua Hewan</button>
-        <button class="expbtn" onclick="xls('sapi')"><i class="fas fa-horse"></i> Sapi</button>
-        <button class="expbtn" onclick="xls('kambing')"><i class="fas fa-paw"></i> Kambing</button>
+        <button class="expbtn" onclick="xls('sapi')"><i class="fas fa-horse"></i> Sapi Saja</button>
+        <button class="expbtn" onclick="xls('kambing')"><i class="fas fa-paw"></i> Kambing Saja</button>
       </div>
 
       <div class="exp-group-label" style="margin-top:.9rem">🏘 Mustahik per RT</div>
@@ -646,7 +781,7 @@ select.fc{cursor:pointer}
         <button class="expbtn" onclick="xls('mustahik','RT 03-04')"><i class="fas fa-home"></i> RT 03-04</button>
         <button class="expbtn" onclick="xls('mustahik','RT 04-04')"><i class="fas fa-home"></i> RT 04-04</button>
         <button class="expbtn" onclick="xls('mustahik','RT 02-03')"><i class="fas fa-home"></i> RT 02-03</button>
-        <button class="expbtn" onclick="xls('mustahik','RT 03-03')"><i class="fas fa-home"></i> RT 04-04</button>
+        <button class="expbtn" onclick="xls('mustahik','RT 03-03')"><i class="fas fa-home"></i> RT 03-03</button>
       </div>
     </div>
 
@@ -666,8 +801,8 @@ select.fc{cursor:pointer}
       <div class="exp-group-label" style="margin-top:.9rem">🐄 Hewan Qurban</div>
       <div class="expg">
         <button class="expbtn" onclick="pdf('hewan')"><i class="fas fa-horse"></i> Semua Hewan</button>
-        <button class="expbtn" onclick="pdf('sapi')"><i class="fas fa-horse"></i> Sapi</button>
-        <button class="expbtn" onclick="pdf('kambing')"><i class="fas fa-paw"></i> Kambing</button>
+        <button class="expbtn" onclick="pdf('sapi')"><i class="fas fa-horse"></i> Sapi Saja</button>
+        <button class="expbtn" onclick="pdf('kambing')"><i class="fas fa-paw"></i> Kambing Saja</button>
       </div>
 
       <div class="exp-group-label" style="margin-top:.9rem">🏘 Mustahik per RT</div>
@@ -685,7 +820,7 @@ select.fc{cursor:pointer}
 </main>
 
 <footer style="text-align:center;padding:1.8rem 1rem;color:var(--tl);font-size:.76rem">
-  <p>Musholla <span style="color:var(--em);font-weight:600">Nurul Falah</span> — Sistem Manajemen Qurban</p>
+  <p><span style="color:var(--em);font-weight:600">Musholla Nurul Falah - Sistem Manajemen Qurban</span></p>
   <p style="margin-top:.2rem">Data tersimpan di Google Sheets • Aktif: <span id="ft-year" style="color:var(--em);font-weight:600">1447 H</span></p>
 </footer>
 
@@ -700,8 +835,16 @@ select.fc{cursor:pointer}
 ============================================================ */
 let allData    = {};   // allData[year] = { hewan:[], panitia:[], mustahik:[], guru:[] }
 let activeYear = '1447';
-let isAdmin    = false;
+let isAdmin    = false;   // akun admin penuh
+let isSekre    = false;   // akun sekretaris
 let apiUrl     = '';
+
+// Helper: apakah punya akses level tertentu
+const hasAccess  = (level) => level==='admin' ? isAdmin : (isAdmin || isSekre);
+// canEdit: sekretaris & admin bisa tambah/edit/hapus
+const canEdit    = () => isAdmin || isSekre;
+// canImport: hanya admin
+const canImport  = () => isAdmin;
 const RT       = ['RT 10-04','RT 03-04','RT 04-04','RT 02-03','RT 03-03'];
 const emptyDb  = () => ({hewan:[],panitia:[],mustahik:[],guru:[]});
 const db       = () => allData[activeYear] || emptyDb();
@@ -763,17 +906,54 @@ async function saveConfig(){
 // Data kompleks di-encode sebagai JSON string di param "d"
 async function gas(params) {
   if (!apiUrl) throw new Error('URL Apps Script belum dikonfigurasi');
-  // Pisahkan param "d" (data kompleks) dari param lain
+
+  // Jika ada data besar (import batch), kirim via GET dengan chunking
+  // GAS hanya support doGet — encode semua via URL params
   const p = {...params};
   if (p.d && typeof p.d === 'object') {
     p.d = encodeURIComponent(JSON.stringify(p.d));
   }
-  const url = apiUrl + '?' + new URLSearchParams(p);
+
+  // Cek panjang URL — jika > 2000 char, perlu chunking
+  const qs = new URLSearchParams(p).toString();
+  const url = apiUrl + '?' + qs;
+
+  // Untuk importRows yang besar, kirim per chunk
+  if (params.action === 'importRows' && params.d && params.d.rows && params.d.rows.length > 20) {
+    return await gasChunked(params);
+  }
+
   const r = await fetch(url, {redirect: 'follow'});
   if (!r.ok) throw new Error('HTTP ' + r.status);
   const data = await r.json();
   if (!data.ok) throw new Error(data.msg || 'Error dari server');
   return data;
+}
+
+// Kirim importRows dalam chunks kecil untuk hindari URL limit
+async function gasChunked(params) {
+  const allRows = params.d.rows;
+  const CHUNK   = 15; // 15 baris per request
+  let totalImported = 0;
+  let totalSkipped  = 0;
+
+  for (let i = 0; i < allRows.length; i += CHUNK) {
+    const chunk = allRows.slice(i, i + CHUNK);
+    const p = {
+      action : params.action,
+      tahun  : params.tahun,
+      type   : params.type,
+      d      : encodeURIComponent(JSON.stringify({rows: chunk}))
+    };
+    const url = apiUrl + '?' + new URLSearchParams(p).toString();
+    const r   = await fetch(url, {redirect:'follow'});
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    if (!data.ok) throw new Error(data.msg || 'Error dari server');
+    totalImported += data.imported || 0;
+    totalSkipped  += data.skipped  || 0;
+  }
+  return {ok: true, imported: totalImported, skipped: totalSkipped};
 }
 // Alias read-only
 const gasCall = gas;
@@ -906,37 +1086,94 @@ async function addYear(){
 /* ============================================================
    ADMIN
 ============================================================ */
-function toggleAdmin(){ isAdmin ? logoutAdmin() : (() => {openModal('mo-admin');setTimeout(()=>document.getElementById('adm-pw').focus(),120);})(); }
+/* ── Auth helpers ── */
+function toggleLogin(){
+  if(isAdmin||isSekre) doLogout();
+  else { openModal('mo-admin'); setTimeout(()=>document.getElementById('adm-pw').focus(),120); }
+}
+
+function updateRoleUI(){
+  const role = document.querySelector('input[name=login-role]:checked')?.value||'admin';
+  document.getElementById('pw-label').textContent = role==='admin'?'Password Admin':'Password Sekretaris';
+}
+
 function doLogin(){
-  const pw=document.getElementById('adm-pw').value;
-  if(pw===ADMIN_PASSWORD){
-    isAdmin=true;
-    document.getElementById('abadge').classList.add('on');
-    document.getElementById('adm-txt').textContent='Keluar';
-    document.getElementById('lock-ico').className='fas fa-lock-open';
+  const pw   = document.getElementById('adm-pw').value;
+  const role = document.querySelector('input[name=login-role]:checked')?.value||'admin';
+  if(role==='admin' && pw===ADMIN_PASSWORD){
+    isAdmin=true; isSekre=false;
+    setRoleBadge('admin');
     closeModal('mo-admin');
-    setAdminUI(true);
-    toast('Login admin berhasil! 🔓');
-  } else toast('Password salah!','err');
+    setRoleUI();
+    toast('Login Admin berhasil! 🛡️');
+  } else if(role==='sekretaris' && pw===SEKRE_PASSWORD){
+    isSekre=true; isAdmin=false;
+    setRoleBadge('sekre');
+    closeModal('mo-admin');
+    setRoleUI();
+    toast('Login Sekretaris berhasil! 📝');
+  } else {
+    toast('Password salah!','err');
+    document.getElementById('adm-pw').value='';
+  }
 }
-function logoutAdmin(){
-  isAdmin=false;
-  document.getElementById('abadge').classList.remove('on');
-  document.getElementById('adm-txt').textContent='Admin';
+
+function doLogout(){
+  isAdmin=false; isSekre=false;
+  const badge=document.getElementById('abadge');
+  badge.className='abadge'; badge.style.display='none';
+  document.getElementById('adm-txt').textContent='Masuk';
   document.getElementById('lock-ico').className='fas fa-lock';
-  setAdminUI(false);
-  toast('Keluar dari mode admin');
+  setRoleUI();
+  toast('Berhasil keluar');
 }
-function setAdminUI(on){
-  ['h-act','p-act','m-act','g-act'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=on?'':'none';});
-  ['btn-add-hewan','btn-add-panitia','btn-add-mustahik','btn-add-guru'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.display=on?'':'none';});
-  const s=document.getElementById('btn-setting'); if(s) s.style.display=on?'':'none';
-  renderYears(); // re-render yopts to show/hide btn-add-year
+
+function setRoleBadge(role){
+  const badge=document.getElementById('abadge');
+  badge.className='abadge on '+role;
+  badge.innerHTML = role==='admin'
+    ? '<i class="fas fa-shield-alt"></i> Admin'
+    : '<i class="fas fa-pen"></i> Sekretaris';
+  badge.style.display='inline-block';
+  document.getElementById('adm-txt').textContent='Keluar';
+  document.getElementById('lock-ico').className='fas fa-lock-open';
+}
+
+function setRoleUI(){
+  const edit  = canEdit();
+  const admin = isAdmin;
+  // Aksi tabel (edit/hapus)
+  ['h-act','p-act','m-act','g-act'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display=edit?'':'none';
+  });
+  // Tombol tambah
+  ['btn-add-hewan','btn-add-panitia','btn-add-mustahik','btn-add-guru'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display=edit?'':'none';
+  });
+  // Hanya admin: setting, import, hapus per RT
+  const s=document.getElementById('btn-setting'); if(s) s.style.display=admin?'':'none';
+  ['btn-import-panitia','btn-import-mustahik','btn-del-rt'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.style.display=admin?'':'none';
+  });
+  // Tab export: sekretaris & admin
+  const tabExp=document.querySelector('.tbtn[data-tab=export]');
+  if(tabExp) tabExp.style.display=edit?'':'none';
+  renderYears();
   renderAll();
 }
+
+// Alias lama
+const setAdminUI = (on) => { if(on){isAdmin=true;}else{isAdmin=false;isSekre=false;} setRoleUI(); };
+
 function requireAdmin(fn){
   if(!apiUrl){toast('Konfigurasi URL Apps Script dahulu!','warn');return;}
   if(isAdmin){ if(typeof fn==='function') fn(); }
+  else{ openModal('mo-admin'); setTimeout(()=>document.getElementById('adm-pw').focus(),120); }
+}
+
+function requireEdit(fn){
+  if(!apiUrl){toast('Konfigurasi URL Apps Script dahulu!','warn');return;}
+  if(canEdit()){ if(typeof fn==='function') fn(); }
   else{ openModal('mo-admin'); setTimeout(()=>document.getElementById('adm-pw').focus(),120); }
 }
 
@@ -944,7 +1181,7 @@ function requireAdmin(fn){
    TABS
 ============================================================ */
 function showTab(tab, btn){
-  if(tab==='export'&&!isAdmin){ requireAdmin(()=>{ _showTab(tab,btn); }); return; }
+  if(tab==='export'&&!canEdit()){ requireEdit(()=>{ _showTab(tab,btn); }); return; }
   _showTab(tab, btn);
 }
 function _showTab(tab, btn){
@@ -963,8 +1200,7 @@ const JABATAN_ORDER = [
   'ketua','wakil ketua','sekretaris','wakil sekretaris',
   'bendahara','wakil bendahara',
   'koordinator pemotongan','anggota pemotongan','koordinator humas',
-  'anggota humas','koordinator perlengkapan','anggota perlengkapan','koordinator konsumsi','anggota konsumsi','koordinator pengesetan','anggota pengesetan','koordinator pengumpul kaki','anggota pengumpul kaki','koordinator pencuci perut','anggota pencuci perut','koordinator pengangkutan','anggota pengangkutan','koordinator penghalus','anggota penghalus','koordinator pembantu umum','anggota pembantu umum',
-  'koordinator jagal','anggota jagal','dokumentasi','keamanan',
+  'anggota humas','koordinator perlengkapan','anggota perlengkapan','koordinator konsumsi','anggota konsumsi','koordinator pengesetan','anggota pengesetan','koordinator pengumpul kaki','anggota pengumpul kaki','koordinator pencuci perut','anggota pencuci perut','koordinator pengangkutan','anggota pengangkutan','koordinator penghalus','anggota penghalus','koordinator pembantu umum','anggota pembantu umum','dokumentasi','keamanan',
 ];
 function jabatanRank(jabatan){
   const j=(jabatan||'').toLowerCase().trim();
@@ -1079,8 +1315,8 @@ async function _togField(o, btnEl){
   const item = d[type] && d[type].find(r=>String(r.id)===String(id));
   if(!item){toast('Data tidak ditemukan','err');return;}
   const curOn = item[field]==='1';
-  if(curOn && !isAdmin){
-    toast('Batalkan centang hanya bisa dilakukan admin','warn');
+  if(!isAdmin && !isSekre){
+    toast('Silakan login dahulu untuk mengubah centang','warn');
     return;
   }
   const willOn = !curOn;
@@ -1105,7 +1341,8 @@ function doAdminAct(btnEl){
   var k = btnEl.dataset.k;
   var o = window._CR[k];
   if(!o || !o.fn){ return; }
-  requireAdmin(o.fn);
+  // Sekretaris dan Admin bisa edit & hapus
+  requireEdit(o.fn);
 }
 
 async function _togPqDag(o, btnEl){
@@ -1117,8 +1354,8 @@ async function _togPqDag(o, btnEl){
   const pqLen = parsePq(item.pequrban).length;
   while(arr.length<pqLen) arr.push('0');
   const curOn  = arr[idx]==='1';
-  if(curOn && !isAdmin){
-    toast('Batalkan centang hanya bisa dilakukan admin','warn');
+  if(!isAdmin && !isSekre){
+    toast('Silakan login dahulu untuk mengubah centang','warn');
     return;
   }
   const willOn = !curOn;
@@ -1171,7 +1408,7 @@ function renderH(){
     const kEdit = '_he_'+i, kDel = '_hd_'+i;
     window._CR[kEdit] = {fn:()=>openForm('hewan',hid)};
     window._CR[kDel]  = {fn:()=>del('hewan',hid)};
-    const ac = isAdmin
+    const ac = canEdit()
       ? '<td><div class="acts">'
           +'<button class="bedit" data-k="'+kEdit+'" onclick="doAdminAct(this)"><i class="fas fa-edit"></i></button>'
           +'<button class="bdel"  data-k="'+kDel+'"  onclick="doAdminAct(this)"><i class="fas fa-trash"></i></button>'
@@ -1208,7 +1445,7 @@ function renderP(){
     const kEdit = '_pe_'+i, kDel = '_pd_'+i;
     window._CR[kEdit] = {fn:()=>openForm('panitia',pid)};
     window._CR[kDel]  = {fn:()=>del('panitia',pid)};
-    const ac = isAdmin
+    const ac = canEdit()
       ? '<td><div class="acts">'
           +'<button class="bedit" data-k="'+kEdit+'" onclick="doAdminAct(this)"><i class="fas fa-edit"></i></button>'
           +'<button class="bdel"  data-k="'+kDel+'"  onclick="doAdminAct(this)"><i class="fas fa-trash"></i></button>'
@@ -1245,7 +1482,7 @@ function renderM(){
     const kEdit = '_me_'+i, kDel = '_md_'+i;
     window._CR[kEdit]={fn:()=>openForm('mustahik',mid)};
     window._CR[kDel] ={fn:()=>del('mustahik',mid)};
-    const ac  = isAdmin
+    const ac  = canEdit()
       ? '<td><div class="acts">'
           +'<button class="bedit" data-k="'+kEdit+'" onclick="doAdminAct(this)"><i class="fas fa-edit"></i></button>'
           +'<button class="bdel"  data-k="'+kDel+'"  onclick="doAdminAct(this)"><i class="fas fa-trash"></i></button>'
@@ -1277,7 +1514,7 @@ function renderG(){
     const kEdit = '_ge_'+i, kDel = '_gd_'+i;
     window._CR[kEdit]={fn:()=>openForm('guru',gid)};
     window._CR[kDel] ={fn:()=>del('guru',gid)};
-    const ac = isAdmin
+    const ac = canEdit()
       ? '<td><div class="acts">'
           +'<button class="bedit" data-k="'+kEdit+'" onclick="doAdminAct(this)"><i class="fas fa-edit"></i></button>'
           +'<button class="bdel"  data-k="'+kDel+'"  onclick="doAdminAct(this)"><i class="fas fa-trash"></i></button>'
@@ -1369,9 +1606,10 @@ function openForm(type, rowId){
     <div class="fg"><label class="fl">Kategori *</label>
       <select class="fc" id="f-kat">
         <option value="GuruTetap" ${item.kat==='GuruTetap'?'selected':''}>Guru Tetap</option>
-        <option value="Sesepuh" ${item.kat==='Sesepuh'?'selected':''}>Sesepuh</option>
+        <option value="SesepuhSetempat" ${item.kat==='SesepuhSetempat'?'selected':''}>Sesepuh Setempat</option>
         <option value="UlamaSetempat" ${item.kat==='UlamaSetempat'?'selected':''}>Ulama Setempat</option>
-        
+        <option value="PanitiaSepuh" ${item.kat==='PanitiaSepuh'?'selected':''}>Panitia Sepuh</option>
+        <option value="PejabatSetempat" ${item.kat==='PejabatSetempat'?'selected':''}>Pejabat Setempat</option>
       </select></div>
     <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${item.ket||''}" placeholder="Opsional"></div>
     <div style="display:flex;gap:.6rem;justify-content:flex-end;margin-top:.5rem">
@@ -1482,6 +1720,184 @@ async function del(type, rowId){
 /* toggleCek diganti oleh _togField di dalam doCek */
 
 /* cekBtn & handleCek diganti oleh ckBtn & doCek */
+
+/* ============================================================
+   IMPORT DATA (Excel/CSV) — Admin Only
+============================================================ */
+let _importRows = { p:[], m:[] };  // rows parsed, siap di-import
+
+/* Baca file xlsx/csv menggunakan ExcelJS lalu tampilkan preview */
+async function parseImport(mode){
+  const fileEl = document.getElementById('imp-'+mode+'-file');
+  const file   = fileEl?.files?.[0];
+  if(!file){ toast('Pilih file terlebih dahulu!','warn'); return; }
+
+  const rt = mode==='m' ? (document.getElementById('imp-m-rt')?.value||'') : '';
+
+  try{
+    const buf  = await file.arrayBuffer();
+    const wb   = new ExcelJS.Workbook();
+    if(file.name.endsWith('.csv')){
+      // Parse CSV manual
+      const txt = new TextDecoder().decode(buf);
+      const lines = txt.split('\n').filter(l=>l.trim());
+      const headers = lines[0].split(',').map(h=>h.trim().toLowerCase().replace(/"/g,''));
+      const rows = lines.slice(1).map(l=>{
+        const vals = l.split(',').map(v=>v.trim().replace(/"/g,''));
+        const obj={};
+        headers.forEach((h,i)=>obj[h]=vals[i]||'');
+        return obj;
+      }).filter(r=>r.nama);
+      _processImportRows(mode, rows, rt);
+    } else {
+      await wb.xlsx.load(buf);
+      const ws = wb.worksheets[0];
+      if(!ws){ toast('Sheet tidak ditemukan!','err'); return; }
+      const headers = [];
+      ws.getRow(1).eachCell(c=>headers.push(String(c.value||'').toLowerCase().trim()));
+      const rows=[];
+      ws.eachRow((row,rn)=>{
+        if(rn===1) return;
+        const obj={};
+        row.eachCell((cell,ci)=>{ if(headers[ci-1]) obj[headers[ci-1]]=String(cell.value||'').trim(); });
+        if(obj.nama) rows.push(obj);
+      });
+      _processImportRows(mode, rows, rt);
+    }
+  }catch(e){ toast('Gagal baca file: '+e.message,'err'); }
+}
+
+function _processImportRows(mode, rows, rtFilter){
+  const d    = db();
+  const list = mode==='p' ? d.panitia : d.mustahik;
+  const existingNames = new Set(list.map(x=>x.nama.trim().toLowerCase()));
+
+  // Filter RT jika dipilih
+  let filtered = rows;
+  if(mode==='m' && rtFilter) filtered = rows.filter(r=>{
+    const rv = (r.rt||r.RT||'').trim();
+    return rv.toUpperCase()===rtFilter.replace(' ','').toUpperCase()
+        || rv===rtFilter || rv.includes(rtFilter.replace('RT ',''));
+  });
+
+  // Tandai duplikat
+  const processed = filtered.map(r=>{
+    const n = (r.nama||r.NAMA||'').trim();
+    const j = r.jabatan||r.JABATAN||'';
+    const k = r.ket||r.KET||r.keterangan||'';
+    const rt= (r.rt||r.RT||rtFilter||'').trim();
+    const dup = existingNames.has(n.toLowerCase());
+    return { nama:n, jabatan:j, ket:k, rt:_normalizeRT(rt), dup };
+  }).filter(r=>r.nama);
+
+  _importRows[mode] = processed;
+
+  const tbody = document.getElementById('imp-'+mode+'-tbody');
+  const preview = document.getElementById('imp-'+mode+'-preview');
+  const info  = document.getElementById('imp-'+mode+'-info');
+  const saveBtn=document.getElementById('imp-'+mode+'-save');
+
+  const dupCount = processed.filter(r=>r.dup).length;
+  const newCount = processed.filter(r=>!r.dup).length;
+
+  if(mode==='p'){
+    tbody.innerHTML = processed.map((r,i)=>'<tr>'
+      +'<td>'+String(i+1)+'</td>'
+      +'<td><b>'+r.nama+'</b></td>'
+      +'<td>'+r.jabatan+'</td>'
+      +'<td>'+r.ket+'</td>'
+      +'<td>'+(r.dup
+        ? '<span style="color:#dc2626;font-size:.75rem;font-weight:600">⚠ Duplikat</span>'
+        : '<span style="color:#166534;font-size:.75rem;font-weight:600">✅ Baru</span>')+'</td>'
+      +'</tr>').join('');
+  } else {
+    tbody.innerHTML = processed.map((r,i)=>'<tr>'
+      +'<td>'+String(i+1)+'</td>'
+      +'<td><b>'+r.nama+'</b></td>'
+      +'<td>'+r.rt+'</td>'
+      +'<td>'+r.ket+'</td>'
+      +'<td>'+(r.dup
+        ? '<span style="color:#dc2626;font-size:.75rem;font-weight:600">⚠ Duplikat</span>'
+        : '<span style="color:#166534;font-size:.75rem;font-weight:600">✅ Baru</span>')+'</td>'
+      +'</tr>').join('');
+  }
+
+  preview.style.display = processed.length ? 'block' : 'none';
+  info.innerHTML = '<b>'+processed.length+'</b> data ditemukan — '
+    +'<span style="color:#166534"><b>'+newCount+'</b> baru</span>, '
+    +'<span style="color:#dc2626"><b>'+dupCount+'</b> duplikat (akan dilewati)</span>';
+  saveBtn.style.display = newCount>0 ? 'inline-flex' : 'none';
+  if(!newCount) toast('Semua data sudah ada (duplikat)!','warn');
+}
+
+function _normalizeRT(rt){
+  const n=rt.replace(/\D/g,'');
+  if(!n) return '';
+  return 'RT '+n.padStart(2,'0');
+}
+
+async function doImport(mode){
+  const rows = (_importRows[mode]||[]).filter(r=>!r.dup);
+  if(!rows.length){ toast('Tidak ada data baru!','warn'); return; }
+
+  const saveBtn=document.getElementById('imp-'+mode+'-save');
+  saveBtn.disabled=true; saveBtn.textContent='Mengimport...';
+
+  let ok=0, fail=0;
+  for(const r of rows){
+    try{
+      const row = mode==='p'
+        ? {nama:r.nama, jabatan:r.jabatan||'', ket:r.ket||'', hadir:'0'}
+        : {nama:r.nama, rt:r.rt||'', ket:r.ket||'', diambil:'0'};
+      await gas({action:'addRow', tahun:activeYear, type: mode==='p'?'panitia':'mustahik', d:row});
+      ok++;
+    }catch(e){ fail++; console.warn('Import row fail:',e.message); }
+  }
+
+  await loadYearData(activeYear);
+  renderAll();
+  closeModal('mo-import-'+mode);
+  toast('✅ Import selesai: '+ok+' berhasil'+(fail?' | '+fail+' gagal':''));
+  saveBtn.disabled=false;
+}
+
+/* ── Hapus data Mustahik per RT ── */
+function openDelRT(){
+  const rtSel=document.getElementById('del-rt-val');
+  if(rtSel) rtSel.value='';
+  document.getElementById('del-rt-info').textContent='';
+  openModal('mo-del-rt');
+  rtSel.onchange=function(){
+    const v=this.value;
+    const d=db();
+    if(!v){document.getElementById('del-rt-info').textContent='';return;}
+    const cnt=v==='ALL'?d.mustahik.length:d.mustahik.filter(m=>m.rt===v).length;
+    document.getElementById('del-rt-info').innerHTML=
+      '<span style="color:#dc2626"><b>'+cnt+'</b> data akan dihapus!</span>';
+  };
+}
+
+async function doDelRT(){
+  const v=document.getElementById('del-rt-val').value;
+  if(!v){ toast('Pilih RT terlebih dahulu!','warn'); return; }
+  const d=db();
+  const toDelete=v==='ALL'?[...d.mustahik]:d.mustahik.filter(m=>m.rt===v);
+  if(!toDelete.length){ toast('Tidak ada data di '+v,'warn'); return; }
+  if(!confirm('Yakin hapus '+toDelete.length+' data mustahik'+(v==='ALL'?' semua RT':' '+v)+'? Tidak bisa dibatalkan!')) return;
+
+  toast('Menghapus '+toDelete.length+' data...','warn');
+  let ok=0;
+  for(const m of toDelete){
+    try{
+      await gas({action:'deleteRow', tahun:activeYear, type:'mustahik', id:m.id});
+      ok++;
+    }catch(e){ console.warn('Del fail:',m.id,e.message); }
+  }
+  await loadYearData(activeYear);
+  renderAll();
+  closeModal('mo-del-rt');
+  toast('✅ '+ok+' data mustahik berhasil dihapus!');
+}
 
 /* ============================================================
    EXPORT — EXCEL (ExcelJS) & PDF
@@ -1768,13 +2184,13 @@ function buildRekapSheet(wb, d, year){
   // Ringkasan
   secHdr('JUMLAH');
   const items=[
-    ['Hewan Sapi',  d.hewan.filter(h=>h.jenis==='Sapi').length,   'Ekor'],
-    ['Hewan Kambing',d.hewan.filter(h=>h.jenis==='Kambing').length,'Ekor'],
-    ['Total Hewan',d.hewan.length,                               'Ekor'],
-    ['Total Pequrban',allPq.length,                                'Orang'],
-    ['Total Panitia', d.panitia.length,                            'Orang'],
-    ['Total Mustahik',d.mustahik.length,                           'KK'],
-    ['Guru & Sesepuh',d.guru.length,                               'Orang'],
+    ['🐄 Hewan Sapi',  d.hewan.filter(h=>h.jenis==='Sapi').length,   'Ekor'],
+    ['🐐 Hewan Kambing',d.hewan.filter(h=>h.jenis==='Kambing').length,'Ekor'],
+    ['🐄🐐 Total Hewan',d.hewan.length,                               'Ekor'],
+    ['🤲 Total Pequrban',allPq.length,                                'Orang'],
+    ['👥 Total Panitia', d.panitia.length,                            'Orang'],
+    ['🏠 Total Mustahik',d.mustahik.length,                           'Mustahik'],
+    ['📚 Guru & Sesepuh',d.guru.length,                               'Orang'],
   ];
   items.forEach(([a,b,c],i)=>dataRow(a,b,c,i,i===items.length-1));
 
@@ -1782,7 +2198,7 @@ function buildRekapSheet(wb, d, year){
   const sp=ws.getRow(rn); sp.height=8; for(let i=1;i<=3;i++) sp.getCell(i).fill=fill('FFFFFF'); rn++;
 
   // Per RT
-  secHdr('JUMLAH (KK)');
+  secHdr('JUMLAH (Mustahik)');
   const total=d.mustahik.length||1;
   RT.forEach((rt,i)=>{
     const cnt=d.mustahik.filter(m=>m.rt===rt).length;
@@ -1813,7 +2229,7 @@ const COL_HEWAN = [
   {header:'Pequrban 7',key:'p7',  width:20},
   {header:'Keterangan',key:'ket', width:22},
 ];
-const COL_PANITIA  = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Lengkap',key:'nama',width:32},{header:'Jabatan',key:'jbt',width:24},{header:'Ket',key:'ket',width:16}];
+const COL_PANITIA  = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Lengkap',key:'nama',width:32},{header:'Jabatan',key:'jbt',width:24},{header:'Keterangan',key:'Ket',width:16}];
 const COL_MUSTAHIK = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Mustahik',key:'nama',width:34},{header:'RT',key:'rt',width:8,align:'center'},{header:'Keterangan',key:'ket',width:24}];
 const COL_GURU     = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Lengkap',key:'nama',width:32},{header:'Kategori',key:'kat',width:14,align:'center'},{header:'Keterangan',key:'ket',width:26}];
 
@@ -1844,16 +2260,16 @@ async function xls(type, filter){
     const rows = mustahikRows(d, rt);
     if(!rows.length){toast('Tidak ada data mustahik'+(rt?' '+rt:''),'warn');return;}
     if(rt){
-      buildSheet(wb, rt.replace(' ',''), 'DATA MUSTAHIK '+rt+' — '+yr+' H', MOSQ+' | '+rt+': '+rows.length+' Mustahik', COL_MUSTAHIK, rows);
+      buildSheet(wb, rt.replace(' ',''), 'DAFTAR MUSTAHIK '+rt+' — '+yr+' H', MOSQ+' | '+rt+': '+rows.length+' Mustahik', COL_MUSTAHIK, rows);
     } else {
-      buildSheet(wb,'Mustahik Semua RT','DATA MUSTAHIK QURBAN '+yr+' H',MOSQ+' | Total Semua RT: '+rows.length+' Mustahik',COL_MUSTAHIK,rows);
-      RT.forEach(r=>{const rr=mustahikRows(d,r);if(rr.length) buildSheet(wb,r.replace(' ',''),'MUSTAHIK '+r+' — '+yr+' H',MOSQ+' | '+r+': '+rr.length+' dari '+rows.length+' KK',COL_MUSTAHIK,rr);});
+      buildSheet(wb,'Mustahik Semua RT','DAFTAR MUSTAHIK QURBAN '+yr+' H',MOSQ+' | Total Semua RT: '+rows.length+' Mustahik',COL_MUSTAHIK,rows);
+      RT.forEach(r=>{const rr=mustahikRows(d,r);if(rr.length) buildSheet(wb,r.replace(' ',''),'MUSTAHIK '+r+' — '+yr+' H',MOSQ+' | '+r+': '+rr.length+' dari '+rows.length+' Mustahik',COL_MUSTAHIK,rr);});
     }
   }
   else if(type==='guru'){
     const rows=guruRows(d);
     if(!rows.length){toast('Tidak ada data guru & sesepuh','warn');return;}
-    buildSheet(wb,'Guru & Sesepuh','DATA GURU & SESEPUH '+yr+' H',MOSQ+' | Total: '+rows.length+' orang',COL_GURU,rows);
+    buildSheet(wb,'Guru & Sesepuh','DAFTAR GURU & SESEPUH '+yr+' H',MOSQ+' | Total: '+rows.length+' orang',COL_GURU,rows);
   }
   else if(type==='rekap'){
     buildRekapSheet(wb, d, yr);
@@ -1897,7 +2313,7 @@ async function doExport(){
       if(rtF){const rr=mustahikRows(d,rtF);if(rr.length) buildSheet(wb,pfx+rtF.replace(' ',''),'MUSTAHIK '+rtF+' '+yr+' H',MOSQ+' | '+rr.length+' Mustahik',COL_MUSTAHIK,rr);}
       else{
         const rows=mustahikRows(d);if(rows.length) buildSheet(wb,pfx+'Mustahik','MUSTAHIK QURBAN '+yr+' H',MOSQ+' | Semua RT: '+rows.length+' Mustahik',COL_MUSTAHIK,rows);
-        RT.forEach(r=>{const rr=mustahikRows(d,r);if(rr.length) buildSheet(wb,pfx+r.replace(' ',''),'MUSTAHIK '+r+' '+yr+' H',MOSQ+' | '+r+': '+rr.length+' KK',COL_MUSTAHIK,rr);});
+        RT.forEach(r=>{const rr=mustahikRows(d,r);if(rr.length) buildSheet(wb,pfx+r.replace(' ',''),'MUSTAHIK '+r+' '+yr+' H',MOSQ+' | '+r+': '+rr.length+' Mustahik',COL_MUSTAHIK,rr);});
       }
     }
     if(chk('ex-g')){const rows=guruRows(d);if(rows.length) buildSheet(wb,pfx+'Guru','GURU & SESEPUH '+yr+' H',MOSQ+' | '+rows.length+' orang',COL_GURU,rows);}
@@ -1936,8 +2352,8 @@ function pdf(type, filter){
   </div>`;
   const foot = `<div class="pdf-footer"><span>Musholla Nurul Falah — Panitia Qurban ${activeYear} H</span><span>${tgl}</span></div>`;
   const ttd  = `<div class="pdf-ttd">
-    <div class="pdf-ttd-box"><div>Mengetahui,</div><div style="font-weight:600">Ketua Panitia</div><br><br><br><div style="font-weight:600">( ZAINAL SYAHRI )</div></div>
-    <div class="pdf-ttd-box"><div></div><br><div style="font-weight:600">Sekretaris</div><br><br><br><div style="font-weight:600">( AZHARI )</div></div>
+    <div class="pdf-ttd-box"><div>Mengetahui,</div><div style="font-weight:600">Ketua Panitia</div><div class="pdf-ttd-line"></div><div class="pdf-ttd-label">( Zaenal Syahri )</div></div>
+    <div class="pdf-ttd-box"><div>Sekretaris</div><div style="font-weight:600">Panitia Qurban</div><div class="pdf-ttd-line"></div><div class="pdf-ttd-label">( Azhari )</div></div>
   </div>`;
   const titleBlock = (t,sub,meta) => `<div class="pdf-title-block"><div class="pdf-doc-title">${t}</div><div class="pdf-doc-sub">${sub}</div></div><div class="pdf-meta"><span>${meta}</span><span>Dicetak: ${tgl}</span></div>`;
   const page = (content, addBreak) => `${addBreak?'<div class="page-break"></div>':''}<div class="pdf-page">${kop}${content}${foot}</div>`;
@@ -1977,13 +2393,13 @@ function pdf(type, filter){
         <tbody>${list.map((m,i)=>'<tr><td class="col-no">'+(i+1)+'</td><td class="col-nama">'+(m.nama||'-')+'</td><td style="text-align:center;font-weight:700;color:#0a3d2b">'+(m.rt||'-')+'</td><td style="font-size:8pt;color:#555">'+(m.ket||'-')+'</td></tr>').join('')}</tbody>
         <tfoot><tr><td colspan="3">TOTAL MUSTAHIK</td><td style="text-align:center">${list.length} Mustahik</td></tr></tfoot>
       </table>
-      ${!rt?'<div class="pdf-section-title">📊 REKAPITULASI PER RT</div><div class="pdf-stat-grid">'+RT.map(r=>{const c=d.mustahik.filter(m=>m.rt===r).length;return '<div class="pdf-stat-box"><div class="lbl">'+r+'</div><div class="val">'+c+'</div><div class="sat">KK</div></div>';}).join('')+'</div>':''}
+      ${!rt?'<div class="pdf-section-title">📊 REKAPITULASI PER RT</div><div class="pdf-stat-grid">'+RT.map(r=>{const c=d.mustahik.filter(m=>m.rt===r).length;return '<div class="pdf-stat-box"><div class="lbl">'+r+'</div><div class="val">'+c+'</div><div class="sat">Mustahik</div></div>';}).join('')+'</div>':''}
       `, isAll&&out.length>0);
   }
 
   if(type==='guru'||isAll){
     out+=page(`
-      ${titleBlock('DAFTAR GURU & SESEPUH '+activeYear+' H', MOSQ+' — Total: '+d.guru.length+' orang','Data Guru Tetap, Sesepuh, Ulama Setempat')}
+      ${titleBlock('DAFTAR GURU & SESEPUH '+activeYear+' H', MOSQ+' — Total: '+d.guru.length+' orang','Data Guru, Sesepuh, Ulama, Panitia Sepuh & Pejabat Setempat')}
       <table class="pdf-table">
         <thead><tr><th>No</th><th>Nama Lengkap</th><th>Kategori</th><th>Keterangan</th></tr></thead>
         <tbody>${d.guru.map((g,i)=>'<tr><td class="col-no">'+(i+1)+'</td><td class="col-nama">'+(g.nama||'-')+'</td><td style="text-align:center;font-weight:600;color:#094d37">'+(g.kat||'-')+'</td><td style="font-size:8pt;color:#555">'+(g.ket||'-')+'</td></tr>').join('')}</tbody>
@@ -1996,12 +2412,12 @@ function pdf(type, filter){
     out+=page(`
       ${titleBlock('REKAP DASHBOARD QURBAN '+activeYear+' H', MOSQ+' — Ringkasan Lengkap','Laporan Rekap')}
       <div class="pdf-stat-grid">
-        <div class="pdf-stat-box"><div class="lbl">Hewan Sapi</div><div class="val">${d.hewan.filter(h=>h.jenis==='Sapi').length}</div><div class="sat">Ekor</div></div>
-        <div class="pdf-stat-box"><div class="lbl">Hewan Kambing</div><div class="val">${d.hewan.filter(h=>h.jenis==='Kambing').length}</div><div class="sat">Ekor</div></div>
-        <div class="pdf-stat-box"><div class="lbl">Total Pequrban</div><div class="val">${allPq.length}</div><div class="sat">Orang</div></div>
-        <div class="pdf-stat-box"><div class="lbl">Total Panitia</div><div class="val">${d.panitia.length}</div><div class="sat">Orang</div></div>
-        <div class="pdf-stat-box"><div class="lbl">Total Mustahik</div><div class="val">${d.mustahik.length}</div><div class="sat">KK</div></div>
-        <div class="pdf-stat-box"><div class="lbl">Guru & Sesepuh</div><div class="val">${d.guru.length}</div><div class="sat">Orang</div></div>
+        <div class="pdf-stat-box"><div class="lbl">🐄 Hewan Sapi</div><div class="val">${d.hewan.filter(h=>h.jenis==='Sapi').length}</div><div class="sat">Ekor</div></div>
+        <div class="pdf-stat-box"><div class="lbl">🐐 Hewan Kambing</div><div class="val">${d.hewan.filter(h=>h.jenis==='Kambing').length}</div><div class="sat">Ekor</div></div>
+        <div class="pdf-stat-box"><div class="lbl">🤲 Total Pequrban</div><div class="val">${allPq.length}</div><div class="sat">Orang</div></div>
+        <div class="pdf-stat-box"><div class="lbl">👥 Total Panitia</div><div class="val">${d.panitia.length}</div><div class="sat">Orang</div></div>
+        <div class="pdf-stat-box"><div class="lbl">🏠 Total Mustahik</div><div class="val">${d.mustahik.length}</div><div class="sat">Mustahik</div></div>
+        <div class="pdf-stat-box"><div class="lbl">📚 Guru & Sesepuh</div><div class="val">${d.guru.length}</div><div class="sat">Orang</div></div>
       </div>
       <div class="pdf-section-title">🏘 DISTRIBUSI MUSTAHIK PER RT</div>
       <table class="pdf-table">
@@ -2016,6 +2432,364 @@ function pdf(type, filter){
 }
 
 const printPDF=pdf;
+
+/* ============================================================
+   ADMIN PANEL — Import & Delete RT
+============================================================ */
+let _selRT = [];  // RT yang dipilih untuk import mustahik
+
+function showAdminTab(tab, btnEl){
+  document.querySelectorAll('.apnl-sec').forEach(s=>s.style.display='none');
+  document.querySelectorAll('.apnl-tab').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById('apnl-'+tab);
+  if(el) el.style.display='';
+  if(btnEl) btnEl.classList.add('active');
+}
+
+function openAdminPanel(tab){
+  // Isi dropdown tahun
+  const years = getYears().length ? getYears() : [activeYear];
+  ['imp-m-yr','imp-p-yr'].forEach(id=>{
+    const sel=document.getElementById(id);
+    if(sel){
+      sel.innerHTML=years.map(y=>`<option value="${y}" ${y===activeYear?'selected':''}>${y} H</option>`).join('');
+    }
+  });
+
+  // Render RT buttons untuk import mustahik
+  _selRT=[];
+  renderRTButtons();
+
+  // Isi jumlah mustahik per RT
+  updateDelRTCounts();
+
+  // Buka tab yang diminta
+  openModal('mo-admin-panel');
+  showAdminTab(tab, document.querySelector(`.apnl-tab[onclick*="${tab}"]`));
+}
+
+function renderRTButtons(){
+  const d=db();
+  const el=document.getElementById('imp-m-rt-btns');
+  if(!el) return;
+  el.innerHTML=RT.map(rt=>{
+    const cnt=d.mustahik.filter(m=>m.rt===rt).length;
+    const sel=_selRT.includes(rt);
+    return `<button class="rt-btn ${sel?'sel':''}" onclick="toggleRT('${rt}',this)">
+      ${rt}<br><span style="font-size:.7rem;opacity:.75">${cnt} data</span>
+    </button>`;
+  }).join('');
+}
+
+function toggleRT(rt, btnEl){
+  const idx=_selRT.indexOf(rt);
+  if(idx>=0){ _selRT.splice(idx,1); btnEl.classList.remove('sel'); }
+  else{ _selRT.push(rt); btnEl.classList.add('sel'); }
+}
+
+function selectAllRT(){
+  _selRT=[...RT];
+  renderRTButtons();
+}
+
+function resetImpM(){
+  _selRT=[];
+  renderRTButtons();
+  document.getElementById('imp-m-txt').value='';
+  document.getElementById('imp-m-preview').innerHTML='';
+}
+
+function updateDelRTCounts(){
+  const d=db();
+  RT.forEach((rt,i)=>{
+    const n=String(i+1).padStart(2,'0');
+    const el=document.getElementById('cnt-rt'+n);
+    if(el) el.textContent=d.mustahik.filter(m=>m.rt===rt).length;
+  });
+  document.querySelectorAll('#del-rt-list input[type=checkbox]').forEach(c=>c.checked=false);
+}
+
+/* ── Clipboard paste ── */
+async function pasteClipboardM(){
+  try{
+    const txt=await navigator.clipboard.readText();
+    document.getElementById('imp-m-txt').value=txt;
+    toast('Clipboard ditempel!');
+  }catch(e){ toast('Tidak bisa akses clipboard — paste manual','warn'); }
+}
+async function pasteClipboardP(){
+  try{
+    const txt=await navigator.clipboard.readText();
+    document.getElementById('imp-p-txt').value=txt;
+    toast('Clipboard ditempel!');
+  }catch(e){ toast('Tidak bisa akses clipboard — paste manual','warn'); }
+}
+
+/* ── Load file CSV/TXT ── */
+function loadFileM(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    let txt=e.target.result;
+    // Jika CSV, ambil kolom pertama saja
+    if(file.name.endsWith('.csv')){
+      txt=txt.split('\n').map(l=>l.split(',')[0].replace(/"/g,'').trim()).filter(Boolean).join('\n');
+    }
+    document.getElementById('imp-m-txt').value=txt;
+    toast('File dimuat: '+file.name);
+  };
+  reader.readAsText(file);
+  input.value='';
+}
+function loadFileP(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=e=>{ document.getElementById('imp-p-txt').value=e.target.result; toast('File dimuat: '+file.name); };
+  reader.readAsText(file);
+  input.value='';
+}
+
+/* ── IMPORT MUSTAHIK ── */
+async function doImportM(){
+  if(!_selRT.length){ toast('Pilih minimal 1 RT tujuan!','warn'); return; }
+  const txt=document.getElementById('imp-m-txt').value.trim();
+  if(!txt){ toast('Input nama mustahik dahulu!','warn'); return; }
+  const yr=document.getElementById('imp-m-yr').value||activeYear;
+
+  const names=txt.split('\n').map(l=>l.trim()).filter(Boolean);
+  if(!names.length){ toast('Tidak ada nama valid!','warn'); return; }
+
+  // Distribusi: setiap nama ke salah satu RT terpilih secara bergantian
+  // Atau jika hanya 1 RT dipilih, semua masuk ke sana
+  // Cek duplikat dari data existing
+  const d=allData[yr]||emptyDb();
+  const existNames=new Set(d.mustahik.map(m=>(m.nama||'').trim().toLowerCase()));
+
+  const rows=[], skipped=[];
+  names.forEach((nama,i)=>{
+    if(!nama) return;
+    if(existNames.has(nama.toLowerCase())){ skipped.push(nama); return; }
+    existNames.add(nama.toLowerCase());
+    const rt=_selRT.length===1 ? _selRT[0] : _selRT[i%_selRT.length];
+    rows.push({nama, rt, ket:'', diambil:'0'});
+  });
+
+  if(!rows.length){ toast('Semua nama sudah terdaftar!','warn'); return; }
+
+  // Tampil preview
+  const prevEl=document.getElementById('imp-m-preview');
+  prevEl.innerHTML='<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:.65rem .9rem;font-size:.8rem;margin-bottom:.5rem">'
+    +'<b style="color:#166534">✅ Siap import: '+rows.length+' nama ke '+_selRT.join(', ')+'</b>'
+    +(skipped.length?'<br><span style="color:#dc2626">⚠️ Dilewati (duplikat): '+skipped.join(', ')+'</span>':'')
+    +'</div>';
+
+  if(!confirm('Import '+rows.length+' mustahik ke '+_selRT.join(', ')+'?')) return;
+
+  setSyncStatus('loading');
+  try{
+    const res=await gas({action:'importRows', tahun:yr, type:'mustahik', d:{rows}});
+    if(yr===activeYear) await loadYearData(activeYear);
+    else allData[yr]=emptyDb(), await loadYearData(yr);
+    renderAll(); renderRTButtons(); updateDelRTCounts();
+    setSyncStatus('ok');
+    toast('✅ Import selesai: '+(res.imported||rows.length)+' berhasil'+(skipped.length?' | '+skipped.length+' dilewati':''));
+    resetImpM();
+  }catch(e){ setSyncStatus('err',e.message); toast('Gagal: '+e.message,'err'); }
+}
+
+/* ── IMPORT PANITIA ── */
+async function doImportP(){
+  const txt=document.getElementById('imp-p-txt').value.trim();
+  if(!txt){ toast('Input data panitia dahulu!','warn'); return; }
+  const yr=document.getElementById('imp-p-yr').value||activeYear;
+
+  const d=allData[yr]||emptyDb();
+  const existNames=new Set(d.panitia.map(p=>(p.nama||'').trim().toLowerCase()));
+
+  const rows=[], skipped=[];
+  txt.split('\n').map(l=>l.trim()).filter(Boolean).forEach(line=>{
+    const parts=line.split('|').map(p=>p.trim());
+    const nama=parts[0]||'';
+    if(!nama) return;
+    if(existNames.has(nama.toLowerCase())){ skipped.push(nama); return; }
+    existNames.add(nama.toLowerCase());
+    rows.push({nama, jabatan:parts[1]||'', ket:parts[2]||'', hadir:'0'});
+  });
+
+  if(!rows.length){ toast('Semua nama sudah terdaftar!','warn'); return; }
+
+  const prevEl=document.getElementById('imp-p-preview');
+  prevEl.innerHTML='<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:.65rem .9rem;font-size:.8rem;margin-bottom:.5rem">'
+    +'<b style="color:#166534">✅ Siap import: '+rows.length+' panitia</b>'
+    +(skipped.length?'<br><span style="color:#dc2626">⚠️ Dilewati: '+skipped.join(', ')+'</span>':'')
+    +'</div>';
+
+  if(!confirm('Import '+rows.length+' panitia?')) return;
+
+  setSyncStatus('loading');
+  try{
+    const res=await gas({action:'importRows', tahun:yr, type:'panitia', d:{rows}});
+    if(yr===activeYear) await loadYearData(activeYear);
+    renderAll();
+    setSyncStatus('ok');
+    toast('✅ Import panitia selesai: '+(res.imported||rows.length)+' berhasil');
+    document.getElementById('imp-p-txt').value='';
+    prevEl.innerHTML='';
+  }catch(e){ setSyncStatus('err',e.message); toast('Gagal: '+e.message,'err'); }
+}
+
+/* ── HAPUS PER RT ── */
+function openDelRT(){ openAdminPanel('del-rt'); }
+
+async function doDelRT(){
+  const checked=[...document.querySelectorAll('#del-rt-list input:checked')].map(c=>c.value);
+  if(!checked.length){ toast('Pilih minimal 1 RT!','warn'); return; }
+  const d=db();
+  const total=d.mustahik.filter(m=>checked.includes(m.rt)).length;
+  if(!total){ toast('Tidak ada data di RT yang dipilih','warn'); return; }
+  if(!confirm('Hapus '+total+' mustahik dari '+checked.join(', ')+'? Tidak bisa dibatalkan!')) return;
+
+  setSyncStatus('loading');
+  let totalDel=0;
+  try{
+    for(const rt of checked){
+      const res=await gas({action:'deleteByRT', tahun:activeYear, rt});
+      totalDel+=(res.deleted||0);
+    }
+    await loadYearData(activeYear);
+    renderAll(); updateDelRTCounts();
+    closeModal('mo-admin-panel');
+    setSyncStatus('ok');
+    toast('✅ '+totalDel+' mustahik dari '+checked.join(', ')+' berhasil dihapus');
+  }catch(e){ setSyncStatus('err',e.message); toast('Gagal: '+e.message,'err'); }
+}
+
+/* ── alias kompatibilitas ── */
+let _importData = [];
+
+function previewImport(type){
+  const isp = type==='panitia';
+  const txt = document.getElementById(isp?'imp-p-txt':'imp-m-txt').value.trim();
+  if(!txt){ toast('Paste data terlebih dahulu!','warn'); return; }
+
+  const existing = db()[type];
+  const existNames = new Set(existing.map(r=>(r.nama||'').trim().toLowerCase()));
+  const rtForce  = isp ? null : (document.getElementById('imp-m-rt').value||null);
+
+  const lines = txt.split('\n').map(l=>l.trim()).filter(Boolean);
+  const parsed=[], skipped=[];
+
+  lines.forEach(line=>{
+    const parts = line.split('|').map(p=>p.trim());
+    const nama  = parts[0]||'';
+    if(!nama){ return; }
+    if(existNames.has(nama.toLowerCase())){
+      skipped.push(nama); return;
+    }
+    existNames.add(nama.toLowerCase()); // cegah duplikat antar baris import
+
+    if(isp){
+      parsed.push({ nama, jabatan:parts[1]||'', ket:parts[2]||'', hadir:'0' });
+    } else {
+      const rt = rtForce || parts[1]||'RT 10-04';
+      const ket= rtForce ? (parts[1]||'') : (parts[2]||'');
+      parsed.push({ nama, rt, ket, diambil:'0' });
+    }
+  });
+
+  _importData = parsed;
+  const prevEl = document.getElementById(isp?'imp-p-preview':'imp-m-preview');
+  const saveBtn= document.getElementById(isp?'imp-p-save':'imp-m-save');
+
+  let html2 = '';
+  if(parsed.length){
+    html2 += '<div style="background:#f0fdf4;border:1.5px solid #86efac;border-radius:8px;padding:.7rem .9rem;margin-bottom:.5rem;font-size:.8rem">'
+      +'<b style="color:#166534">✅ Siap diimpor: '+parsed.length+' data</b><br>'
+      +'<div style="margin-top:.4rem;max-height:120px;overflow-y:auto">'
+      +parsed.map((r,i)=>'<span style="display:block;padding:1px 0">'+String(i+1)+'. '+r.nama+(isp&&r.jabatan?' — '+r.jabatan:'')+(r.rt?' ('+r.rt+')':'')+'</span>').join('')
+      +'</div></div>';
+    saveBtn.style.display='';
+  } else {
+    saveBtn.style.display='none';
+  }
+  if(skipped.length){
+    html2 += '<div style="background:#fff7ed;border:1.5px solid #fb923c;border-radius:8px;padding:.7rem .9rem;font-size:.8rem">'
+      +'<b style="color:#9a3412">⚠️ Dilewati (duplikat): '+skipped.length+' nama</b><br>'
+      +skipped.map(n=>'<span style="display:block">• '+n+'</span>').join('')
+      +'</div>';
+  }
+  prevEl.innerHTML = html2;
+  if(!parsed.length) toast('Semua nama sudah terdaftar (duplikat)!','warn');
+}
+
+async function doImport(type){
+  if(!_importData.length){ toast('Tidak ada data untuk disimpan!','warn'); return; }
+  const isp   = type==='panitia';
+  const saveBtn=document.getElementById(isp?'imp-p-save':'imp-m-save');
+  saveBtn.disabled=true;
+  saveBtn.innerHTML='<i class="fas fa-spinner fa-spin"></i> Menyimpan...';
+  setSyncStatus('loading');
+  try{
+    // Gunakan importBatch di GAS — lebih efisien, anti duplikat server-side
+    const res = await gas({action:'importRows', tahun:activeYear, type, d:{rows:_importData}});
+    await loadYearData(activeYear);
+    renderAll();
+    closeModal(isp?'mo-import-p':'mo-import-m');
+    _importData=[];
+    document.getElementById(isp?'imp-p-txt':'imp-m-txt').value='';
+    document.getElementById(isp?'imp-p-preview':'imp-m-preview').innerHTML='';
+    setSyncStatus('ok');
+    toast('✅ Import selesai: '+(res.imported||0)+' berhasil'+(res.skipped?' | '+res.skipped+' dilewati':''));
+  }catch(e){
+    setSyncStatus('err',e.message);
+    toast('Gagal import: '+e.message,'err');
+  }finally{
+    saveBtn.disabled=false;
+    saveBtn.style.display='none';
+    saveBtn.innerHTML='<i class="fas fa-save"></i> Simpan Semua';
+  }
+}
+
+/* ============================================================
+   HAPUS PER RT (Admin Only)
+============================================================ */
+function openDelRT(){
+  const d=db();
+  RT.forEach((rt,i)=>{
+    const n=String(i+1).padStart(2,'0');
+    const el=document.getElementById('cnt-rt'+n);
+    if(el) el.textContent=d.mustahik.filter(m=>m.rt===rt).length;
+  });
+  // Uncheck semua
+  document.querySelectorAll('#del-rt-list input[type=checkbox]').forEach(c=>c.checked=false);
+  openModal('mo-del-rt');
+}
+
+async function doDelRT(){
+  const checked=[...document.querySelectorAll('#del-rt-list input:checked')].map(c=>c.value);
+  if(!checked.length){ toast('Pilih minimal 1 RT!','warn'); return; }
+  const d=db();
+  const toDelete=d.mustahik.filter(m=>checked.includes(m.rt));
+  if(!toDelete.length){ toast('Tidak ada data di RT yang dipilih','warn'); return; }
+  if(!confirm('Hapus '+toDelete.length+' mustahik dari '+checked.join(', ')+'? Tidak bisa dikembalikan!')){ return; }
+
+  setSyncStatus('loading');
+  let totalDeleted=0;
+  try{
+    for(const rt of checked){
+      const res=await gas({action:'deleteByRT', tahun:activeYear, rt});
+      totalDeleted += res.deleted||0;
+    }
+    await loadYearData(activeYear);
+    renderAll();
+    closeModal('mo-del-rt');
+    setSyncStatus('ok');
+    toast('✅ '+totalDeleted+' mustahik dari '+checked.join(', ')+' berhasil dihapus');
+  }catch(e){
+    setSyncStatus('err',e.message);
+    toast('Gagal hapus: '+e.message,'err');
+  }
+}
 
 /* ============================================================
    TOAST
