@@ -217,7 +217,7 @@ main{max-width:1200px;margin:0 auto;padding:1.5rem}
 .brt10-04{background:#dbeafe;color:#1e40af}.brt03-04{background:#e0e7ff;color:#3730a3}
 .brt04-04{background:#fce7f3;color:#9d174d}.brt02-03{background:#ffedd5;color:#9a3412}
 .brt03-03{background:#d1fae5;color:#065f46}
-.bGuruTetap{background:#dbeafe;color:#1e40af}.bSesepuhSetempat{background:#ede9fe;color:#5b21b6}
+.bGuruTetap{background:#dbeafe;color:#1e40af}.bSesepuh{background:#ede9fe;color:#5b21b6}
 .bUlamaSetempat{background:#dcfce7;color:#166534}.bPanitiaSepuh{background:#fce7f3;color:#9d174d}
 .bPejabatSetempat{background:#fce7f3;color:#1ddf37}
 
@@ -590,7 +590,7 @@ select.fc{cursor:pointer}
       <label class="fl" style="margin-bottom:.5rem">🐄 Filter Jenis Hewan (jika Hewan Qurban dicentang)</label>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem">
         <label class="ex-chk"><input type="checkbox" id="ex-sapi" checked><span>🐄 Sapi</span></label>
-        <label class="ex-chk"><input type="checkbox" id="ex-kambing" checked><span>🐐 Kambing</span></label>
+        <label class="ex-chk"><input type="checkbox" id="ex-kambing" checked><span>🐐 Kambing/Domba</span></label>
       </div>
     </div>
     <div style="display:flex;gap:.65rem;justify-content:flex-end;margin-top:.75rem">
@@ -653,7 +653,7 @@ select.fc{cursor:pointer}
   <div class="sec on" id="sec-dash">
     <div class="sg">
       <div class="sc"><div class="sic">🐄</div><div class="sn" id="ss">0</div><div class="sl">Sapi</div></div>
-      <div class="sc g"><div class="sic">🐐</div><div class="sn" id="sk">0</div><div class="sl">Kambing</div></div>
+      <div class="sc g"><div class="sic">🐐</div><div class="sn" id="sk">0</div><div class="sl">Kambing/Domba</div></div>
       <div class="sc"><div class="sic">👥</div><div class="sn" id="sp">0</div><div class="sl">Panitia</div></div>
       <div class="sc g"><div class="sic">🤲</div><div class="sn" id="spq">0</div><div class="sl">Total Pequrban</div></div>
       <div class="sc"><div class="sic">🏠</div><div class="sn" id="sm">0</div><div class="sl">Mustahik</div></div>
@@ -771,7 +771,7 @@ select.fc{cursor:pointer}
       <div class="expg">
         <button class="expbtn" onclick="xls('hewan')"><i class="fas fa-horse"></i> Semua Hewan</button>
         <button class="expbtn" onclick="xls('sapi')"><i class="fas fa-horse"></i> Sapi Saja</button>
-        <button class="expbtn" onclick="xls('kambing')"><i class="fas fa-paw"></i> Kambing Saja</button>
+        <button class="expbtn" onclick="xls('kambing/Domba')"><i class="fas fa-paw"></i> Kambing/Domba Saja</button>
       </div>
 
       <div class="exp-group-label" style="margin-top:.9rem">🏘 Mustahik per RT</div>
@@ -802,7 +802,7 @@ select.fc{cursor:pointer}
       <div class="expg">
         <button class="expbtn" onclick="pdf('hewan')"><i class="fas fa-horse"></i> Semua Hewan</button>
         <button class="expbtn" onclick="pdf('sapi')"><i class="fas fa-horse"></i> Sapi Saja</button>
-        <button class="expbtn" onclick="pdf('kambing')"><i class="fas fa-paw"></i> Kambing Saja</button>
+        <button class="expbtn" onclick="pdf('kambing/Domba')"><i class="fas fa-paw"></i> Kambing/Domba Saja</button>
       </div>
 
       <div class="exp-group-label" style="margin-top:.9rem">🏘 Mustahik per RT</div>
@@ -1230,7 +1230,7 @@ function renderDash(){
   const allPq=[];
   d.hewan.forEach(h=>{ const ps=parsePq(h.pequrban); ps.forEach(p=>allPq.push({nama:p,jenis:h.jenis,no:h.no})); });
   set('ss',d.hewan.filter(h=>h.jenis==='Sapi').length);
-  set('sk',d.hewan.filter(h=>h.jenis==='Kambing').length);
+  set('sk',d.hewan.filter(h=>h.jenis==='Kambing/Domba').length);
   set('sp',d.panitia.length); set('spq',allPq.length);
   set('sm',d.mustahik.length); set('sg2',d.guru.length);
   document.getElementById('rtg').innerHTML=RT.map(rt=>{
@@ -1563,9 +1563,9 @@ function openForm(type, rowId){
       <div class="fg"><label class="fl">Jenis Hewan *</label>
         <select class="fc" id="f-jenis" onchange="upPq()">
           <option value="Sapi" ${item.jenis==='Sapi'?'selected':''}>🐄 Sapi (maks. 7 pequrban)</option>
-          <option value="Kambing" ${item.jenis==='Kambing'?'selected':''}>🐐 Kambing (individu)</option>
+          <option value="Kambing/Domba" ${item.jenis==='Kambing/Domba'?'selected':''}>🐐 Kambing/Domba (individu)</option>
         </select></div>
-      <div class="fg"><label class="fl">No. Hewan *</label><input class="fc" id="f-no" value="${item.no||''}" placeholder="Cth: S-01 / K-01"></div>
+      <div class="fg"><label class="fl">No. Hewan *</label><input class="fc" id="f-no" value="${item.no||''}" placeholder="Cth: S-01 / K-01 / D-01"></div>
     </div>
     <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${item.ket||''}" placeholder="Opsional"></div>
     <div class="fg"><label class="fl">Nama Pequrban <small id="pq-hint" style="color:var(--tl)"></small></label>
@@ -1629,7 +1629,7 @@ function upPq(){
   const btn=document.getElementById('paddbtn');
   if(!hint) return;
   if(jenis==='Sapi'){hint.textContent=`(Maks. 7, saat ini: ${count})`;if(btn)btn.style.display=count>=7?'none':'';}
-  else{hint.textContent='(1 orang — individu)';if(btn)btn.style.display=count>=1?'none':'';}
+  else{hint.textContent='(per orang — individu)';if(btn)btn.style.display=count>=1?'none':'';}
 }
 function addPq(){
   const jenis=document.getElementById('f-jenis').value;
@@ -2185,7 +2185,7 @@ function buildRekapSheet(wb, d, year){
   secHdr('JUMLAH');
   const items=[
     ['🐄 Hewan Sapi',  d.hewan.filter(h=>h.jenis==='Sapi').length,   'Ekor'],
-    ['🐐 Hewan Kambing',d.hewan.filter(h=>h.jenis==='Kambing').length,'Ekor'],
+    ['🐐 Hewan Kambing/Domba',d.hewan.filter(h=>h.jenis==='Kambing/Domba').length,'Ekor'],
     ['🐄🐐 Total Hewan',d.hewan.length,                               'Ekor'],
     ['🤲 Total Pequrban',allPq.length,                                'Orang'],
     ['👥 Total Panitia', d.panitia.length,                            'Orang'],
@@ -2241,8 +2241,8 @@ async function xls(type, filter){
   wb.created  = new Date();
   wb.modified = new Date();
 
-  if(type==='hewan'||type==='sapi'||type==='kambing'){
-    const jenis = type==='sapi'?'Sapi':type==='kambing'?'Kambing':null;
+  if(type==='hewan'||type==='sapi'||type==='kambing/Domba'){
+    const jenis = type==='sapi'?'Sapi':type==='kambing/Domba'?'Kambing/Domba':null;
     const rows  = hewanRows(d, jenis);
     if(!rows.length){toast('Tidak ada data hewan'+(jenis?' '+jenis:''),'warn');return;}
     buildSheet(wb, jenis||'Hewan Qurban',
@@ -2304,7 +2304,7 @@ async function doExport(){
     const pfx=multi?yr+'H_':'';
 
     if(chk('ex-h')){
-      const jenis=chk('ex-sapi')&&!chk('ex-kambing')?'Sapi':!chk('ex-sapi')&&chk('ex-kambing')?'Kambing':null;
+      const jenis=chk('ex-sapi')&&!chk('ex-kambing/Domba')?'Sapi':!chk('ex-sapi')&&chk('ex-kambing/Domba')?'Kambing/Domba':null;
       const rows=hewanRows(d,jenis);
       if(rows.length) buildSheet(wb,pfx+'Hewan','HEWAN QURBAN '+yr+' H'+(jenis?' — '+jenis:''),MOSQ+' | '+rows.length+' ekor',COL_HEWAN,rows);
     }
@@ -2361,15 +2361,15 @@ function pdf(type, filter){
   let out='';
   const isAll=(type==='semua');
 
-  if(type==='hewan'||type==='sapi'||type==='kambing'||isAll){
-    const jenis=type==='sapi'?'Sapi':type==='kambing'?'Kambing':null;
+  if(type==='hewan'||type==='sapi'||type==='kambing/Domba'||isAll){
+    const jenis=type==='sapi'?'Sapi':type==='kambing/Domba'?'Kambing/Domba':null;
     const list=jenis?d.hewan.filter(h=>h.jenis===jenis):d.hewan;
     out+=page(`
-      ${titleBlock('DAFTAR HEWAN QURBAN '+activeYear+' H'+(jenis?' — '+jenis:''), MOSQ+' — '+(jenis||'Semua Jenis')+': '+list.length+' ekor', 'Sapi: '+d.hewan.filter(h=>h.jenis==='Sapi').length+' | Kambing: '+d.hewan.filter(h=>h.jenis==='Kambing').length)}
+      ${titleBlock('DAFTAR HEWAN QURBAN '+activeYear+' H'+(jenis?' — '+jenis:''), MOSQ+' — '+(jenis||'Semua Jenis')+': '+list.length+' ekor', 'Sapi: '+d.hewan.filter(h=>h.jenis==='Sapi').length+' | Kambing/Domba: '+d.hewan.filter(h=>h.jenis==='Kambing/Domba').length)}
       <table class="pdf-table">
         <thead><tr><th>No</th><th>No. Hewan</th><th>Jenis</th><th>Daftar Pequrban</th><th>Keterangan</th></tr></thead>
         <tbody>${list.map((h,i)=>{const ps=parsePq(h.pequrban);return '<tr><td class="col-no">'+(i+1)+'</td><td class="col-id">'+( h.no||'-')+'</td><td style="text-align:center"><b>'+h.jenis+'</b></td><td>'+ps.map((p,pi)=>'<span style="display:block;padding:1px 0;border-bottom:1px dotted #ddd">'+(pi+1)+'. '+p+'</span>').join('')+'</td><td style="color:#555;font-size:8pt">'+(h.ket||'-')+'</td></tr>';}).join('')}</tbody>
-        <tfoot><tr><td colspan="2">TOTAL</td><td style="text-align:center">${list.length} Ekor</td><td colspan="2">Sapi: ${d.hewan.filter(h=>h.jenis==='Sapi').length} | Kambing: ${d.hewan.filter(h=>h.jenis==='Kambing').length}</td></tr></tfoot>
+        <tfoot><tr><td colspan="2">TOTAL</td><td style="text-align:center">${list.length} Ekor</td><td colspan="2">Sapi: ${d.hewan.filter(h=>h.jenis==='Sapi').length} | Kambing/Domba: ${d.hewan.filter(h=>h.jenis==='Kambing/Domba').length}</td></tr></tfoot>
       </table>`, isAll&&out.length>0);
   }
 
@@ -2413,7 +2413,7 @@ function pdf(type, filter){
       ${titleBlock('REKAP DASHBOARD QURBAN '+activeYear+' H', MOSQ+' — Ringkasan Lengkap','Laporan Rekap')}
       <div class="pdf-stat-grid">
         <div class="pdf-stat-box"><div class="lbl">🐄 Hewan Sapi</div><div class="val">${d.hewan.filter(h=>h.jenis==='Sapi').length}</div><div class="sat">Ekor</div></div>
-        <div class="pdf-stat-box"><div class="lbl">🐐 Hewan Kambing</div><div class="val">${d.hewan.filter(h=>h.jenis==='Kambing').length}</div><div class="sat">Ekor</div></div>
+        <div class="pdf-stat-box"><div class="lbl">🐐 Hewan Kambing/Domba</div><div class="val">${d.hewan.filter(h=>h.jenis==='Kambing/Domba').length}</div><div class="sat">Ekor</div></div>
         <div class="pdf-stat-box"><div class="lbl">🤲 Total Pequrban</div><div class="val">${allPq.length}</div><div class="sat">Orang</div></div>
         <div class="pdf-stat-box"><div class="lbl">👥 Total Panitia</div><div class="val">${d.panitia.length}</div><div class="sat">Orang</div></div>
         <div class="pdf-stat-box"><div class="lbl">🏠 Total Mustahik</div><div class="val">${d.mustahik.length}</div><div class="sat">Mustahik</div></div>
