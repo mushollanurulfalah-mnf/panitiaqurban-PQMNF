@@ -213,11 +213,11 @@ main{max-width:1200px;margin:0 auto;padding:1.5rem}
 .cek-btn.off{background:#f3f4f6;color:#6b7280;border:1.5px solid #d1d5db}
 .cek-btn.off:hover{background:#e5e7eb}
 .cek-btn .cek-ico{font-size:.85rem}
-.bs{background:#dcfce7;color:#166534}.bk{background:#fef9c3;color:#854d0e}
+.bs{background:#dcfce7;color:#166534}.bk{background:#fef9c3;color:#854d0e}.bd{background:#ede9fe;color:#5b21b6}
 .brt10-04{background:#dbeafe;color:#1e40af}.brt03-04{background:#e0e7ff;color:#3730a3}
 .brt04-04{background:#fce7f3;color:#9d174d}.brt02-03{background:#ffedd5;color:#9a3412}
 .brt03-03{background:#d1fae5;color:#065f46}
-.bGuruTetap{background:#dbeafe;color:#1e40af}.bSesepuh{background:#ede9fe;color:#5b21b6}
+.bGuruTetap{background:#dbeafe;color:#1e40af}.bSesepuhSetempat{background:#ede9fe;color:#5b21b6}
 .bUlamaSetempat{background:#dcfce7;color:#166534}.bPanitiaSepuh{background:#fce7f3;color:#9d174d}
 .bPejabatSetempat{background:#fce7f3;color:#1ddf37}
 
@@ -270,6 +270,31 @@ select.fc{cursor:pointer}
 /* LOADING OVERLAY on save */
 .loading-row{text-align:center;padding:2rem;color:var(--tl);font-size:.83rem}
 .loading-row i{animation:spin 1s linear infinite}
+
+/* ── Layout 2-kolom Mustahik PDF ── */
+.pdf-2col{display:grid;grid-template-columns:1fr 1fr;gap:0;width:100%;margin-bottom:8px;
+  border:2.5px solid #0a3d2b;border-radius:6px;overflow:hidden;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pdf-2col-header{grid-column:1/-1;background:#0a3d2b;color:#fff;font-weight:700;
+  font-size:9pt;padding:7px 12px;text-align:center;letter-spacing:.05em}
+.pdf-2col-row{display:contents}
+.pdf-2col-half{display:flex;align-items:stretch;min-height:24px;border-bottom:1px solid #c8d8cc}
+.pdf-2col-half.left-col{border-right:2.5px solid #0a3d2b}
+.pdf-2col-half.even-row{background:#f0fff8!important}
+.pdf-2col-half.odd-row{background:#ffffff!important}
+.pdf-2col-half.empty-cell{background:#f9fafb!important;border-bottom:none}
+.pdf-2col-half:last-child{border-bottom:none}
+.pdf-2col-no{width:30px;min-width:30px;text-align:center;font-weight:700;
+  font-size:8pt;color:#0a3d2b;background:#d1fae5;
+  display:flex;align-items:center;justify-content:center;
+  border-right:1.5px solid #9dc4ad;align-self:stretch;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.pdf-2col-nama{flex:1;font-size:8.5pt;padding:4px 8px;color:#1f2937;
+  display:flex;align-items:center}
+.pdf-2col-footer{grid-column:1/-1;background:#d1fae5;font-weight:700;
+  font-size:8.5pt;padding:6px 10px;text-align:center;color:#0a3d2b;
+  border-top:2.5px solid #0a3d2b;
+  -webkit-print-color-adjust:exact;print-color-adjust:exact}
 
 @media(max-width:640px){
   main{padding:1rem}.hero{padding:1.5rem}
@@ -359,6 +384,8 @@ select.fc{cursor:pointer}
   .pdf-footer span:first-child{color:#0d6e4f;font-weight:600}
 
   .page-break{page-break-before:always}
+
+  /* pdf-2col styles moved outside print media query */
 }
 
 </style>
@@ -377,7 +404,7 @@ select.fc{cursor:pointer}
   <div class="mb">
     <div style="text-align:center;margin-bottom:1.2rem">
       <div style="font-size:2.5rem">🔐</div>
-      <div class="mtitle" style="text-align:center">Login dulu bro</div>
+      <div class="mtitle" style="text-align:center">Masuk ke Sistem</div>
       <p class="msub">Pilih peran dan masukkan password</p>
     </div>
     <!-- Role selector -->
@@ -499,13 +526,13 @@ select.fc{cursor:pointer}
       <div class="apnl-step">① INPUT DATA PANITIA (SATU BARIS = SATU ORANG)</div>
       <div style="background:var(--cream);border-radius:8px;padding:.65rem .85rem;font-size:.77rem;color:var(--tl);margin-bottom:.75rem;line-height:1.8">
         Format: <code>Nama | Jabatan | Keterangan</code> &nbsp;—&nbsp; Jabatan & keterangan opsional<br>
-        Contoh: <code>Ariel Noah | Ketua | Koordinator Sapi</code>
+        Contoh: <code>Ronaldo | Ketua | Koordinator Sapi</code>
       </div>
       <div class="fg" style="margin-bottom:.65rem">
         <label class="fl">Tahun</label>
         <select class="fc" id="imp-p-yr" style="max-width:180px"></select>
       </div>
-      <textarea id="imp-p-txt" class="fc" rows="9" placeholder="Ronaldo | Ketua&#10;Messi | Sekretaris&#10;Robert | Bendahara&#10;Buffon | Pemotongan&#10;..." style="font-size:.85rem;resize:vertical;margin-bottom:.65rem"></textarea>
+      <textarea id="imp-p-txt" class="fc" rows="9" placeholder="Rnaldo | Ketua&#10;Messi | Sekretaris&#10;Neymar | Bendahara&#10;Kaka&#10;..." style="font-size:.85rem;resize:vertical;margin-bottom:.65rem"></textarea>
       <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.75rem">
         <button class="bp" style="background:#475569;font-size:.78rem" onclick="pasteClipboardP()"><i class="fas fa-clipboard"></i> Tempel dari Clipboard</button>
         <button class="bn" style="font-size:.78rem" onclick="document.getElementById('imp-p-txt').value=''">✕ Kosongkan</button>
@@ -548,6 +575,43 @@ select.fc{cursor:pointer}
 <!-- IMPORT PANITIA MODAL -->
 <!-- IMPORT MUSTAHIK MODAL -->
 <!-- HAPUS PER RT MODAL -->
+<!-- MODAL RESET CENTANG -->
+<div class="mo" id="mo-reset-cek" style="display:none">
+  <div class="mb">
+    <div class="mtitle">🗑️ Hapus / Reset Centang</div>
+    <p class="msub" style="color:#dc2626">⚠️ Aksi ini akan menghapus status centang yang dipilih. Tidak bisa dibatalkan!</p>
+    <div class="fg">
+      <label class="fl" style="margin-bottom:.65rem">Pilih yang akan di-reset:</label>
+      <div style="display:flex;flex-direction:column;gap:.45rem">
+        <label style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:#fff7ed;border:1.5px solid #fdba74;border-radius:8px;cursor:pointer;font-size:.83rem">
+          <input type="checkbox" id="rc-dipotong" style="accent-color:#f97316;width:15px;height:15px">
+          ✂️ Centang <b>Hewan Dipotong</b> — reset semua jadi Belum
+        </label>
+        <label style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:#fff7ed;border:1.5px solid #fdba74;border-radius:8px;cursor:pointer;font-size:.83rem">
+          <input type="checkbox" id="rc-pqdaging" style="accent-color:#f97316;width:15px;height:15px">
+          🥩 Centang <b>Daging Pequrban Dibagikan</b> — reset semua jadi Belum
+        </label>
+        <label style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:#fff7ed;border:1.5px solid #fdba74;border-radius:8px;cursor:pointer;font-size:.83rem">
+          <input type="checkbox" id="rc-hadir" style="accent-color:#f97316;width:15px;height:15px">
+          👥 Centang <b>Panitia Hadir</b> — reset semua jadi Tidak Hadir
+        </label>
+        <label style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:#fff7ed;border:1.5px solid #fdba74;border-radius:8px;cursor:pointer;font-size:.83rem">
+          <input type="checkbox" id="rc-diambil" style="accent-color:#f97316;width:15px;height:15px">
+          🥩 Centang <b>Mustahik Daging Diambil</b> — reset semua jadi Belum
+        </label>
+        <label style="display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;background:#fff7ed;border:1.5px solid #fdba74;border-radius:8px;cursor:pointer;font-size:.83rem">
+          <input type="checkbox" id="rc-dibawakan" style="accent-color:#f97316;width:15px;height:15px">
+          📦 Centang <b>Guru Daging Dibawakan</b> — reset semua jadi Belum
+        </label>
+      </div>
+    </div>
+    <div style="display:flex;gap:.65rem;justify-content:flex-end;margin-top:.75rem">
+      <button class="bn" onclick="closeModal('mo-reset-cek')">Batal</button>
+      <button class="bp" style="background:#dc2626" onclick="doResetCek()"><i class="fas fa-eraser"></i> Reset yang Dipilih</button>
+    </div>
+  </div>
+</div>
+
 <!-- FORM MODAL -->
 <div class="mo" id="mo-form" style="display:none">
   <div class="mb wide" id="fm-box"></div>
@@ -590,7 +654,8 @@ select.fc{cursor:pointer}
       <label class="fl" style="margin-bottom:.5rem">🐄 Filter Jenis Hewan (jika Hewan Qurban dicentang)</label>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:.45rem">
         <label class="ex-chk"><input type="checkbox" id="ex-sapi" checked><span>🐄 Sapi</span></label>
-        <label class="ex-chk"><input type="checkbox" id="ex-kambing" checked><span>🐐 Kambing/Domba</span></label>
+        <label class="ex-chk"><input type="checkbox" id="ex-kambing" checked><span>🐐 Kambing</span></label>
+        <label class="ex-chk"><input type="checkbox" id="ex-domba" checked><span>🐑 Domba</span></label>
       </div>
     </div>
     <div style="display:flex;gap:.65rem;justify-content:flex-end;margin-top:.75rem">
@@ -613,6 +678,7 @@ select.fc{cursor:pointer}
       <button class="bn" onclick="toggleLogin()"><i class="fas fa-lock" id="lock-ico"></i> <span id="adm-txt">Masuk</span></button>
       <button class="bn" id="btn-setting" onclick="openCfg()" title="Pengaturan" style="display:none"><i class="fas fa-cog"></i></button>
       <button class="bn" id="btn-admin-panel" onclick="openAdminPanel('import-m')" title="Panel Admin" style="display:none;background:rgba(201,162,39,.15);border-color:var(--gold);color:var(--gold)"><i class="fas fa-tools"></i></button>
+      <button class="bn" id="btn-reset-cek" onclick="openModal('mo-reset-cek')" title="Reset Centang" style="display:none;background:rgba(220,38,38,.15);border-color:#f87171;color:#f87171"><i class="fas fa-eraser"></i></button>
     </div>
   </div>
 </nav>
@@ -653,7 +719,8 @@ select.fc{cursor:pointer}
   <div class="sec on" id="sec-dash">
     <div class="sg">
       <div class="sc"><div class="sic">🐄</div><div class="sn" id="ss">0</div><div class="sl">Sapi</div></div>
-      <div class="sc g"><div class="sic">🐐</div><div class="sn" id="sk">0</div><div class="sl">Kambing/Domba</div></div>
+      <div class="sc g"><div class="sic">🐐</div><div class="sn" id="sk">0</div><div class="sl">Kambing</div></div>
+      <div class="sc"><div class="sic">🐑</div><div class="sn" id="sdom">0</div><div class="sl">Domba</div></div>
       <div class="sc"><div class="sic">👥</div><div class="sn" id="sp">0</div><div class="sl">Panitia</div></div>
       <div class="sc g"><div class="sic">🤲</div><div class="sn" id="spq">0</div><div class="sl">Total Pequrban</div></div>
       <div class="sc"><div class="sic">🏠</div><div class="sn" id="sm">0</div><div class="sl">Mustahik</div></div>
@@ -677,8 +744,14 @@ select.fc{cursor:pointer}
     <div class="tc">
       <div class="th">
         <div class="tt"><i class="fas fa-horse"></i> Data Hewan Qurban</div>
-        <div style="display:flex;gap:.45rem;flex-wrap:wrap">
-          <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." oninput="filt('htb',this.value)"></div>
+        <div style="display:flex;gap:.45rem;flex-wrap:wrap;align-items:center">
+          <select class="fc" id="filt-jenis" style="max-width:130px;padding:.38rem .65rem" onchange="renderH()">
+            <option value="">Semua Jenis</option>
+            <option value="Sapi">🐄 Sapi</option>
+            <option value="Kambing">🐐 Kambing</option>
+            <option value="Domba">🐑 Domba</option>
+          </select>
+          <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." id="filt-hewan-q" oninput="renderH()"></div>
           <button class="bp" id="btn-add-hewan" onclick="requireEdit(()=>openForm('hewan'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
         </div>
       </div>
@@ -695,8 +768,13 @@ select.fc{cursor:pointer}
     <div class="tc">
       <div class="th">
         <div class="tt"><i class="fas fa-users"></i> Data Panitia</div>
-        <div style="display:flex;gap:.45rem;flex-wrap:wrap">
-          <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." oninput="filt('ptb',this.value)"></div>
+        <div style="display:flex;gap:.45rem;flex-wrap:wrap;align-items:center">
+          <select class="fc" id="filt-hadir" style="max-width:145px;padding:.38rem .65rem" onchange="renderP()">
+            <option value="">Semua Status</option>
+            <option value="1">✅ Hadir</option>
+            <option value="0">⬜ Tidak Hadir</option>
+          </select>
+          <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." id="filt-panitia-q" oninput="renderP()"></div>
           <button class="bp" id="btn-add-panitia" onclick="requireEdit(()=>openForm('panitia'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
           <button class="bp" id="btn-import-panitia" onclick="requireAdmin(()=>openAdminPanel('import-p'))" style="display:none;background:#2563eb"><i class="fas fa-file-import"></i> Import</button>
         </div>
@@ -718,6 +796,11 @@ select.fc{cursor:pointer}
           <select class="fc" style="max-width:115px;padding:.38rem .65rem" id="frt" onchange="renderM()">
             <option value="">Semua RT</option>
             <option>RT 10-04</option><option>RT 03-04</option><option>RT 04-04</option><option>RT 02-03</option><option>RT 03-03</option>
+          </select>
+          <select class="fc" id="filt-diambil" style="max-width:155px;padding:.38rem .65rem" onchange="renderM()">
+            <option value="">Semua Status</option>
+            <option value="1">✅ Sudah Diambil</option>
+            <option value="0">⬜ Belum Diambil</option>
           </select>
           <div class="sbox"><i class="fas fa-search"></i><input type="text" placeholder="Cari..." id="ms" oninput="renderM()"></div>
           <button class="bp" id="btn-add-mustahik" onclick="requireEdit(()=>openForm('mustahik'))" style="display:none"><i class="fas fa-plus"></i> Tambah</button>
@@ -770,8 +853,9 @@ select.fc{cursor:pointer}
       <div class="exp-group-label" style="margin-top:.9rem">🐄 Hewan Qurban</div>
       <div class="expg">
         <button class="expbtn" onclick="xls('hewan')"><i class="fas fa-horse"></i> Semua Hewan</button>
-        <button class="expbtn" onclick="xls('sapi')"><i class="fas fa-horse"></i> Sapi Saja</button>
-        <button class="expbtn" onclick="xls('kambing/Domba')"><i class="fas fa-paw"></i> Kambing/Domba Saja</button>
+        <button class="expbtn" onclick="xls('sapi')"><i class="fas fa-horse"></i> Sapi </button>
+        <button class="expbtn" onclick="xls('kambing')"><i class="fas fa-paw"></i> Kambing </button>
+        <button class="expbtn" onclick="xls('domba')"><i class="fas fa-dog"></i> Domba </button>
       </div>
 
       <div class="exp-group-label" style="margin-top:.9rem">🏘 Mustahik per RT</div>
@@ -801,8 +885,9 @@ select.fc{cursor:pointer}
       <div class="exp-group-label" style="margin-top:.9rem">🐄 Hewan Qurban</div>
       <div class="expg">
         <button class="expbtn" onclick="pdf('hewan')"><i class="fas fa-horse"></i> Semua Hewan</button>
-        <button class="expbtn" onclick="pdf('sapi')"><i class="fas fa-horse"></i> Sapi Saja</button>
-        <button class="expbtn" onclick="pdf('kambing/Domba')"><i class="fas fa-paw"></i> Kambing/Domba Saja</button>
+        <button class="expbtn" onclick="pdf('sapi')"><i class="fas fa-horse"></i> Sapi </button>
+        <button class="expbtn" onclick="pdf('kambing')"><i class="fas fa-paw"></i> Kambing </button>
+        <button class="expbtn" onclick="pdf('domba')"><i class="fas fa-dog"></i> Domba </button>
       </div>
 
       <div class="exp-group-label" style="margin-top:.9rem">🏘 Mustahik per RT</div>
@@ -820,7 +905,7 @@ select.fc{cursor:pointer}
 </main>
 
 <footer style="text-align:center;padding:1.8rem 1rem;color:var(--tl);font-size:.76rem">
-  <p><span style="color:var(--em);font-weight:600">Musholla Nurul Falah - Sistem Manajemen Qurban</span></p>
+  <p><span style="color:var(--em);font-weight:600">Nusholla Nurul Falah</span> — Sistem Manajemen Qurban</p>
   <p style="margin-top:.2rem">Data tersimpan di Google Sheets • Aktif: <span id="ft-year" style="color:var(--em);font-weight:600">1447 H</span></p>
 </footer>
 
@@ -1031,7 +1116,7 @@ function renderYears(){
 }
 
 function updateTitles(){
-  document.getElementById('hero-title').textContent=`PANITIA QURBAN ${activeYear} H`;
+  document.getElementById('hero-title').textContent=`🐄 Manajemen Qurban ${activeYear} H`;
   const ei=document.getElementById('exp-yr-info'); if(ei) ei.textContent=activeYear+' H';
 }
 
@@ -1200,7 +1285,9 @@ const JABATAN_ORDER = [
   'ketua','wakil ketua','sekretaris','wakil sekretaris',
   'bendahara','wakil bendahara',
   'koordinator pemotongan','anggota pemotongan','koordinator humas',
-  'anggota humas','koordinator perlengkapan','anggota perlengkapan','koordinator konsumsi','anggota konsumsi','koordinator pengesetan','anggota pengesetan','koordinator pengumpul organ','anggota pengumpul organ','koordinator pencuci perut','anggota pencuci perut','koordinator pengangkutan','anggota pengangkutan','koordinator penghalus','anggota penghalus','koordinator pembantu umum','anggota pembantu umum','dokumentasi','keamanan',
+  'anggota humas','koordinator perlengkapan','anggota perlengkapan','koordinator konsumsi','anggota konsumsi','koordinator pengesetan','anggota pengesetan',
+  'koordinator pengumpul organ','anggota pengumpul organ','koordinator pengangkutan','anggota pengangkutan','koordinator penghalus','anggota penghalus',
+  'koordinator pencuci perut','anggota pencuci perut','koordinator pembantu umum','anggota pembantu umum','dokumentasi','keamanan',
 ];
 function jabatanRank(jabatan){
   const j=(jabatan||'').toLowerCase().trim();
@@ -1230,7 +1317,8 @@ function renderDash(){
   const allPq=[];
   d.hewan.forEach(h=>{ const ps=parsePq(h.pequrban); ps.forEach(p=>allPq.push({nama:p,jenis:h.jenis,no:h.no})); });
   set('ss',d.hewan.filter(h=>h.jenis==='Sapi').length);
-  set('sk',d.hewan.filter(h=>h.jenis==='Kambing/Domba').length);
+  set('sk',d.hewan.filter(h=>h.jenis==='Kambing').length);
+  set('sdom',d.hewan.filter(h=>h.jenis==='Domba').length);
   set('sp',d.panitia.length); set('spq',allPq.length);
   set('sm',d.mustahik.length); set('sg2',d.guru.length);
   document.getElementById('rtg').innerHTML=RT.map(rt=>{
@@ -1238,7 +1326,7 @@ function renderDash(){
     return `<div class="rtc"><div class="rtn">${c}</div><div class="rtl">Mustahik ${rt}</div></div>`;
   }).join('');
   const tb=document.getElementById('pq-dash');
-  tb.innerHTML=allPq.length?allPq.map((p,i)=>`<tr><td>${i+1}</td><td><strong>${p.nama}</strong></td><td><span class="badge ${p.jenis==='Sapi'?'bs':'bk'}">${p.jenis}</span></td><td>${p.no||'-'}</td></tr>`).join('')
+  tb.innerHTML=allPq.length?allPq.map((p,i)=>`<tr><td>${i+1}</td><td><strong>${p.nama}</strong></td><td><span class="badge ${p.jenis==='Sapi'?'bs':p.jenis==='Domba'?'bd':'bk'}">${p.jenis}</span></td><td>${p.no||'-'}</td></tr>`).join('')
     :`<tr><td colspan="4" style="text-align:center;color:var(--tl);padding:2rem">Belum ada data pequrban</td></tr>`;
   setTinfo('tinfo-dash', allPq.length, 'pequrban');
 
@@ -1377,14 +1465,42 @@ async function _togPqDag(o, btnEl){
   }
 }
 
+/* ── Sort no hewan: S→K→D lalu numerik ── */
+function sortHewan(list){
+  const PRE={'S':1,'K':2,'D':3};
+  return [...list].sort((a,b)=>{
+    const na=String(a.no||'').toUpperCase(), nb=String(b.no||'').toUpperCase();
+    const pa=PRE[na[0]]||9, pb=PRE[nb[0]]||9;
+    if(pa!==pb) return pa-pb;
+    return (parseInt(na.replace(/\D/g,''))||0)-(parseInt(nb.replace(/\D/g,''))||0);
+  });
+}
+
 /* ══ renderH ══════════════════════════════════════════ */
 function renderH(){
   const d=db(), tb=document.getElementById('htb');
-  if(!d.hewan.length){
-    tb.innerHTML='<tr><td colspan="7"><div class="empty"><i class="fas fa-horse"></i><p>Belum ada data hewan</p></div></td></tr>';
-    return;
+  const filtJenis=(document.getElementById('filt-jenis')||{}).value||'';
+  const filtQ=((document.getElementById('filt-hewan-q')||{}).value||'').toLowerCase();
+
+  // Sort berdasarkan no hewan
+  let data=sortHewan(d.hewan);
+  // Filter jenis
+  if(filtJenis) data=data.filter(h=>h.jenis===filtJenis);
+  // Filter search
+  if(filtQ) data=data.filter(h=>
+    (h.no||'').toLowerCase().includes(filtQ)||
+    (h.jenis||'').toLowerCase().includes(filtQ)||
+    (h.ket||'').toLowerCase().includes(filtQ)||
+    parsePq(h.pequrban).some(p=>p.toLowerCase().includes(filtQ))
+  );
+
+  if(!data.length){
+    tb.innerHTML='<tr><td colspan="7"><div class="empty"><i class="fas fa-horse"></i><p>'
+      +(d.hewan.length?'Tidak ada hewan cocok filter':'Belum ada data hewan')
+      +'</p></div></td></tr>';
+    setTinfo('tinfo-hewan',0,'hewan');return;
   }
-  const rows = d.hewan.map((h,i)=>{
+  const rows = data.map((h,i)=>{
     const hid    = String(h.id||i);
     const pqList = parsePq(h.pequrban);
     const dagArr = (h.pq_daging||'').split('|');
@@ -1426,18 +1542,30 @@ function renderH(){
       +'</tr>';
   });
   tb.innerHTML = rows.join('');
-  setTinfo('tinfo-hewan', d.hewan.length, 'hewan');
+  setTinfo('tinfo-hewan', data.length, 'hewan', (d.hewan.length!==data.length)?' dari '+d.hewan.length+' total':'');
 }
 
 /* ══ renderP ══════════════════════════════════════════ */
 function renderP(){
   const d=db(), tb=document.getElementById('ptb');
-  if(!d.panitia.length){
-    tb.innerHTML='<tr><td colspan="6"><div class="empty"><i class="fas fa-users"></i><p>Belum ada data panitia</p></div></td></tr>';
-    return;
+  const filtHadir = (document.getElementById('filt-hadir')||{}).value||'';
+  const filtQ     = ((document.getElementById('filt-panitia-q')||{}).value||'').toLowerCase();
+
+  let data = sortedPanitia(d.panitia);
+  if(filtHadir!=='') data=data.filter(p=>p.hadir===(filtHadir==='1'?'1':'0'));
+  if(filtQ) data=data.filter(p=>
+    (p.nama||'').toLowerCase().includes(filtQ)||
+    (p.jabatan||'').toLowerCase().includes(filtQ)||
+    (p.ket||'').toLowerCase().includes(filtQ)
+  );
+
+  if(!data.length){
+    tb.innerHTML='<tr><td colspan="6"><div class="empty"><i class="fas fa-users"></i><p>'
+      +(d.panitia.length?'Tidak ada panitia cocok filter':'Belum ada data panitia')
+      +'</p></div></td></tr>';
+    setTinfo('tinfo-panitia',0,'anggota'); return;
   }
-  const sorted = sortedPanitia(d.panitia);
-  const rows = sorted.map((p,i)=>{
+  const rows = data.map((p,i)=>{
     const pid    = String(p.id||i);
     const hadirOn = p.hadir==='1';
     const kH = regCek({type:'panitia', id:pid, field:'hadir', lblOn:'Hadir', lblOff:'Tidak Hadir'});
@@ -1462,21 +1590,23 @@ function renderP(){
       +'</tr>';
   });
   tb.innerHTML = rows.join('');
-  setTinfo('tinfo-panitia', d.panitia.length, 'anggota');
+  setTinfo('tinfo-panitia', data.length, 'anggota', (d.panitia.length!==data.length)?' dari '+d.panitia.length+' total':'');
 }
 
 function renderM(){
   const d=db();
-  const fRT=document.getElementById('frt').value;
-  const fS=document.getElementById('ms').value.toLowerCase();
+  const fRT      = (document.getElementById('frt')||{}).value||'';
+  const fS       = ((document.getElementById('ms')||{}).value||'').toLowerCase();
+  const fDiambil = (document.getElementById('filt-diambil')||{}).value||'';
   let data=sortedMustahik(d.mustahik);
-  if(fRT) data=data.filter(m=>m.rt===fRT);
-  if(fS) data=data.filter(m=>(m.nama||'').toLowerCase().includes(fS));
+  if(fRT)       data=data.filter(m=>m.rt===fRT);
+  if(fDiambil!=='') data=data.filter(m=>m.diambil===(fDiambil==='1'?'1':'0'));
+  if(fS)        data=data.filter(m=>(m.nama||'').toLowerCase().includes(fS));
   const tb=document.getElementById('mtb');
   if(!data.length){tb.innerHTML=`<tr><td colspan="6"><div class="empty"><i class="fas fa-hands-helping"></i><p>Belum ada data mustahik</p></div></td></tr>`;return;}
   tb.innerHTML=data.map((m,i)=>{
     const mid = String(m.id||i);
-    const rk  = 'brt'+(m.rt||'RT 10-04').replace(/\s/g,'').replace('RT','').padStart(2,'0');
+    const rk  = 'brt'+(m.rt||'RT 01').replace(/\s/g,'').replace('RT','').padStart(2,'0');
     const diambilOn = m.diambil==='1';
     const kA = regCek({type:'mustahik', id:mid, field:'diambil', lblOn:'Sudah Diambil', lblOff:'Belum'});
     const kEdit = '_me_'+i, kDel = '_md_'+i;
@@ -1562,12 +1692,15 @@ function openForm(type, rowId){
     <div class="fr">
       <div class="fg"><label class="fl">Jenis Hewan *</label>
         <select class="fc" id="f-jenis" onchange="upPq()">
-          <option value="Sapi" ${item.jenis==='Sapi'?'selected':''}>🐄 Sapi (maks. 7 pequrban)</option>
-          <option value="Kambing/Domba" ${item.jenis==='Kambing/Domba'?'selected':''}>🐐 Kambing/Domba (individu)</option>
+          <option value="Sapi"   ${item.jenis==='Sapi'?'selected':''}>🐄 Sapi (maks. 7 pequrban)</option>
+          <option value="Kambing"${item.jenis==='Kambing'?'selected':''}>🐐 Kambing (individu)</option>
+          <option value="Domba"  ${item.jenis==='Domba'?'selected':''}>🐑 Domba (individu)</option>
         </select></div>
       <div class="fg"><label class="fl">No. Hewan *</label><input class="fc" id="f-no" value="${item.no||''}" placeholder="Cth: S-01 / K-01 / D-01"></div>
     </div>
-    <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${item.ket||''}" placeholder="Opsional"></div>
+    <div class="fr">
+      <div class="fg"><label class="fl">Keterangan</label><input class="fc" id="f-ket" value="${item.ket||''}" placeholder="Opsional"></div>
+    </div>
     <div class="fg"><label class="fl">Nama Pequrban <small id="pq-hint" style="color:var(--tl)"></small></label>
       <div id="pq-inputs">${pqs.map((p,i)=>`<div class="pitem" id="pi${i}"><input class="fc pqi" value="${p||''}" placeholder="Nama pequrban ${i+1}"><button class="prmbtn" onclick="rmPq(${i})">×</button></div>`).join('')}</div>
       <button class="paddbtn" id="paddbtn" onclick="addPq()"><i class="fas fa-plus"></i> Tambah Pequrban</button>
@@ -1628,13 +1761,18 @@ function upPq(){
   const hint=document.getElementById('pq-hint');
   const btn=document.getElementById('paddbtn');
   if(!hint) return;
-  if(jenis==='Sapi'){hint.textContent=`(Maks. 7, saat ini: ${count})`;if(btn)btn.style.display=count>=7?'none':'';}
-  else{hint.textContent='(per orang — individu)';if(btn)btn.style.display=count>=1?'none':'';}
+  if(jenis==='Sapi'){
+    hint.textContent='(Maks. 7, saat ini: '+count+')';
+    if(btn) btn.style.display=count>=7?'none':'';
+  } else {
+    hint.textContent='(1 orang — individu)';
+    if(btn) btn.style.display=count>=1?'none':'';
+  }
 }
 function addPq(){
   const jenis=document.getElementById('f-jenis').value;
   const count=document.querySelectorAll('.pqi').length;
-  const max=jenis==='Sapi'?7:1;
+  const max=(jenis==='Sapi')?7:1;
   if(count>=max){toast(`Maks. ${max} pequrban untuk ${jenis}!`,'warn');return;}
   const c=document.getElementById('pq-inputs');
   const div=document.createElement('div');div.className='pitem';div.id=`pi${count}`;
@@ -1671,6 +1809,27 @@ async function saveH(rowId){
   const pq=Array.from(document.querySelectorAll('.pqi')).map(i=>i.value.trim()).filter(Boolean);
   if(!no){toast('No. hewan wajib diisi!','err');return;}
   if(!pq.length){toast('Isi minimal 1 nama pequrban!','err');return;}
+
+  // Anti-double no hewan
+  const noLow=no.trim().toLowerCase();
+  const dupNo=db().hewan.find(h=>String(h.no).trim().toLowerCase()===noLow && String(h.id)!==String(rowId));
+  if(dupNo){toast('No. hewan "'+no+'" sudah dipakai!','err');return;}
+
+  // Anti-double nama pequrban (dalam 1 hewan)
+  const pqUniq=[...new Set(pq.map(p=>p.toLowerCase()))];
+  if(pqUniq.length!==pq.length){toast('Ada nama pequrban yang sama dalam satu hewan!','err');return;}
+
+  // Anti-double nama pequrban (lintas hewan — cegah 1 orang masuk 2 hewan)
+  const allPqExisting=[];
+  db().hewan.forEach(h=>{
+    if(String(h.id)===String(rowId)) return; // skip diri sendiri
+    parsePq(h.pequrban).forEach(p=>allPqExisting.push({nama:p.trim().toLowerCase(), no:h.no}));
+  });
+  for(const p of pq){
+    const dup=allPqExisting.find(x=>x.nama===p.trim().toLowerCase());
+    if(dup){toast('"'+p+'" sudah terdaftar sebagai pequrban di hewan '+dup.no,'err');return;}
+  }
+
   const existing=db().hewan.find(h=>String(h.id)===String(rowId));
   const row={jenis, no, ket, pequrban:pq.join('|'),
     dipotong: existing?.dipotong||'0',
@@ -1919,7 +2078,7 @@ function saveBuf(buf, fname){
 function pqN(h,i){ return parsePq(h.pequrban)[i]||''; }
 
 function hewanRows(d, jenis){
-  const list = jenis ? d.hewan.filter(h=>h.jenis===jenis) : d.hewan;
+  const list = jenis ? d.hewan.filter(h=>h.jenis===jenis) : sortHewan(d.hewan);
   return list.map((h,i)=>[i+1, h.no||'', h.jenis,
     pqN(h,0),pqN(h,1),pqN(h,2),pqN(h,3),pqN(h,4),pqN(h,5),pqN(h,6), h.ket||'']);
 }
@@ -2116,6 +2275,126 @@ function buildSheet(wb, sName, title, subtitle, cols, rows){
 }
 
 /* ══════════════════════════════════════════════════════════
+   buildSheet2Col — Excel mustahik 2-kolom per RT
+   Layout: [ No | Nama ] [ No | Nama ] per baris
+══════════════════════════════════════════════════════════ */
+function buildSheet2Col(wb, sName, title, subtitle, list){
+  const ws = wb.addWorksheet(sName, {
+    pageSetup:{paperSize:9, orientation:'portrait', fitToPage:true, fitToWidth:1, fitToHeight:0}
+  });
+
+  // Warna
+  const fg  = hex => ({type:'pattern',pattern:'solid',fgColor:{argb:'FF'+hex}});
+  const fnt = (sz,bold,rgb,italic) => ({name:'Calibri',size:sz,bold:!!bold,color:{argb:'FF'+rgb},italic:!!italic});
+  const aln = (h='left',wrap=false) => ({horizontal:h,vertical:'middle',wrapText:wrap});
+  const bThin= (rgb='B0D4BC') => ({style:'thin',color:{argb:'FF'+rgb}});
+  const bMed = (rgb='0A3D2B') => ({style:'medium',color:{argb:'FF'+rgb}});
+  const bAll = (t,b,l,r) => ({top:t,bottom:b,left:l,right:r});
+
+  // 4 kolom: No_L | Nama_L | No_R | Nama_R
+  // Lebar: 5, 30, 5, 30
+  ws.columns = [
+    {key:'noL',   width:5},
+    {key:'namaL', width:30},
+    {key:'noR',   width:5},
+    {key:'namaR', width:30},
+  ];
+
+  let r = 1;
+  const nc = 4;
+
+  // Helper: merge dan isi sel
+  const mergeRow = (row, val, fillHex, fontSz, bold, fontRgb) => {
+    ws.mergeCells(row,1,row,nc);
+    const cell = ws.getRow(row).getCell(1);
+    cell.value      = val;
+    cell.font       = fnt(fontSz,bold,fontRgb||'FFFFFF');
+    cell.fill       = fg(fillHex);
+    cell.alignment  = aln('center');
+    ws.getRow(row).height = fontSz===16?36:fontSz===13?30:fontSz===10?18:20;
+    r++;
+  };
+
+  // KOP
+  mergeRow(r, '🕌  '+MOSQ,    'FFF3CD', 16, true, '0A3D2B');
+  mergeRow(r, ORG+' — Tahun '+activeYear+' H', 'F0FFF4', 10, false, '145A38');
+  mergeRow(r, '',             'C9A227', 3, false, '000000');   // garis emas
+  ws.getRow(r-1).height = 5;
+  mergeRow(r, title,          '0A3D2B', 13, true);
+  mergeRow(r, subtitle,       '1A6B46', 10, false);
+  mergeRow(r, 'Dicetak: '+new Date().toLocaleDateString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}), 'EAF5EE', 9, false, '4B5563');
+  mergeRow(r, '',             'EAF5EE', 4, false, '000000');
+  ws.getRow(r-1).height = 5;
+
+  // Header kolom
+  const hRow = ws.getRow(r); hRow.height = 24;
+  const hdr = ['No','Nama Mustahik','No','Nama Mustahik'];
+  hdr.forEach((h,ci)=>{
+    const cell = hRow.getCell(ci+1);
+    cell.value = h;
+    cell.font  = fnt(10,true,'FFFFFF');
+    cell.fill  = fg('1A6B46');
+    cell.alignment = aln('center');
+    const isLast=ci===nc-1, isMid=ci===1;
+    cell.border = bAll(bMed(),bMed(),
+      ci===0?bMed():isMid?{style:'medium',color:{argb:'FFC9A227'}}:bThin('1A6B46'),
+      isLast?bMed():isMid?{style:'medium',color:{argb:'FFC9A227'}}:bThin('1A6B46')
+    );
+  });
+  r++;
+
+  // Data rows — pasangkan kiri-kanan
+  for(let i=0;i<list.length;i+=2){
+    const L    = list[i];
+    const R    = list[i+1]||null;
+    const even = (i/2)%2===0;
+    const bgL  = even?'FFFFFF':'F0FFF8';
+    const bgR  = R ? bgL : 'F9FAFB';
+    const dRow = ws.getRow(r); dRow.height = 20;
+    const isLast = (i+2)>=list.length;
+
+    // Sel No Kiri
+    const c0=dRow.getCell(1);
+    c0.value=i+1; c0.font=fnt(10,true,'0A3D2B'); c0.fill=fg('D1FAE5');
+    c0.alignment=aln('center');
+    c0.border=bAll(bThin(),isLast?bMed():bThin(),bMed(),bThin('9DC4AD'));
+
+    // Sel Nama Kiri
+    const c1=dRow.getCell(2);
+    c1.value=L.nama||''; c1.font=fnt(10,false,'1F2937'); c1.fill=fg(bgL);
+    c1.alignment=aln('left');
+    c1.border=bAll(bThin(),isLast?bMed():bThin(),bThin('9DC4AD'),{style:'medium',color:{argb:'FFC9A227'}});
+
+    // Sel No Kanan
+    const c2=dRow.getCell(3);
+    c2.value=R?i+2:''; c2.font=fnt(10,true,R?'0A3D2B':'D1D5DB'); c2.fill=fg(R?'D1FAE5':'F9FAFB');
+    c2.alignment=aln('center');
+    c2.border=bAll(bThin(),isLast?bMed():bThin(),{style:'medium',color:{argb:'FFC9A227'}},bThin('9DC4AD'));
+
+    // Sel Nama Kanan
+    const c3=dRow.getCell(4);
+    c3.value=R?R.nama||'':''; c3.font=fnt(10,false,'1F2937'); c3.fill=fg(bgR);
+    c3.alignment=aln('left');
+    c3.border=bAll(bThin(),isLast?bMed():bThin(),bThin('9DC4AD'),bMed());
+
+    r++;
+  }
+
+  // Baris Total
+  ws.mergeCells(r,1,r,nc);
+  const totRow = ws.getRow(r); totRow.height = 22;
+  const totCell = totRow.getCell(1);
+  totCell.value = '∑  TOTAL MUSTAHIK '+sName.replace('RT','RT ')+': '+list.length+' Kepala Keluarga';
+  totCell.font  = fnt(10,true,'FFFFFF');
+  totCell.fill  = fg('064E3B');
+  totCell.alignment = aln('center');
+  totCell.border = bAll({style:'medium',color:{argb:'FFC9A227'}},bMed(),bMed(),bMed());
+
+  ws['!ref'] = 'A1:D'+r;  // untuk referensi
+  return ws;
+}
+
+/* ══════════════════════════════════════════════════════════
    buildRekapSheet(wb, d, year) — Sheet Rekap Dashboard
 ══════════════════════════════════════════════════════════ */
 function buildRekapSheet(wb, d, year){
@@ -2184,8 +2463,9 @@ function buildRekapSheet(wb, d, year){
   // Ringkasan
   secHdr('JUMLAH');
   const items=[
-    ['🐄 Hewan Sapi',  d.hewan.filter(h=>h.jenis==='Sapi').length,   'Ekor'],
-    ['🐐 Hewan Kambing/Domba',d.hewan.filter(h=>h.jenis==='Kambing/Domba').length,'Ekor'],
+    ['🐄 Hewan Sapi',   d.hewan.filter(h=>h.jenis==='Sapi').length,   'Ekor'],
+    ['🐐 Hewan Kambing',d.hewan.filter(h=>h.jenis==='Kambing').length,'Ekor'],
+    ['🐑 Hewan Domba',  d.hewan.filter(h=>h.jenis==='Domba').length,   'Ekor'],
     ['🐄🐐 Total Hewan',d.hewan.length,                               'Ekor'],
     ['🤲 Total Pequrban',allPq.length,                                'Orang'],
     ['👥 Total Panitia', d.panitia.length,                            'Orang'],
@@ -2217,19 +2497,19 @@ function buildRekapSheet(wb, d, year){
    xls(type, filter) — Entry point export Excel via ExcelJS
 ══════════════════════════════════════════════════════════ */
 const COL_HEWAN = [
-  {header:'No',       key:'no',   width:5,  align:'center'},
-  {header:'No. Hewan',key:'no_h', width:12, align:'center'},
-  {header:'Jenis',    key:'jen',  width:10, align:'center'},
-  {header:'Pequrban 1',key:'p1',  width:20},
-  {header:'Pequrban 2',key:'p2',  width:20},
-  {header:'Pequrban 3',key:'p3',  width:20},
-  {header:'Pequrban 4',key:'p4',  width:20},
-  {header:'Pequrban 5',key:'p5',  width:20},
-  {header:'Pequrban 6',key:'p6',  width:20},
-  {header:'Pequrban 7',key:'p7',  width:20},
-  {header:'Keterangan',key:'ket', width:22},
+  {header:'No',        key:'no',   width:5,  align:'center'},
+  {header:'No. Hewan', key:'no_h', width:12, align:'center'},
+  {header:'Jenis',     key:'jen',  width:10, align:'center'},
+  {header:'Pequrban 1',key:'p1',   width:22},
+  {header:'Pequrban 2',key:'p2',   width:22},
+  {header:'Pequrban 3',key:'p3',   width:22},
+  {header:'Pequrban 4',key:'p4',   width:22},
+  {header:'Pequrban 5',key:'p5',   width:22},
+  {header:'Pequrban 6',key:'p6',   width:22},
+  {header:'Pequrban 7',key:'p7',   width:22},
+  {header:'Keterangan',key:'ket',  width:22},
 ];
-const COL_PANITIA  = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Lengkap',key:'nama',width:32},{header:'Jabatan',key:'jbt',width:24},{header:'Keterangan',key:'Ket',width:16}];
+const COL_PANITIA  = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Lengkap',key:'nama',width:32},{header:'Jabatan',key:'jbt',width:24},{header:'No. HP',key:'hp',width:16}];
 const COL_MUSTAHIK = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Mustahik',key:'nama',width:34},{header:'RT',key:'rt',width:8,align:'center'},{header:'Keterangan',key:'ket',width:24}];
 const COL_GURU     = [{header:'No',key:'no',width:5,align:'center'},{header:'Nama Lengkap',key:'nama',width:32},{header:'Kategori',key:'kat',width:14,align:'center'},{header:'Keterangan',key:'ket',width:26}];
 
@@ -2241,8 +2521,8 @@ async function xls(type, filter){
   wb.created  = new Date();
   wb.modified = new Date();
 
-  if(type==='hewan'||type==='sapi'||type==='kambing/Domba'){
-    const jenis = type==='sapi'?'Sapi':type==='kambing/Domba'?'Kambing/Domba':null;
+  if(type==='hewan'||type==='sapi'||type==='kambing'||type==='domba'){
+    const jenis = type==='sapi'?'Sapi':type==='kambing'?'Kambing':type==='domba'?'Domba':null;
     const rows  = hewanRows(d, jenis);
     if(!rows.length){toast('Tidak ada data hewan'+(jenis?' '+jenis:''),'warn');return;}
     buildSheet(wb, jenis||'Hewan Qurban',
@@ -2304,7 +2584,14 @@ async function doExport(){
     const pfx=multi?yr+'H_':'';
 
     if(chk('ex-h')){
-      const jenis=chk('ex-sapi')&&!chk('ex-kambing/Domba')?'Sapi':!chk('ex-sapi')&&chk('ex-kambing/Domba')?'Kambing/Domba':null;
+      // Tentukan filter jenis berdasarkan checkbox
+      const wantS=chk('ex-sapi'), wantK=chk('ex-kambing'), wantD=chk('ex-domba');
+      // Jika tidak semua dipilih, buat multiple sheets
+      const jenisList=[];
+      if(wantS) jenisList.push('Sapi');
+      if(wantK) jenisList.push('Kambing');
+      if(wantD) jenisList.push('Domba');
+      const jenis=(!wantS&&!wantK&&!wantD)||(wantS&&wantK&&wantD)?null:jenisList[0]||null;
       const rows=hewanRows(d,jenis);
       if(rows.length) buildSheet(wb,pfx+'Hewan','HEWAN QURBAN '+yr+' H'+(jenis?' — '+jenis:''),MOSQ+' | '+rows.length+' ekor',COL_HEWAN,rows);
     }
@@ -2339,6 +2626,52 @@ const saveXlsx      = saveBuf;
 /* ══════════════════════════════════════════════════════════
    pdf(type, filter) — Cetak / Simpan PDF
 ══════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════
+   Render daftar mustahik 2-kolom (kiri | kanan per baris)
+   Format: No. Nama Mustahik | No. Nama Mustahik
+════════════════════════════════════════════════════════ */
+function mustahik2ColHTML(list, rtLabel){
+  if(!list.length) return '<p style="text-align:center;color:#888;padding:1rem">Tidak ada data</p>';
+
+  let inner = '';
+  // Render berpasangan kiri-kanan
+  for(let i=0; i<list.length; i+=2){
+    const L    = list[i];
+    const R    = list[i+1] || null;
+    const even = (i/2)%2===0;
+    const rowCls = even ? 'even-row' : 'odd-row';
+
+    // Sel kiri
+    inner += '<div class="pdf-2col-half left-col '+rowCls+'">'
+      + '<div class="pdf-2col-no">'+(i+1)+'</div>'
+      + '<div class="pdf-2col-nama">'+(L.nama||'-')+'</div>'
+      + '</div>';
+
+    // Sel kanan
+    if(R){
+      inner += '<div class="pdf-2col-half '+rowCls+'">'
+        + '<div class="pdf-2col-no">'+(i+2)+'</div>'
+        + '<div class="pdf-2col-nama">'+(R.nama||'-')+'</div>'
+        + '</div>';
+    } else {
+      // Kolom kanan kosong (jumlah ganjil)
+      inner += '<div class="pdf-2col-half empty-cell"></div>';
+    }
+  }
+
+  return '<div class="pdf-2col">'
+    + '<div class="pdf-2col-header">'
+        + '📋 DAFTAR MUSTAHIK — '+rtLabel
+        + ' &nbsp;|&nbsp; Total: '+list.length+' Kepala Keluarga'
+      + '</div>'
+    + inner
+    + '<div class="pdf-2col-footer">'
+        + 'TOTAL MUSTAHIK '+rtLabel+': '
+        + '<strong>'+list.length+'</strong> KEPALA KELUARGA'
+      + '</div>'
+    + '</div>';
+}
+
 function pdf(type, filter){
   const d    = db();
   const area = document.getElementById('pdf-area');
@@ -2352,8 +2685,8 @@ function pdf(type, filter){
   </div>`;
   const foot = `<div class="pdf-footer"><span>Musholla Nurul Falah — Panitia Qurban ${activeYear} H</span><span>${tgl}</span></div>`;
   const ttd  = `<div class="pdf-ttd">
-    <div class="pdf-ttd-box"><div>Mengetahui,</div><div style="font-weight:600">Ketua Panitia</div><div class="pdf-ttd-line"></div><div class="pdf-ttd-label">( Zaenal Syahri )</div></div>
-    <div class="pdf-ttd-box"><div>Sekretaris</div><div style="font-weight:600">Panitia Qurban</div><div class="pdf-ttd-line"></div><div class="pdf-ttd-label">( Azhari )</div></div>
+    <div class="pdf-ttd-box"><div>Mengetahui,</div><div style="font-weight:600">Ketua Panitia</div><div class="pdf-ttd-line"></div><div class="pdf-ttd-label">( ZAENAL SYAHRI )</div></div>
+    <div class="pdf-ttd-box"><div>Sekretaris</div><div style="font-weight:600">Panitia Qurban</div><div class="pdf-ttd-line"></div><div class="pdf-ttd-label">( AZHARI )</div></div>
   </div>`;
   const titleBlock = (t,sub,meta) => `<div class="pdf-title-block"><div class="pdf-doc-title">${t}</div><div class="pdf-doc-sub">${sub}</div></div><div class="pdf-meta"><span>${meta}</span><span>Dicetak: ${tgl}</span></div>`;
   const page = (content, addBreak) => `${addBreak?'<div class="page-break"></div>':''}<div class="pdf-page">${kop}${content}${foot}</div>`;
@@ -2361,15 +2694,15 @@ function pdf(type, filter){
   let out='';
   const isAll=(type==='semua');
 
-  if(type==='hewan'||type==='sapi'||type==='kambing/Domba'||isAll){
-    const jenis=type==='sapi'?'Sapi':type==='kambing/Domba'?'Kambing/Domba':null;
+  if(type==='hewan'||type==='sapi'||type==='kambing'||type==='domba'||isAll){
+    const jenis=type==='sapi'?'Sapi':type==='kambing'?'Kambing':type==='domba'?'Domba':null;
     const list=jenis?d.hewan.filter(h=>h.jenis===jenis):d.hewan;
     out+=page(`
-      ${titleBlock('DAFTAR HEWAN QURBAN '+activeYear+' H'+(jenis?' — '+jenis:''), MOSQ+' — '+(jenis||'Semua Jenis')+': '+list.length+' ekor', 'Sapi: '+d.hewan.filter(h=>h.jenis==='Sapi').length+' | Kambing/Domba: '+d.hewan.filter(h=>h.jenis==='Kambing/Domba').length)}
+      ${titleBlock('DAFTAR HEWAN QURBAN '+activeYear+' H'+(jenis?' — '+jenis:''), MOSQ+' — '+(jenis||'Semua Jenis')+': '+list.length+' ekor', 'Sapi: '+d.hewan.filter(h=>h.jenis==='Sapi').length+' | Kambing: '+d.hewan.filter(h=>h.jenis==='Kambing').length+' | Domba: '+d.hewan.filter(h=>h.jenis==='Domba').length)}
       <table class="pdf-table">
         <thead><tr><th>No</th><th>No. Hewan</th><th>Jenis</th><th>Daftar Pequrban</th><th>Keterangan</th></tr></thead>
         <tbody>${list.map((h,i)=>{const ps=parsePq(h.pequrban);return '<tr><td class="col-no">'+(i+1)+'</td><td class="col-id">'+( h.no||'-')+'</td><td style="text-align:center"><b>'+h.jenis+'</b></td><td>'+ps.map((p,pi)=>'<span style="display:block;padding:1px 0;border-bottom:1px dotted #ddd">'+(pi+1)+'. '+p+'</span>').join('')+'</td><td style="color:#555;font-size:8pt">'+(h.ket||'-')+'</td></tr>';}).join('')}</tbody>
-        <tfoot><tr><td colspan="2">TOTAL</td><td style="text-align:center">${list.length} Ekor</td><td colspan="2">Sapi: ${d.hewan.filter(h=>h.jenis==='Sapi').length} | Kambing/Domba: ${d.hewan.filter(h=>h.jenis==='Kambing/Domba').length}</td></tr></tfoot>
+        <tfoot><tr><td colspan="2">TOTAL</td><td style="text-align:center">${list.length} Ekor</td><td colspan="2">Sapi: ${d.hewan.filter(h=>h.jenis==='Sapi').length} | Kambing: ${d.hewan.filter(h=>h.jenis==='Kambing').length} | Domba: ${d.hewan.filter(h=>h.jenis==='Domba').length}</td></tr></tfoot>
       </table>`, isAll&&out.length>0);
   }
 
@@ -2377,7 +2710,7 @@ function pdf(type, filter){
     out+=page(`
       ${titleBlock('DAFTAR PANITIA QURBAN '+activeYear+' H', MOSQ+' — Total: '+d.panitia.length+' anggota','Data Kepanitiaan')}
       <table class="pdf-table">
-        <thead><tr><th>No</th><th>Nama Lengkap</th><th>Jabatan</th><th>Keterangan</th></tr></thead>
+        <thead><tr><th>No</th><th>Nama Lengkap</th><th>Jabatan</th><th>No. HP</th></tr></thead>
         <tbody>${sortedPanitia(d.panitia).map((p,i)=>'<tr><td class="col-no">'+(i+1)+'</td><td class="col-nama">'+(p.nama||'-')+'</td><td style="color:#094d37;font-weight:600">'+(p.jabatan||'-')+'</td><td style="font-size:8pt">'+(p.hp||'-')+'</td></tr>').join('')}</tbody>
         <tfoot><tr><td colspan="3">TOTAL PANITIA</td><td style="text-align:center">${d.panitia.length} Orang</td></tr></tfoot>
       </table>${ttd}`, isAll&&out.length>0);
@@ -2386,20 +2719,40 @@ function pdf(type, filter){
   if(type==='mustahik'||isAll){
     const rt   = filter||null;
     const list = sortedMustahik(rt?d.mustahik.filter(m=>m.rt===rt):d.mustahik);
-    out+=page(`
-      ${titleBlock('DAFTAR MUSTAHIK QURBAN '+activeYear+' H'+(rt?' — '+rt:''), MOSQ+' — '+(rt?rt+': '+list.length+' Mustahik':'Semua RT: '+list.length+' Mustahik'),'Penerima Daging Qurban')}
-      <table class="pdf-table">
-        <thead><tr><th>No</th><th>Nama Mustahik</th><th>RT</th><th>Keterangan</th></tr></thead>
-        <tbody>${list.map((m,i)=>'<tr><td class="col-no">'+(i+1)+'</td><td class="col-nama">'+(m.nama||'-')+'</td><td style="text-align:center;font-weight:700;color:#0a3d2b">'+(m.rt||'-')+'</td><td style="font-size:8pt;color:#555">'+(m.ket||'-')+'</td></tr>').join('')}</tbody>
-        <tfoot><tr><td colspan="3">TOTAL MUSTAHIK</td><td style="text-align:center">${list.length} Mustahik</td></tr></tfoot>
-      </table>
-      ${!rt?'<div class="pdf-section-title">📊 REKAPITULASI PER RT</div><div class="pdf-stat-grid">'+RT.map(r=>{const c=d.mustahik.filter(m=>m.rt===r).length;return '<div class="pdf-stat-box"><div class="lbl">'+r+'</div><div class="val">'+c+'</div><div class="sat">Mustahik</div></div>';}).join('')+'</div>':''}
-      `, isAll&&out.length>0);
+
+    if(rt){
+      // 1 RT → layout 2 kolom
+      out+=page(
+        titleBlock('DAFTAR MUSTAHIK '+rt+' — '+activeYear+' H', MOSQ+' — '+rt+': '+list.length+' Mustahik','Penerima Daging Qurban')
+        +mustahik2ColHTML(list, rt),
+        isAll&&out.length>0);
+    } else {
+      // Semua RT → 1 tabel umum + per RT masing-masing 2 kolom
+      out+=page(
+        titleBlock('DAFTAR MUSTAHIK QURBAN '+activeYear+' H', MOSQ+' — Semua RT: '+list.length+' Mustahik','Penerima Daging Qurban')
+        +'<table class="pdf-table">'
+        +'<thead><tr><th>No</th><th>Nama Mustahik</th><th>RT</th><th>Keterangan</th></tr></thead>'
+        +'<tbody>'+list.map((m,i)=>'<tr><td class="col-no">'+(i+1)+'</td><td class="col-nama">'+(m.nama||'-')+'</td><td style="text-align:center;font-weight:700;color:#0a3d2b">'+(m.rt||'-')+'</td><td style="font-size:8pt;color:#555">'+(m.ket||'-')+'</td></tr>').join('')+'</tbody>'
+        +'<tfoot><tr><td colspan="3">TOTAL MUSTAHIK</td><td style="text-align:center">'+list.length+' Mustahik</td></tr></tfoot>'
+        +'</table>'
+        +'<div class="pdf-section-title">📊 REKAPITULASI PER RT</div>'
+        +'<div class="pdf-stat-grid">'+RT.map(r=>{const c=d.mustahik.filter(m=>m.rt===r).length;return '<div class="pdf-stat-box"><div class="lbl">'+r+'</div><div class="val">'+c+'</div><div class="sat">Mustahik</div></div>';}).join('')+'</div>',
+        isAll&&out.length>0);
+      // Cetak per RT masing-masing layout 2 kolom
+      RT.forEach(r=>{
+        const rList=sortedMustahik(d.mustahik.filter(m=>m.rt===r));
+        if(!rList.length) return;
+        out+=page(
+          titleBlock('DAFTAR MUSTAHIK '+r+' — '+activeYear+' H', MOSQ+' — '+r+': '+rList.length+' Mustahik','Penerima Daging Qurban')
+          +mustahik2ColHTML(rList, r),
+          true);
+      });
+    }
   }
 
   if(type==='guru'||isAll){
     out+=page(`
-      ${titleBlock('DAFTAR GURU & SESEPUH '+activeYear+' H', MOSQ+' — Total: '+d.guru.length+' orang','Data Guru, Sesepuh, Ulama, Panitia Sepuh & Pejabat Setempat')}
+      ${titleBlock('DAFTAR GURU & SESEPUH '+activeYear+' H', MOSQ+' — Total: '+d.guru.length+' orang','Data Guru, Sesepuh, Ustadz & Ustadzah')}
       <table class="pdf-table">
         <thead><tr><th>No</th><th>Nama Lengkap</th><th>Kategori</th><th>Keterangan</th></tr></thead>
         <tbody>${d.guru.map((g,i)=>'<tr><td class="col-no">'+(i+1)+'</td><td class="col-nama">'+(g.nama||'-')+'</td><td style="text-align:center;font-weight:600;color:#094d37">'+(g.kat||'-')+'</td><td style="font-size:8pt;color:#555">'+(g.ket||'-')+'</td></tr>').join('')}</tbody>
@@ -2413,7 +2766,8 @@ function pdf(type, filter){
       ${titleBlock('REKAP DASHBOARD QURBAN '+activeYear+' H', MOSQ+' — Ringkasan Lengkap','Laporan Rekap')}
       <div class="pdf-stat-grid">
         <div class="pdf-stat-box"><div class="lbl">🐄 Hewan Sapi</div><div class="val">${d.hewan.filter(h=>h.jenis==='Sapi').length}</div><div class="sat">Ekor</div></div>
-        <div class="pdf-stat-box"><div class="lbl">🐐 Hewan Kambing/Domba</div><div class="val">${d.hewan.filter(h=>h.jenis==='Kambing/Domba').length}</div><div class="sat">Ekor</div></div>
+        <div class="pdf-stat-box"><div class="lbl">🐐 Hewan Kambing</div><div class="val">${d.hewan.filter(h=>h.jenis==='Kambing').length}</div><div class="sat">Ekor</div></div>
+        <div class="pdf-stat-box"><div class="lbl">🐑 Hewan Domba</div><div class="val">${d.hewan.filter(h=>h.jenis==='Domba').length}</div><div class="sat">Ekor</div></div>
         <div class="pdf-stat-box"><div class="lbl">🤲 Total Pequrban</div><div class="val">${allPq.length}</div><div class="sat">Orang</div></div>
         <div class="pdf-stat-box"><div class="lbl">👥 Total Panitia</div><div class="val">${d.panitia.length}</div><div class="sat">Orang</div></div>
         <div class="pdf-stat-box"><div class="lbl">🏠 Total Mustahik</div><div class="val">${d.mustahik.length}</div><div class="sat">Mustahik</div></div>
@@ -2691,7 +3045,7 @@ function previewImport(type){
     if(isp){
       parsed.push({ nama, jabatan:parts[1]||'', ket:parts[2]||'', hadir:'0' });
     } else {
-      const rt = rtForce || parts[1]||'RT 10-04';
+      const rt = rtForce || parts[1]||'RT 01';
       const ket= rtForce ? (parts[1]||'') : (parts[2]||'');
       parsed.push({ nama, rt, ket, diambil:'0' });
     }
@@ -2788,6 +3142,80 @@ async function doDelRT(){
   }catch(e){
     setSyncStatus('err',e.message);
     toast('Gagal hapus: '+e.message,'err');
+  }
+}
+
+/* ============================================================
+   RESET SEMUA CENTANG (Admin Only)
+============================================================ */
+async function doResetCek(){
+  const wantDipotong  = document.getElementById('rc-dipotong')?.checked;
+  const wantPqDaging  = document.getElementById('rc-pqdaging')?.checked;
+  const wantHadir     = document.getElementById('rc-hadir')?.checked;
+  const wantDiambil   = document.getElementById('rc-diambil')?.checked;
+  const wantDibawakan = document.getElementById('rc-dibawakan')?.checked;
+
+  if(!wantDipotong&&!wantPqDaging&&!wantHadir&&!wantDiambil&&!wantDibawakan){
+    toast('Pilih minimal 1 kategori centang!','warn'); return;
+  }
+  if(!confirm('Reset semua centang yang dipilih? Tidak bisa dibatalkan!')) return;
+
+  setSyncStatus('loading');
+  let total=0;
+  const d=db();
+  const yr=activeYear;
+
+  try{
+    // Reset dipotong (hewan)
+    if(wantDipotong){
+      for(const h of d.hewan.filter(x=>x.dipotong==='1')){
+        await gas({action:'toggleCheck', tahun:yr, type:'hewan', id:h.id, field:'dipotong'});
+        h.dipotong='0'; total++;
+      }
+    }
+    // Reset pq_daging (hewan — semua pequrban)
+    if(wantPqDaging){
+      for(const h of d.hewan){
+        const arr=(h.pq_daging||'').split('|');
+        const hasOn=arr.some(v=>v==='1');
+        if(!hasOn) continue;
+        const newArr=arr.map(()=>'0');
+        const newRow={...h, pq_daging:newArr.join('|')};
+        await gas({action:'updateRow', tahun:yr, type:'hewan', id:h.id, d:newRow});
+        h.pq_daging=newArr.join('|'); total++;
+      }
+    }
+    // Reset hadir (panitia)
+    if(wantHadir){
+      for(const p of d.panitia.filter(x=>x.hadir==='1')){
+        await gas({action:'toggleCheck', tahun:yr, type:'panitia', id:p.id, field:'hadir'});
+        p.hadir='0'; total++;
+      }
+    }
+    // Reset diambil (mustahik)
+    if(wantDiambil){
+      for(const m of d.mustahik.filter(x=>x.diambil==='1')){
+        await gas({action:'toggleCheck', tahun:yr, type:'mustahik', id:m.id, field:'diambil'});
+        m.diambil='0'; total++;
+      }
+    }
+    // Reset dibawakan (guru)
+    if(wantDibawakan){
+      for(const g of d.guru.filter(x=>x.dibawakan==='1')){
+        await gas({action:'toggleCheck', tahun:yr, type:'guru', id:g.id, field:'dibawakan'});
+        g.dibawakan='0'; total++;
+      }
+    }
+
+    renderAll();
+    closeModal('mo-reset-cek');
+    setSyncStatus('ok');
+    toast('✅ Reset selesai: '+total+' centang dihapus');
+  }catch(e){
+    setSyncStatus('err',e.message);
+    toast('Gagal reset: '+e.message,'err');
+    // Reload untuk sinkronkan data
+    await loadYearData(yr); renderAll();
   }
 }
 
